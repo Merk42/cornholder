@@ -123,7 +123,7 @@ function InningHalf ({onChange, color}) {
     )
 }
 
-export default function Inning() {
+export default function Inning({onChange}) {
 
     const colors = {
         red: 'bg-red-800',
@@ -143,24 +143,7 @@ export default function Inning() {
     }
 
 
-    const result = (redTotal:number, blueTotal:number) => {
-         const change = {
-            team: '',
-            value: 0
-         }   
-         if (redTotal === blueTotal) {
-            return change;
-         }
-         if (redTotal > blueTotal) {
-            change.team = 'red'
-         } else {
-            change.team = 'blue'
-         }
-         change.value = Math.abs(redTotal - blueTotal)
-         return change
-    }
-
-    const visibleTodos = useMemo(() => {
+    const result = useMemo(() => {
         const change = {
             team: 'wash',
             value: 0
@@ -177,17 +160,22 @@ export default function Inning() {
          return change
   }, [redTotal, blueTotal])
 
+    const handleClick = (event) => {
+        onChange(result)
+        // and reset
+    };
+
     return (
         <div>
             <InningHalf onChange={handleRedTeamTotalChange} color='red'/>
             <pre>red: {redTotal}</pre>
             <InningHalf onChange={handleBlueTeamTotalChange} color='blue'/>
             <pre>blue: {blueTotal}</pre>
-            <button className={`${colors[visibleTodos.team]} cursor-pointer grow text-center border-2 p-2 rounded-md text-white`}>
-                {visibleTodos.value === 0 ? (
+            <button onClick={handleClick} className={`${colors[result.team]} cursor-pointer grow text-center border-2 p-2 rounded-md text-white`}>
+                {result.value === 0 ? (
                     <span>wash</span>
                 ) : (
-                    <span>{visibleTodos.team} gets {visibleTodos.value} points</span>
+                    <span>{result.team} gets {result.value} points</span>
                 )}
             </button>
         </div>
