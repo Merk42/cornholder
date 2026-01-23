@@ -1,7 +1,14 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 function CustomRadioButton({ name, value, label, selectedvalue, onChange, legend}) {
+
+const colors = {
+  red: 'border-red-800 peer-checked:bg-red-800',
+  blue: 'border-blue-800 peer-checked:bg-blue-800'
+}
+
+
   return (
     <span className='flex grow'>
         <input
@@ -13,7 +20,7 @@ function CustomRadioButton({ name, value, label, selectedvalue, onChange, legend
             checked={selectedvalue.toString() === value.toString()}
             onChange={onChange}/>
         <label
-            className={`cursor-pointer grow text-center border-${legend}-800 border-2 p-2 rounded-md peer-checked:bg-${legend}-800 peer-checked:text-white`}
+            className={`${colors[legend]} cursor-pointer grow text-center border-2 p-2 rounded-md peer-checked:text-white`}
             htmlFor={name + '-' + value.toString()}>
             {label}
         </label>
@@ -118,28 +125,15 @@ function InningHalf ({onChange, color}) {
 
 export default function Inning() {
 
-    const [onBoardTotal, setOnBoardTotal] = useState<number>(0);
+    const colors = {
+        red: 'bg-red-800',
+        blue: 'bg-blue-800',
+        wash: 'bg-slate-800'
+    }
 
-    const [inHoleTotal, setInHoleTotal] = useState<number>(0);
 
     const [redTotal, setRedTotal] = useState<number>(0);
     const [blueTotal, setBlueTotal] = useState<number>(0);
-
-    const handleOnBoardChange = (total:number) => {
-        setOnBoardTotal(Number(total)); // Receive and store data from child
-    }
-     
-    const handleInHoleChange = (total:number) => {
-        setInHoleTotal(Number(total)); // Receive and store data from child
-    }
-
-    const points = (onboard:number, inhole:number) => {
-        if (onboard + inhole > 4) {
-            return 0
-        }
-        return onboard + (inhole * 3)
-    }
-
 
     const handleRedTeamTotalChange = (total:number) => {
         setRedTotal(total)
@@ -148,10 +142,54 @@ export default function Inning() {
         setBlueTotal(total)
     }
 
+
+    const result = (redTotal:number, blueTotal:number) => {
+         const change = {
+            team: '',
+            value: 0
+         }   
+         if (redTotal === blueTotal) {
+            return change;
+         }
+         if (redTotal > blueTotal) {
+            change.team = 'red'
+         } else {
+            change.team = 'blue'
+         }
+         change.value = Math.abs(redTotal - blueTotal)
+         return change
+    }
+
+    const visibleTodos = useMemo(() => {
+        const change = {
+            team: 'wash',
+            value: 0
+         }   
+         if (redTotal === blueTotal) {
+            return change;
+         }
+         if (redTotal > blueTotal) {
+            change.team = 'red'
+         } else {
+            change.team = 'blue'
+         }
+         change.value = Math.abs(redTotal - blueTotal)
+         return change
+  }, [redTotal, blueTotal])
+
     return (
         <div>
             <InningHalf onChange={handleRedTeamTotalChange} color='red'/>
+            <pre>red: {redTotal}</pre>
             <InningHalf onChange={handleBlueTeamTotalChange} color='blue'/>
+            <pre>blue: {blueTotal}</pre>
+            <button className={`${colors[visibleTodos.team]} cursor-pointer grow text-center border-2 p-2 rounded-md text-white`}>
+                {visibleTodos.value === 0 ? (
+                    <span>wash</span>
+                ) : (
+                    <span>{visibleTodos.team} gets {visibleTodos.value} points</span>
+                )}
+            </button>
         </div>
         
 
