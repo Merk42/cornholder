@@ -78,12 +78,20 @@ export default function Inning() {
             updateBlue(newpoints.value)
         }
     }
+    resetFields()
     if (score.red >= 21 || score.blue >= 21) {
       router.push('/winner');
     }
     // some kind of value reset?
     // increment a round?
 
+  }
+
+  const resetFields = () => {
+    setOnBoardRedValue(0);
+    setInHoleRedValue(0);
+    setOnBoardBlueValue(0);
+    setInHoleBlueValue(0);
   }
 
   const router = useRouter();

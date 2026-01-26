@@ -29,6 +29,7 @@ export type CounterActions = {
   updateBlue: (points:number) => void
   setRedTeam: (name:string) => void
   setBlueTeam: (name:string) => void
+  resetScore: () => void
 }
 
 export type CounterStore = CounterState & CounterActions
@@ -47,7 +48,6 @@ function updateScore(team:Team, score:number, initial:Score):Score {
     const OLDSCORE = initial[team];
     const NEWSCORE = OLDSCORE + score;
     initial[team] = NEWSCORE;
-    console.log('new score', initial)
     return initial;
 }
 
@@ -61,7 +61,8 @@ export const createCounterStore = (
     updateRed: (points:number) => set((state) => ({ score: updateScore('red', points, state.score) })),
     updateBlue: (points:number) => set((state) => ({ score: updateScore('blue', points, state.score) })),
     setRedTeam: (name:string) => set({ redteam: name }),
-    setBlueTeam: (name:string) => set({ blueteam: name })
+    setBlueTeam: (name:string) => set({ blueteam: name }),
+    resetScore: () => set(() => ({ score: defaultInitState.score }))
   }))
 }
 

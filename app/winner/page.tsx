@@ -1,12 +1,12 @@
 'use client'; // Required for client-side hooks in the App Router
 import { useMemo } from 'react';
-
+import { useRouter } from 'next/navigation';
 import { useCounterStore } from '../providers/counter-store-provider'
-import Link from 'next/link';
+
 
 export default function Winner() {
-
-    const { redteam, blueteam, score } = useCounterStore(
+    const router = useRouter();
+    const { redteam, blueteam, score, resetScore } = useCounterStore(
         (state) => state,
     )
 
@@ -21,11 +21,21 @@ export default function Winner() {
         }
     }, [redteam, blueteam, score])
 
+    const handleClickSame = () => {
+        resetScore()
+        router.push('/game');
+    }
+    const handleClickDiff = () => {
+        resetScore()
+        router.push('/start');
+    }
+
     return (
         <div>
             <h1>{phrase}</h1>
             <p>{score.red}:{score.blue}</p>
-            <Link href="/start">New Game</Link> 
+            <button onClick={handleClickSame}>New Game (same teams)</button> 
+            <button onClick={handleClickDiff}>New Game (different teams)</button> 
         </div>
         
     )
