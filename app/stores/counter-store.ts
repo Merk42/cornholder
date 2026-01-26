@@ -1,12 +1,12 @@
 // src/stores/counter-store.ts
 import { createStore } from 'zustand/vanilla'
 
-type Team = 'red'|'blue'
+export type Team = 'red'|'blue';
+export type Position = 'onboard'|'inhole'
 
 type InningBags = {
   [T in Team]:{
-    'onboard':number;
-    'inhole': number;
+    [P in Position]:number;
   }
 }
 
@@ -18,7 +18,6 @@ type Score = {
 export type CounterState = {
   count: number;
   score: Score;
-  bags: InningBags;
   redteam: string;
   blueteam: string;
 }
@@ -40,16 +39,6 @@ export const defaultInitState: CounterState = {
     'red':0,
     'blue':0
   },
-  bags: {
-    'red': {
-      'onboard':0,
-      'inhole':0
-    },
-    'blue': {
-      'onboard':0,
-      'inhole':0
-    }
-  },
   redteam:'',
   blueteam:''
 }
@@ -58,6 +47,7 @@ function updateScore(team:Team, score:number, initial:Score):Score {
     const OLDSCORE = initial[team];
     const NEWSCORE = OLDSCORE + score;
     initial[team] = NEWSCORE;
+    console.log('new score', initial)
     return initial;
 }
 
@@ -71,6 +61,7 @@ export const createCounterStore = (
     updateRed: (points:number) => set((state) => ({ score: updateScore('red', points, state.score) })),
     updateBlue: (points:number) => set((state) => ({ score: updateScore('blue', points, state.score) })),
     setRedTeam: (name:string) => set({ redteam: name }),
-    setBlueTeam: (name:string) => set({ blueteam: name }),
+    setBlueTeam: (name:string) => set({ blueteam: name })
   }))
 }
+

@@ -1,184 +1,145 @@
 'use client'
 import { useEffect, useMemo, useState } from "react";
+import { useCounterStore } from '../../providers/counter-store-provider'
+import { useRouter } from 'next/navigation';
 
-function CustomRadioButton({ name, value, label, selectedvalue, onChange, legend}) {
+export default function Inning() {
 
-const colors = {
-  red: 'border-red-800 peer-checked:bg-red-800',
-  blue: 'border-blue-800 peer-checked:bg-blue-800'
-}
-
-
-  return (
-    <span className='flex grow'>
-        <input
-            className="hidden peer"
-            id={name + '-' + value.toString()}
-            type="radio"
-            name={name}
-            value={value}
-            checked={selectedvalue.toString() === value.toString()}
-            onChange={onChange}/>
-        <label
-            className={`${colors[legend]} cursor-pointer grow text-center border-2 p-2 rounded-md peer-checked:text-white`}
-            htmlFor={name + '-' + value.toString()}>
-            {label}
-        </label>
-    </span>
-  );
-}
-
-function OnBoard({ onChange, color }) {
+    const { score, updateRed, updateBlue } = useCounterStore(
+        (state) => state,
+    )
 
     const numbers = [...Array(5).keys()]
-
-    const [onBoardValue, setOnBoardValue] = useState(0);
-
-    const handleChange = (event) => {
+    const [onBoardRedValue, setOnBoardRedValue] = useState(0);
+    const [inHoleRedValue, setInHoleRedValue] = useState(0);
+    const [onBoardBlueValue, setOnBoardBlueValue] = useState(0);
+    const [inHoleBlueValue, setInHoleBlueValue] = useState(0);
+    const handleOnboardRedChange = (event) => {
         console.log('handleChange', event.target.value)
         const VAL = Number(event.target.value);
-       setOnBoardValue(VAL);
-       // maybe emit?
-       onChange(VAL)
+        setOnBoardRedValue(VAL);
+    };
+    const handleInHoleRedChange = (event) => {
+        console.log('handleChange', event.target.value)
+        const VAL = Number(event.target.value);
+        setInHoleRedValue(VAL);
+    };
+    const handleOnboardBlueChange = (event) => {
+        console.log('handleChange', event.target.value)
+        const VAL = Number(event.target.value);
+        setOnBoardBlueValue(VAL);
+    };
+    const handleInHoleBlueChange = (event) => {
+        console.log('handleChange', event.target.value)
+        const VAL = Number(event.target.value);
+        setInHoleBlueValue(VAL);
     };
 
-    return (
-        <fieldset className="grid grid-cols-[repeat(5,1fr)]">
-            <legend>on board</legend>
-            {numbers.map((number) => (
-                <CustomRadioButton
-                key={number}
-                name={'onboard-' + color}
-                value={number}
-                label={number}
-                selectedvalue={onBoardValue}
-                legend={color}
-                onChange={handleChange}
-                />
-            ))}
-        </fieldset>
-    )
-}
-
-function InHole({ onChange, color }) {
-
-    const numbers = [...Array(5).keys()]
-
-    const [inHoleValue, setInHoleValue] = useState(0);
-
-    const handleChange = (event) => {
-       setInHoleValue(event.target.value);
-       // maybe emit?
-       onChange(event.target.value)
-    };
-
-    return (
-        <fieldset className="grid grid-cols-[repeat(5,1fr)]">
-            <legend>in hole</legend>
-            {numbers.map((number) => (
-                <CustomRadioButton
-                key={number}
-                name={'inhole-' + color}
-                value={number}
-                label={number}
-                selectedvalue={inHoleValue}
-                legend={color}
-                onChange={handleChange}
-                />
-            ))}              
-        </fieldset>
-    )
-}
-
-function InningHalf ({onChange, color}) {
-    const [onBoardTotal, setOnBoardTotal] = useState<number>(0);
-
-    const [inHoleTotal, setInHoleTotal] = useState<number>(0);
-
-    const handleOnBoardChange = (total:number) => {
-        setOnBoardTotal(Number(total)); // Receive and store data from child
-    }
-     
-    const handleInHoleChange = (total:number) => {
-        setInHoleTotal(Number(total)); // Receive and store data from child
-    }
-
-    const points = (onboard:number, inhole:number) => {
-        if (onboard + inhole > 4) {
+    const rTotal = useMemo(() => {
+        if (onBoardRedValue + inHoleRedValue > 4) {
             return 0
         }
-        return onboard + (inhole * 3)
-    }
+        return onBoardRedValue+ (inHoleRedValue * 3)
+        
+    },[onBoardRedValue, inHoleRedValue])
 
-    useEffect(() => {
-         onChange(points(onBoardTotal, inHoleTotal))
-    },[onBoardTotal, inHoleTotal, onChange]);
-
-    return (
-        <div>
-            <OnBoard onChange={handleOnBoardChange} color={color}/>
-            <InHole onChange={handleInHoleChange} color={color}/>
-            <pre>{points(onBoardTotal, inHoleTotal)}</pre>
-        </div>
-    )
-}
-
-export default function Inning({onChange}) {
-
-    const colors = {
-        red: 'bg-red-800',
-        blue: 'bg-blue-800',
-        wash: 'bg-slate-800'
-    }
+    const bTotal = useMemo(() => {
+        if (onBoardBlueValue + inHoleBlueValue > 4) {
+            return 0
+        }
+        return onBoardBlueValue + (inHoleBlueValue * 3)
+        
+    },[onBoardBlueValue, inHoleBlueValue])
 
 
-    const [redTotal, setRedTotal] = useState<number>(0);
-    const [blueTotal, setBlueTotal] = useState<number>(0);
-
-    const handleRedTeamTotalChange = (total:number) => {
-        setRedTotal(total)
-    }
-    const handleBlueTeamTotalChange = (total:number) => {
-        setBlueTotal(total)
-    }
-
-
-    const result = useMemo(() => {
+    const newpoints = useMemo(() => {
         const change = {
             team: 'wash',
             value: 0
          }   
-         if (redTotal === blueTotal) {
+         if (rTotal === bTotal) {
             return change;
          }
-         if (redTotal > blueTotal) {
+         if (rTotal > bTotal) {
             change.team = 'red'
          } else {
             change.team = 'blue'
          }
-         change.value = Math.abs(redTotal - blueTotal)
+         change.value = Math.abs(rTotal - bTotal)
          return change
-  }, [redTotal, blueTotal])
+  }, [rTotal, bTotal])
 
-    const handleClick = (event) => {
-        onChange(result)
-        // and reset
-        
-    };
+  const handleScoreUpdate = (e) => {
+    if (newpoints.value !== 0) {
+        if (newpoints.team === 'red') {  
+            updateRed(newpoints.value)
+        }
+        if (newpoints.team === 'blue') {      
+            updateBlue(newpoints.value)
+        }
+    }
+    if (score.red >= 21 || score.blue >= 21) {
+      router.push('/winner');
+    }
+    // some kind of value reset?
+    // increment a round?
+
+  }
+
+  const router = useRouter();
+
 
     return (
         <div>
-            <InningHalf onChange={handleRedTeamTotalChange} color='red'/>
-            <pre>red: {redTotal}</pre>
-            <InningHalf onChange={handleBlueTeamTotalChange} color='blue'/>
-            <pre>blue: {blueTotal}</pre>
-            <button onClick={handleClick} className={`${colors[result.team]} cursor-pointer grow text-center border-2 p-2 rounded-md text-white`}>
-                {result.value === 0 ? (
-                    <span>wash</span>
-                ) : (
-                    <span>{result.team} gets {result.value} points</span>
-                )}
-            </button>
+            <div className="flex">
+                <div className="flex-1">
+                    <fieldset className="grid grid-cols-[repeat(5,1fr)]">
+                        <legend>on board</legend>
+                        {numbers.map((number) => (
+                            <span className='flex grow' key={number}>
+                                <input className="hidden peer" id={'onboard-red-' + number} type="radio" name="red-onboard" value={number} onChange={handleOnboardRedChange} checked={onBoardRedValue === number}/>
+                                <label htmlFor={'onboard-red-' + number} className={`border-red-800 peer-checked:bg-red-800 cursor-pointer grow text-center border-2 p-2 rounded-md peer-checked:text-white`}>{number}</label>
+                            </span>
+                        ))}
+                    </fieldset>
+                    <fieldset className="grid grid-cols-[repeat(5,1fr)]">
+                        <legend>in hole</legend>
+                        {numbers.map((number) => (
+                            <span className='flex grow' key={number}>
+                                <input className="hidden peer" id={'inhole-red-' + number} type="radio" name="red-inhole" value={number} onChange={handleInHoleRedChange} checked={inHoleRedValue === number}/>
+                                <label htmlFor={'inhole-red-' + number} className={`border-red-800 peer-checked:bg-red-800 cursor-pointer grow text-center border-2 p-2 rounded-md peer-checked:text-white`}>{number}</label>
+                            </span>
+                        ))}
+                    </fieldset>
+                </div>
+                <div className="flex-none">{rTotal}</div>
+            </div>
+            <div className="flex">
+                <div className="flex-1">
+                    <fieldset className="grid grid-cols-[repeat(5,1fr)]">
+                        <legend>on board</legend>
+                        {numbers.map((number) => (
+                            <span className='flex grow' key={number}>
+                                <input className="hidden peer" id={'onboard-blue-' + number} type="radio" name="blue-onboard" value={number} onChange={handleOnboardBlueChange} checked={onBoardBlueValue === number}/>
+                                <label htmlFor={'onboard-blue-' + number} className={`border-blue-800 peer-checked:bg-blue-800 cursor-pointer grow text-center border-2 p-2 rounded-md peer-checked:text-white`}>{number}</label>
+                            </span>
+                        ))}
+                    </fieldset>
+                    <fieldset className="grid grid-cols-[repeat(5,1fr)]">
+                        <legend>in hole</legend>
+                        {numbers.map((number) => (
+                            <span className='flex grow' key={number}>
+                                <input className="hidden peer" id={'inhole-blue-' + number} type="radio" name="blue-inhole" value={number} onChange={handleInHoleBlueChange} checked={inHoleBlueValue === number}/>
+                                <label htmlFor={'inhole-blue-' + number} className={`border-blue-800 peer-checked:bg-blue-800 cursor-pointer grow text-center border-2 p-2 rounded-md peer-checked:text-white`}>{number}</label>
+                            </span>
+                        ))}
+                    </fieldset>
+                </div>
+                <div className="flex-none">
+                    {bTotal}
+                </div>
+            </div>
+            <button onClick={handleScoreUpdate}>{newpoints.team} gets {newpoints.value} points</button>
         </div>
         
 
