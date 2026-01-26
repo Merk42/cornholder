@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useCounterStore } from '../../providers/counter-store-provider'
 import { useRouter } from 'next/navigation';
 
@@ -14,22 +14,22 @@ export default function Inning() {
     const [inHoleRedValue, setInHoleRedValue] = useState(0);
     const [onBoardBlueValue, setOnBoardBlueValue] = useState(0);
     const [inHoleBlueValue, setInHoleBlueValue] = useState(0);
-    const handleOnboardRedChange = (event) => {
+    const handleOnboardRedChange = (event:React.ChangeEvent<HTMLInputElement>) => {
         console.log('handleChange', event.target.value)
         const VAL = Number(event.target.value);
         setOnBoardRedValue(VAL);
     };
-    const handleInHoleRedChange = (event) => {
+    const handleInHoleRedChange = (event:React.ChangeEvent<HTMLInputElement>) => {
         console.log('handleChange', event.target.value)
         const VAL = Number(event.target.value);
         setInHoleRedValue(VAL);
     };
-    const handleOnboardBlueChange = (event) => {
+    const handleOnboardBlueChange = (event:React.ChangeEvent<HTMLInputElement>) => {
         console.log('handleChange', event.target.value)
         const VAL = Number(event.target.value);
         setOnBoardBlueValue(VAL);
     };
-    const handleInHoleBlueChange = (event) => {
+    const handleInHoleBlueChange = (event:React.ChangeEvent<HTMLInputElement>) => {
         console.log('handleChange', event.target.value)
         const VAL = Number(event.target.value);
         setInHoleBlueValue(VAL);
@@ -56,50 +56,66 @@ export default function Inning() {
         const change = {
             team: 'wash',
             value: 0
-         }   
-         if (rTotal === bTotal) {
+        }   
+        if (rTotal === bTotal) {
             return change;
-         }
-         if (rTotal > bTotal) {
+        }
+        if (rTotal > bTotal) {
             change.team = 'red'
-         } else {
+        } else {
             change.team = 'blue'
-         }
-         change.value = Math.abs(rTotal - bTotal)
-         return change
-  }, [rTotal, bTotal])
-
-  const handleScoreUpdate = (e) => {
-    if (newpoints.value !== 0) {
-        if (newpoints.team === 'red') {  
-            updateRed(newpoints.value)
         }
-        if (newpoints.team === 'blue') {      
-            updateBlue(newpoints.value)
+        change.value = Math.abs(rTotal - bTotal)
+        return change
+    }, [rTotal, bTotal])
+
+    const handleScoreUpdate = (e:React.MouseEvent<HTMLButtonElement>) => {
+        if (newpoints.value !== 0) {
+            if (newpoints.team === 'red') {  
+                updateRed(newpoints.value)
+            }
+            if (newpoints.team === 'blue') {      
+                updateBlue(newpoints.value)
+            }
         }
+        resetFields()
+        if (score.red >= 21 || score.blue >= 21) {
+        router.push('/winner');
+        }
+        // some kind of value reset?
+        // increment a round?
+
     }
-    resetFields()
-    if (score.red >= 21 || score.blue >= 21) {
-      router.push('/winner');
+
+    const resetFields = () => {
+        setOnBoardRedValue(0);
+        setInHoleRedValue(0);
+        setOnBoardBlueValue(0);
+        setInHoleBlueValue(0);
     }
-    // some kind of value reset?
-    // increment a round?
 
-  }
+    const router = useRouter();
 
-  const resetFields = () => {
-    setOnBoardRedValue(0);
-    setInHoleRedValue(0);
-    setOnBoardBlueValue(0);
-    setInHoleBlueValue(0);
-  }
-
-  const router = useRouter();
-
+    const buttonColor = useMemo(() => {
+        if (newpoints.team === 'red') {
+            return 'bg-red-800'
+        }
+        if (newpoints.team === 'blue') {
+            return 'bg-blue-800'
+        }
+        return 'bg-slate-800'
+    },[newpoints.team])
+    
+    const buttonText = useMemo(() => {
+        if (newpoints.team === 'wash') {
+            return 'wash'
+        }
+        return `${newpoints.team} gets ${newpoints.value} point${newpoints.value > 1 ? 's' : ''}`
+    },[newpoints])
 
     return (
         <div>
-            <div className="flex">
+            <div className="flex border-red-800 border-2 p-2">
                 <div className="flex-1">
                     <fieldset className="grid grid-cols-[repeat(5,1fr)]">
                         <legend>on board</legend>
@@ -120,9 +136,9 @@ export default function Inning() {
                         ))}
                     </fieldset>
                 </div>
-                <div className="flex-none">{rTotal}</div>
+                <div className="flex-none w-[3ch] text-center self-center text-3xl text-red-800">{rTotal}</div>
             </div>
-            <div className="flex">
+            <div className="flex border-blue-800 border-2 p-2">
                 <div className="flex-1">
                     <fieldset className="grid grid-cols-[repeat(5,1fr)]">
                         <legend>on board</legend>
@@ -143,11 +159,9 @@ export default function Inning() {
                         ))}
                     </fieldset>
                 </div>
-                <div className="flex-none">
-                    {bTotal}
-                </div>
+                <div className="flex-none w-[3ch] text-center self-center text-3xl text-blue-800">{bTotal}</div>
             </div>
-            <button onClick={handleScoreUpdate}>{newpoints.team} gets {newpoints.value} points</button>
+            <button className={`${buttonColor} text-center w-full mt-2 p-4 text-white capitalize`} onClick={handleScoreUpdate}>{buttonText}</button>
         </div>
         
 

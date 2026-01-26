@@ -17,8 +17,8 @@ export default function Score() {
                 </div>
             </div>
             <div className="grid grid-cols-[repeat(2,1fr)] w-full">
-                <div>{redteam}</div>
-                <div>{blueteam}</div>
+                <div className="text-center truncate">{redteam}</div>
+                <div className="text-center truncate">{blueteam}</div>
             </div>
         </div>
     )
