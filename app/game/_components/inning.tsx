@@ -1,18 +1,7 @@
 'use client'
-import { ChangeEventHandler, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-type TeamColors = 'red'|'blue';
-
-interface RadioButtonProps {
-    name: string;
-    value: string|number;
-    label: string|number;
-    selectedvalue: string|number;
-    legend: TeamColors;
-    onChange: ChangeEventHandler<HTMLInputElement>;
-}
-
-function CustomRadioButton({ name, value, label, selectedvalue, onChange, legend}:RadioButtonProps) {
+function CustomRadioButton({ name, value, label, selectedvalue, onChange, legend}) {
 
 const colors = {
   red: 'border-red-800 peer-checked:bg-red-800',
@@ -39,7 +28,7 @@ const colors = {
   );
 }
 
-function OnBoard({ onChange, color }:{onChange:Function, color:TeamColors}) {
+function OnBoard({ onChange, color }) {
 
     const numbers = [...Array(5).keys()]
 
@@ -71,7 +60,7 @@ function OnBoard({ onChange, color }:{onChange:Function, color:TeamColors}) {
     )
 }
 
-function InHole({ onChange, color }:{onChange:Function, color:TeamColors}) {
+function InHole({ onChange, color }) {
 
     const numbers = [...Array(5).keys()]
 
@@ -101,7 +90,7 @@ function InHole({ onChange, color }:{onChange:Function, color:TeamColors}) {
     )
 }
 
-function InningHalf ({onChange, color}:{onChange:Function, color:TeamColors}) {
+function InningHalf ({onChange, color}) {
     const [onBoardTotal, setOnBoardTotal] = useState<number>(0);
 
     const [inHoleTotal, setInHoleTotal] = useState<number>(0);
@@ -134,7 +123,7 @@ function InningHalf ({onChange, color}:{onChange:Function, color:TeamColors}) {
     )
 }
 
-export default function Inning({onChange}:{onChange:Function}) {
+export default function Inning({onChange}) {
 
     const colors = {
         red: 'bg-red-800',
