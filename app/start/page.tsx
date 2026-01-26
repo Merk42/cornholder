@@ -69,7 +69,7 @@ export default function Start() {
                     ))}
                 </select>
             </div>
-            <button type='button' onClick={handleLoginRedirect}>
+            <button type='button' onClick={handleLoginRedirect} disabled={redTeamName === '' || blueTeamName === ''}>
                 start game
             </button>
         </form>
