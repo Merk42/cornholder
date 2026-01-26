@@ -15,22 +15,18 @@ export default function Inning() {
     const [onBoardBlueValue, setOnBoardBlueValue] = useState(0);
     const [inHoleBlueValue, setInHoleBlueValue] = useState(0);
     const handleOnboardRedChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-        console.log('handleChange', event.target.value)
         const VAL = Number(event.target.value);
         setOnBoardRedValue(VAL);
     };
     const handleInHoleRedChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-        console.log('handleChange', event.target.value)
         const VAL = Number(event.target.value);
         setInHoleRedValue(VAL);
     };
     const handleOnboardBlueChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-        console.log('handleChange', event.target.value)
         const VAL = Number(event.target.value);
         setOnBoardBlueValue(VAL);
     };
     const handleInHoleBlueChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-        console.log('handleChange', event.target.value)
         const VAL = Number(event.target.value);
         setInHoleBlueValue(VAL);
     };
@@ -69,7 +65,7 @@ export default function Inning() {
         return change
     }, [rTotal, bTotal])
 
-    const handleScoreUpdate = (e:React.MouseEvent<HTMLButtonElement>) => {
+    const handleScoreUpdate = () => {
         if (newpoints.value !== 0) {
             if (newpoints.team === 'red') {  
                 updateRed(newpoints.value)
