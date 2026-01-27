@@ -23,11 +23,11 @@ export default function Winner() {
 
     const handleClickSame = () => {
         resetScore()
-        router.push('./game');
+        router.push('/game');
     }
     const handleClickDiff = () => {
         resetScore()
-        router.push('./start');
+        router.push('/start');
     }
 
     return (
