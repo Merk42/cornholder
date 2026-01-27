@@ -82,7 +82,7 @@ export default function Inning() {
         }
         resetFields()
         if (score.red >= 21 || score.blue >= 21) {
-            router.push('/winner');
+            router.push('./winner');
         }
         // increment a round?
     }
