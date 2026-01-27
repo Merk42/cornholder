@@ -66,7 +66,7 @@ export const createCounterStore = (
     setRedTeam: (name:string) => set({ redteam: name }),
     setBlueTeam: (name:string) => set({ blueteam: name }),
     setFirst: (team:Team) => set({ firsttoss: team }),
-    resetScore: () => set(() => ({ score: defaultInitState.score }))
+    resetScore: () => set({ score: {'red':0,'blue':0} })
   }))
 }
 
