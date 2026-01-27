@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <div>
-      <main>
+      <main className="w-3xl mx-auto">
        <Score/>
        <div>
         <Inning/>

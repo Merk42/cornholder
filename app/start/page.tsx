@@ -4,10 +4,9 @@ import { useRouter } from 'next/navigation';
 import { useCounterStore } from '../providers/counter-store-provider'
 
 export default function Start() {
-    const { setRedTeam, setBlueTeam } = useCounterStore(
+    const { setRedTeam, setBlueTeam, setFirst } = useCounterStore(
         (state) => state,
     )
-
 
     const TEAMS = [
         "B Team",
@@ -34,6 +33,7 @@ export default function Start() {
         // Navigate to the login page
         setRedTeam(redTeamName);
         setBlueTeam(blueTeamName);
+        setFirst('red')
         router.push('/game');
     }
 
@@ -41,12 +41,10 @@ export default function Start() {
     const [blueTeamName, setBlueTeamName] = useState('');
 
     const handleRedChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
-    // Update the state with the new value selected by the user
         setRedTeamName(event.target.value);
     }
 
     const handleBlueChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
-    // Update the state with the new value selected by the user
         setBlueTeamName(event.target.value);
     }
 

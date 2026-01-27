@@ -16,6 +16,7 @@ type Score = {
 
 
 export type CounterState = {
+  firsttoss: Team;
   count: number;
   score: Score;
   redteam: string;
@@ -29,12 +30,14 @@ export type CounterActions = {
   updateBlue: (points:number) => void
   setRedTeam: (name:string) => void
   setBlueTeam: (name:string) => void
+  setFirst: (team:Team) => void
   resetScore: () => void
 }
 
 export type CounterStore = CounterState & CounterActions
 
 export const defaultInitState: CounterState = {
+  firsttoss: 'red',
   count: 0,
   score: {
     'red':0,
@@ -62,6 +65,7 @@ export const createCounterStore = (
     updateBlue: (points:number) => set((state) => ({ score: updateScore('blue', points, state.score) })),
     setRedTeam: (name:string) => set({ redteam: name }),
     setBlueTeam: (name:string) => set({ blueteam: name }),
+    setFirst: (team:Team) => set({ firsttoss: team }),
     resetScore: () => set(() => ({ score: defaultInitState.score }))
   }))
 }

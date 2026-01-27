@@ -2,10 +2,11 @@
 import { useMemo, useState } from "react";
 import { useCounterStore } from '../../providers/counter-store-provider'
 import { useRouter } from 'next/navigation';
+import { Team } from "@/app/stores/counter-store";
 
 export default function Inning() {
 
-    const { score, updateRed, updateBlue } = useCounterStore(
+    const { score, updateRed, updateBlue, setFirst } = useCounterStore(
         (state) => state,
     )
 
@@ -68,11 +69,12 @@ export default function Inning() {
     const handleScoreUpdate = () => {
         if (newpoints.value !== 0) {
             if (newpoints.team === 'red') {  
-                updateRed(newpoints.value)
+                updateRed(newpoints.value);     
             }
             if (newpoints.team === 'blue') {      
                 updateBlue(newpoints.value)
             }
+            setFirst(newpoints.team as Team)
         }
         resetFields()
         if (score.red >= 21 || score.blue >= 21) {
@@ -111,7 +113,7 @@ export default function Inning() {
 
     return (
         <div>
-            <div className="flex border-red-800 border-2 p-2">
+            <div className="flex border-red-800 border-2 p-2 my-4">
                 <div className="flex-1">
                     <fieldset className="grid grid-cols-[repeat(5,1fr)]">
                         <legend>on board</legend>
@@ -134,7 +136,7 @@ export default function Inning() {
                 </div>
                 <div className="flex-none w-[3ch] text-center self-center text-3xl text-red-800">{rTotal}</div>
             </div>
-            <div className="flex border-blue-800 border-2 p-2">
+            <div className="flex border-blue-800 border-2 p-2 my-4">
                 <div className="flex-1">
                     <fieldset className="grid grid-cols-[repeat(5,1fr)]">
                         <legend>on board</legend>
