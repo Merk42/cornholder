@@ -4,16 +4,9 @@ import { createStore } from 'zustand/vanilla'
 export type Team = 'red'|'blue';
 export type Position = 'onboard'|'inhole'
 
-type InningBags = {
-  [T in Team]:{
-    [P in Position]:number;
-  }
-}
-
 type Score = {
   [T in Team]:number
 }
-
 
 export type CounterState = {
   firsttoss: Team;
@@ -24,8 +17,6 @@ export type CounterState = {
 }
 
 export type CounterActions = {
-  decrementCount: () => void
-  incrementCount: () => void
   updateRed: (points:number) => void
   updateBlue: (points:number) => void
   setRedTeam: (name:string) => void
@@ -59,8 +50,6 @@ export const createCounterStore = (
 ) => {
   return createStore<CounterStore>()((set) => ({
     ...initState,
-    decrementCount: () => set((state) => ({ count: state.count - 1 })),
-    incrementCount: () => set((state) => ({ count: state.count + 1 })),
     updateRed: (points:number) => set((state) => ({ score: updateScore('red', points, state.score) })),
     updateBlue: (points:number) => set((state) => ({ score: updateScore('blue', points, state.score) })),
     setRedTeam: (name:string) => set({ redteam: name }),
