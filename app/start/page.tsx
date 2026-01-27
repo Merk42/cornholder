@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCounterStore } from '../providers/counter-store-provider'
+import { DEFAULT_BUTTON } from '../const/style';
 
 export default function Start() {
     const { setRedTeam, setBlueTeam, setFirst } = useCounterStore(
@@ -67,7 +68,7 @@ export default function Start() {
                     ))}
                 </select>
             </div>
-            <button type='button' onClick={handleLoginRedirect} disabled={redTeamName === '' || blueTeamName === ''}>
+            <button type='button' className={DEFAULT_BUTTON} onClick={handleLoginRedirect} disabled={redTeamName === '' || blueTeamName === ''}>
                 start game
             </button>
         </form>
