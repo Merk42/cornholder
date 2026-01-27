@@ -3,7 +3,6 @@ import { useMemo, useState } from "react";
 import { useCounterStore } from '../../providers/counter-store-provider'
 import { useRouter } from 'next/navigation';
 import { Team } from "@/app/stores/counter-store";
-import { DEFAULT_BUTTON } from "@/app/const/style";
 
 export default function Inning() {
 
@@ -33,17 +32,17 @@ export default function Inning() {
         setInHoleBlueValue(VAL);
     };
 
-    const rTotal = useMemo(() => {
+    const rTotal = useMemo<number>(() => {
         if (onBoardRedValue + inHoleRedValue > 4) {
-            return 0
+            return 99
         }
         return onBoardRedValue+ (inHoleRedValue * 3)
         
     },[onBoardRedValue, inHoleRedValue])
 
-    const bTotal = useMemo(() => {
+    const bTotal = useMemo<number>(() => {
         if (onBoardBlueValue + inHoleBlueValue > 4) {
-            return 0
+            return 99
         }
         return onBoardBlueValue + (inHoleBlueValue * 3)
         
@@ -54,7 +53,11 @@ export default function Inning() {
         const change = {
             team: 'wash',
             value: 0
-        }   
+        }
+        if (rTotal === 99 || bTotal === 99) {
+            change.team = 'error'
+            return change;
+        }
         if (rTotal === bTotal) {
             return change;
         }
@@ -79,11 +82,9 @@ export default function Inning() {
         }
         resetFields()
         if (score.red >= 21 || score.blue >= 21) {
-        router.push('/winner');
+            router.push('/winner');
         }
-        // some kind of value reset?
         // increment a round?
-
     }
 
     const resetFields = () => {
@@ -106,6 +107,9 @@ export default function Inning() {
     },[newpoints.team])
     
     const buttonText = useMemo(() => {
+        if (newpoints.team === 'error') {
+            return 'Error entering bag count'
+        }
         if (newpoints.team === 'wash') {
             return 'wash'
         }
@@ -135,7 +139,7 @@ export default function Inning() {
                         ))}
                     </fieldset>
                 </div>
-                <div className="flex-none w-[3ch] text-center self-center text-3xl text-red-800">{rTotal}</div>
+                <div className="flex-none w-[3ch] text-center self-center text-3xl text-red-800">{rTotal !== 99 ? rTotal : '--'}</div>
             </div>
             <div className="flex border-blue-800 border-2 p-2 my-4">
                 <div className="flex-1">
@@ -158,9 +162,9 @@ export default function Inning() {
                         ))}
                     </fieldset>
                 </div>
-                <div className="flex-none w-[3ch] text-center self-center text-3xl text-blue-800">{bTotal}</div>
+                <div className="flex-none w-[3ch] text-center self-center text-3xl text-blue-800">{bTotal !== 99 ? bTotal : '--'}</div>
             </div>
-            <button className={`${buttonColor} text-center w-full mt-2 p-4 text-white capitalize`} onClick={handleScoreUpdate}>{buttonText}</button>
+            <button className={`${buttonColor} text-center w-full mt-2 p-4 text-white capitalize`} onClick={handleScoreUpdate} disabled={bTotal === 99 || rTotal === 99}>{buttonText}</button>
         </div>
         
 
