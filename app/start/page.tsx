@@ -56,7 +56,8 @@ export default function Start() {
 
 
     return (
-        <form className='w-3xl mx-auto'>
+        <form className='max-w-3xl px-4 mx-auto'>
+            <h1 className='text-4xl my-4 text-center'>Set Teams</h1>
             <div className='mt-2'>
                 <label htmlFor="red">Red</label>
                 <select className='h-10 w-full rounded border-r-8 border-transparent px-4 text-sm outline outline-neutral-700' id="red" value={redTeamName} onChange={handleRedChange}>
