@@ -26,15 +26,19 @@ export default function Start() {
         "The Riff Raff",
         "Tooth Girls 1 Bag",
         "UniCORNs*"
-      ]
+    ]
     
     const router = useRouter();
 
-    const handleLoginRedirect = () => {
-        // Navigate to the login page
+    const coinFlip = () => {
+        const newNumber = Math.random() > .5 ? 'red' : 'blue';
+        setFirst(newNumber);
+    };
+
+    const handleGameStart = () => {
         setRedTeam(redTeamName);
         setBlueTeam(blueTeamName);
-        setFirst('red')
+        coinFlip();
         router.push('/game');
     }
 
@@ -68,7 +72,7 @@ export default function Start() {
                     ))}
                 </select>
             </div>
-            <button type='button' className={DEFAULT_BUTTON} onClick={handleLoginRedirect} disabled={redTeamName === '' || blueTeamName === ''}>
+            <button type='button' className={DEFAULT_BUTTON} onClick={handleGameStart} disabled={redTeamName === '' || blueTeamName === ''}>
                 start game
             </button>
         </form>
