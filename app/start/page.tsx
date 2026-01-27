@@ -60,7 +60,7 @@ export default function Start() {
             <h1 className='text-4xl my-4 text-center'>Set Teams</h1>
             <div className='mt-2'>
                 <label htmlFor="red">Red</label>
-                <select className='h-10 w-full rounded border-r-8 border-transparent px-4 text-sm outline outline-neutral-700' id="red" value={redTeamName} onChange={handleRedChange}>
+                <select className='h-10 w-full rounded border-r-8 border-transparent px-4 text-sm outline outline-red-700' id="red" value={redTeamName} onChange={handleRedChange}>
                     {TEAMS.map((team) => (
                         <option value={team} key={team}>{team}</option>
                     ))}
@@ -68,7 +68,7 @@ export default function Start() {
             </div>
             <div className='mt-2'>
                 <label htmlFor="blue">Blue</label>
-                <select className='h-10 w-full rounded border-r-8 border-transparent px-4 text-sm outline outline-neutral-700' id="blue" value={blueTeamName} onChange={handleBlueChange}>
+                <select className='h-10 w-full rounded border-r-8 border-transparent px-4 text-sm outline outline-blue-700' id="blue" value={blueTeamName} onChange={handleBlueChange}>
                     {TEAMS.map((team) => (
                         <option value={team} key={team}>{team}</option>
                     ))}
