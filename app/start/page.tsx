@@ -40,7 +40,7 @@ export default function Start() {
         setRedTeam(redTeamName);
         setBlueTeam(blueTeamName);
         coinFlip();
-        router.push('./game');
+        router.push('/game');
     }
 
     const [redTeamName, setRedTeamName] = useState('--- SELECT ---');
