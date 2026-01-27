@@ -10,6 +10,7 @@ export default function Start() {
     )
 
     const TEAMS = [
+        "--- SELECT ---",
         "B Team",
         "Bombs Away",
         "Bumble&Fumble",
@@ -42,8 +43,8 @@ export default function Start() {
         router.push('/game');
     }
 
-    const [redTeamName, setRedTeamName] = useState('');
-    const [blueTeamName, setBlueTeamName] = useState('');
+    const [redTeamName, setRedTeamName] = useState('--- SELECT ---');
+    const [blueTeamName, setBlueTeamName] = useState('--- SELECT ---');
 
     const handleRedChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
         setRedTeamName(event.target.value);
@@ -55,27 +56,28 @@ export default function Start() {
 
 
     return (
-        <form>
-            <div>
+        <form className='w-3xl mx-auto'>
+            <div className='mt-2'>
                 <label htmlFor="red">Red</label>
-                <select id="red" value={redTeamName} onChange={handleRedChange}>
+                <select className='h-10 w-full rounded border-r-8 border-transparent px-4 text-sm outline outline-neutral-700' id="red" value={redTeamName} onChange={handleRedChange}>
                     {TEAMS.map((team) => (
                         <option value={team} key={team}>{team}</option>
                     ))}
                 </select>
             </div>
-            <div>
+            <div className='mt-2'>
                 <label htmlFor="blue">Blue</label>
-                <select id="blue" value={blueTeamName} onChange={handleBlueChange}>
+                <select className='h-10 w-full rounded border-r-8 border-transparent px-4 text-sm outline outline-neutral-700' id="blue" value={blueTeamName} onChange={handleBlueChange}>
                     {TEAMS.map((team) => (
                         <option value={team} key={team}>{team}</option>
                     ))}
                 </select>
             </div>
-            <button type='button' className={DEFAULT_BUTTON} onClick={handleGameStart} disabled={redTeamName === '' || blueTeamName === ''}>
-                start game
-            </button>
+            <div className='text-center mt-4'>
+                <button type='button' className={DEFAULT_BUTTON} onClick={handleGameStart} disabled={redTeamName === '--- SELECT ---' || blueTeamName === '--- SELECT ---'}>
+                    start game
+                </button>
+            </div>
         </form>
-        
     )
 }
