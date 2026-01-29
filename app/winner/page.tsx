@@ -32,8 +32,13 @@ export default function Winner() {
 
     return (
         <div className="max-w-3xl px-4 mx-auto text-center h-dvh place-content-center">
-            <h1 className='text-4xl'>{phrase}</h1>
-            <p className='text-3xl'>{score.red}:{score.blue}</p>
+            <h1 className='text-4xl mb-6'>{phrase}</h1>
+            <dl className='grid grid-cols-[1fr_auto]'>
+                <dt className='text-left text-2xl p-2 border-2 border-red-800'>{redteam}</dt>
+                <dd className='text-2xl p-2 border-2 border-red-800'>{score.red}</dd>
+                <dt className='text-left text-2xl p-2 border-2 border-blue-800'>{blueteam}</dt>
+                <dd className='text-2xl p-2 border-2 border-blue-800'>{score.blue}</dd>
+            </dl>
             <div className='mt-4'>
                 <button onClick={handleClickSame} className={`leading-none ${DEFAULT_BUTTON}`}>New Game<br></br><span className='text-xs'>(same teams)</span></button> 
             </div>
