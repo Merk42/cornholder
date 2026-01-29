@@ -6,7 +6,7 @@ import { Team } from "@/app/stores/counter-store";
 
 export default function Inning() {
 
-    const { score, updateRed, updateBlue, setFirst } = useCounterStore(
+    const { redteam, blueteam, score, updateRed, updateBlue, setFirst } = useCounterStore(
         (state) => state,
     )
 
@@ -118,46 +118,52 @@ export default function Inning() {
 
     return (
         <div>
-            <div className="flex border-red-800 border-2 p-2 my-4">
+            <div className="flex flex-wrap border-red-800 border-2 bg-red-100 p-2 my-4 shadow-xl/30">
+                <h2 className="w-full text-2xl font-bold">
+                    {redteam}
+                </h2>
                 <div className="flex-1">
                     <fieldset className="grid grid-cols-[repeat(5,1fr)]">
-                        <legend>on board</legend>
+                        <legend className="capitalize">on board</legend>
                         {numbers.map((number) => (
                             <span className='flex grow' key={number}>
                                 <input className="hidden peer" id={'onboard-red-' + number} type="radio" name="red-onboard" value={number} onChange={handleOnboardRedChange} checked={onBoardRedValue === number}/>
-                                <label htmlFor={'onboard-red-' + number} className={`border-red-800 peer-checked:bg-red-800 cursor-pointer grow text-center border-2 p-2 rounded-md peer-checked:text-white`}>{number}</label>
+                                <label htmlFor={'onboard-red-' + number} className={`border-red-800 bg-red-300 peer-checked:bg-red-800 cursor-pointer grow text-center border-2 p-2 rounded-md peer-checked:text-white`}>{number}</label>
                             </span>
                         ))}
                     </fieldset>
                     <fieldset className="grid grid-cols-[repeat(5,1fr)]">
-                        <legend>in hole</legend>
+                        <legend className="capitalize">in hole</legend>
                         {numbers.map((number) => (
                             <span className='flex grow' key={number}>
                                 <input className="hidden peer" id={'inhole-red-' + number} type="radio" name="red-inhole" value={number} onChange={handleInHoleRedChange} checked={inHoleRedValue === number}/>
-                                <label htmlFor={'inhole-red-' + number} className={`border-red-800 peer-checked:bg-red-800 cursor-pointer grow text-center border-2 p-2 rounded-md peer-checked:text-white`}>{number}</label>
+                                <label htmlFor={'inhole-red-' + number} className={`border-red-800 bg-red-300 peer-checked:bg-red-800 cursor-pointer grow text-center border-2 p-2 rounded-md peer-checked:text-white`}>{number}</label>
                             </span>
                         ))}
                     </fieldset>
                 </div>
                 <div className="flex-none w-[3ch] text-center self-center text-3xl text-red-800">{rTotal !== 99 ? rTotal : '--'}</div>
             </div>
-            <div className="flex border-blue-800 border-2 p-2 my-4">
+            <div className="flex flex-wrap border-blue-800 border-2 bg-blue-100 p-2 my-4 shadow-xl/30">
+                <h2 className="w-full text-2xl font-bold">
+                    {blueteam}
+                </h2>
                 <div className="flex-1">
                     <fieldset className="grid grid-cols-[repeat(5,1fr)]">
-                        <legend>on board</legend>
+                        <legend className="capitalize">on board</legend>
                         {numbers.map((number) => (
                             <span className='flex grow' key={number}>
                                 <input className="hidden peer" id={'onboard-blue-' + number} type="radio" name="blue-onboard" value={number} onChange={handleOnboardBlueChange} checked={onBoardBlueValue === number}/>
-                                <label htmlFor={'onboard-blue-' + number} className={`border-blue-800 peer-checked:bg-blue-800 cursor-pointer grow text-center border-2 p-2 rounded-md peer-checked:text-white`}>{number}</label>
+                                <label htmlFor={'onboard-blue-' + number} className={`border-blue-800 bg-blue-300 peer-checked:bg-blue-800 cursor-pointer grow text-center border-2 p-2 rounded-md peer-checked:text-white`}>{number}</label>
                             </span>
                         ))}
                     </fieldset>
                     <fieldset className="grid grid-cols-[repeat(5,1fr)]">
-                        <legend>in hole</legend>
+                        <legend className="capitalize">in hole</legend>
                         {numbers.map((number) => (
                             <span className='flex grow' key={number}>
                                 <input className="hidden peer" id={'inhole-blue-' + number} type="radio" name="blue-inhole" value={number} onChange={handleInHoleBlueChange} checked={inHoleBlueValue === number}/>
-                                <label htmlFor={'inhole-blue-' + number} className={`border-blue-800 peer-checked:bg-blue-800 cursor-pointer grow text-center border-2 p-2 rounded-md peer-checked:text-white`}>{number}</label>
+                                <label htmlFor={'inhole-blue-' + number} className={`border-blue-800 bg-blue-300 peer-checked:bg-blue-800 cursor-pointer grow text-center border-2 p-2 rounded-md peer-checked:text-white`}>{number}</label>
                             </span>
                         ))}
                     </fieldset>
