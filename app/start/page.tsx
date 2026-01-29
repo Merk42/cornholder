@@ -56,7 +56,7 @@ export default function Start() {
 
 
     return (
-        <form className='max-w-3xl px-4 mx-auto'>
+        <form className='max-w-3xl px-4 mx-auto h-dvh place-content-center'>
             <h1 className='text-4xl my-4 text-center'>Set Teams</h1>
             <div className='mt-2'>
                 <label htmlFor="red">Red</label>
