@@ -1,5 +1,5 @@
 import { useCounterStore } from '../../providers/counter-store-provider'
-
+import { SCORE } from '@/app/const/style'
 export default function Score() {
 
     const { redteam, blueteam, score, firsttoss } = useCounterStore(
@@ -9,10 +9,10 @@ export default function Score() {
     return (
         <div>
             <div className="grid grid-cols-[repeat(2,1fr)] w-full">
-                <div className={`bg-red-600 place-content-center aspect-[1] text-center text-white text-[10vw]`}>
+                <div className={`${SCORE['base']}${SCORE['red']}`}>
                 {score.red}
                 </div>
-                <div className={`bg-blue-600 place-content-center aspect-[1] text-center text-white text-[10vw]`}>
+                <div className={`${SCORE['base']}${SCORE['blue']}`}>
                 {score.blue}
                 </div>
             </div>

@@ -2,7 +2,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCounterStore } from '../providers/counter-store-provider'
-import { DEFAULT_BUTTON } from '../const/style';
+import { DEFAULT_BUTTON, FINAL } from '../const/style';
 
 export default function Winner() {
     const router = useRouter();
@@ -34,10 +34,10 @@ export default function Winner() {
         <div className="max-w-3xl px-4 mx-auto text-center h-dvh place-content-center">
             <h1 className='text-4xl mb-6'>{phrase}</h1>
             <dl className='grid grid-cols-[1fr_auto]'>
-                <dt className='text-left text-2xl p-2 border-2 border-red-800'>{redteam}</dt>
-                <dd className='text-2xl p-2 border-2 border-red-800'>{score.red}</dd>
-                <dt className='text-left text-2xl p-2 border-2 border-blue-800'>{blueteam}</dt>
-                <dd className='text-2xl p-2 border-2 border-blue-800'>{score.blue}</dd>
+                <dt className={`${FINAL.name['base']}${FINAL.name['red']}`}>{redteam}</dt>
+                <dd className={`${FINAL.score['base']}${FINAL.score['red']}`}>{score.red}</dd>
+                <dt className={`${FINAL.name['base']}${FINAL.name['blue']}`}>{blueteam}</dt>
+                <dd className={`${FINAL.score['base']}${FINAL.score['blue']}`}>{score.blue}</dd>
             </dl>
             <div className='mt-4'>
                 <button onClick={handleClickSame} className={`leading-none ${DEFAULT_BUTTON}`}>New Game<br></br><span className='text-xs'>(same teams)</span></button> 
