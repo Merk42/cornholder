@@ -5,26 +5,6 @@ export type THEME_GROUP = {
 
 export const DEFAULT_BUTTON = "bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded disabled:bg-slate-400 disabled:border-slate-500"
 
-export const TEAM_SELECT:THEME_GROUP = {
-    'base':'h-10 w-full rounded border-r-8 border-transparent px-4 text-sm outline ',
-    'red':'outline-red-700',
-    'orange':'outline-orange-700',
-    'amber':'outline-amber-700',
-    'yellow':'outline-yellow-700',
-    'lime':'outline-lime-700',
-    'green':'outline-green-700',
-    'emerald':'outline-emerald-700',
-    'teal':'outline-teal-700',
-    'cyan':'outline-cyan-700',
-    'sky':'outline-sky-700',
-    'blue':'outline-blue-700',
-    'indigo':'outline-indigo-700',
-    'violet':'outline-violet-700',
-    'purple':'outline-purple-700',
-    'fuchsia':'outline-fuchsia-700',
-    'pink':'outline-pink-700',
-    'rose':'outline-rose-700'
-}
 export const BAG_BORDER:THEME_GROUP = {
     'base':'flex flex-wrap border-2  p-2 my-4 shadow-xl/30',
     'red':'border-red-800 bg-red-100 dark:bg-red-700',

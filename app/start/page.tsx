@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCounterStore } from '../providers/counter-store-provider'
-import { DEFAULT_BUTTON, TEAM_SELECT, THEME, BAG_BORDER, BAG_BUTTON } from '../const/style';
+import { DEFAULT_BUTTON, THEME, BAG_BORDER, BAG_BUTTON } from '../const/style';
 
 export default function Start() {
     const { setTeam1Name, setTeam2Name, setFirst, setTeam1Color, setTeam2Color } = useCounterStore(
