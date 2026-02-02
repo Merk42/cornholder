@@ -114,8 +114,15 @@ export default function Inning() {
         if (newpoints.team === 'wash') {
             return 'wash'
         }
-        return `${newpoints.team} gets ${newpoints.value} point${newpoints.value > 1 ? 's' : ''}`
-    },[newpoints])
+        let name = '';
+        if (newpoints.team === 'team1') {
+            name = team1name
+        }
+        if (newpoints.team === 'team2') {
+            name = team2name
+        }
+        return `${name} gets ${newpoints.value} point${newpoints.value > 1 ? 's' : ''}`
+    },[newpoints, team1name, team2name])
 
     return (
         <div>
