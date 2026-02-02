@@ -1,7 +1,8 @@
 // src/stores/counter-store.ts
 import { createStore } from 'zustand/vanilla'
+import type { THEME } from '../const/style';
 
-export type Team = 'red'|'blue';
+export type Team = 'team1'|'team2';
 export type Position = 'onboard'|'inhole'
 
 type Score = {
@@ -12,15 +13,17 @@ export type CounterState = {
   firsttoss: Team;
   count: number;
   score: Score;
-  redteam: string;
-  blueteam: string;
+  team1name: string;
+  team2name: string;
+  team1color: THEME;
+  team2color: THEME;
 }
 
 export type CounterActions = {
-  updateRed: (points:number) => void
-  updateBlue: (points:number) => void
-  setRedTeam: (name:string) => void
-  setBlueTeam: (name:string) => void
+  increaseTeam1Score: (points:number) => void
+  increaseTeam2Score: (points:number) => void
+  setTeam1Name: (name:string) => void
+  setTeam2Name: (name:string) => void
   setFirst: (team:Team) => void
   resetScore: () => void
 }
@@ -28,14 +31,16 @@ export type CounterActions = {
 export type CounterStore = CounterState & CounterActions
 
 export const defaultInitState: CounterState = {
-  firsttoss: 'red',
+  firsttoss: 'team1',
   count: 0,
   score: {
-    'red':0,
-    'blue':0
+    'team1':0,
+    'team2':0
   },
-  redteam:'',
-  blueteam:''
+  team1name:'',
+  team2name:'',
+  team1color:'red',
+  team2color: 'blue'
 }
 
 function updateScore(team:Team, score:number, initial:Score):Score {
@@ -50,12 +55,14 @@ export const createCounterStore = (
 ) => {
   return createStore<CounterStore>()((set) => ({
     ...initState,
-    updateRed: (points:number) => set((state) => ({ score: updateScore('red', points, state.score) })),
-    updateBlue: (points:number) => set((state) => ({ score: updateScore('blue', points, state.score) })),
-    setRedTeam: (name:string) => set({ redteam: name }),
-    setBlueTeam: (name:string) => set({ blueteam: name }),
+    increaseTeam1Score: (points:number) => set((state) => ({ score: updateScore('team1', points, state.score) })),
+    increaseTeam2Score: (points:number) => set((state) => ({ score: updateScore('team2', points, state.score) })),
+    setTeam1Name: (name:string) => set({ team1name: name }),
+    setTeam2Name: (name:string) => set({ team2name: name }),
+    setTeam1Color: (color:THEME) => set({ team1color: color }),
+    setTeam2Color: (color:THEME) => set({ team2color: color }),
     setFirst: (team:Team) => set({ firsttoss: team }),
-    resetScore: () => set({ score: {'red':0,'blue':0} })
+    resetScore: () => set({ score: {'team1':0,'team2':0} })
   }))
 }
 

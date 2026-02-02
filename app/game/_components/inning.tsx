@@ -7,47 +7,47 @@ import { BAG_BORDER, BAG_BUTTON, BAG_TOTAL, SUBMIT } from "@/app/const/style";
 
 export default function Inning() {
 
-    const { redteam, blueteam, score, updateRed, updateBlue, setFirst } = useCounterStore(
+    const { team1name, team2name, team1color, team2color, score, increaseTeam1Score, increaseTeam2Score, setFirst } = useCounterStore(
         (state) => state,
     )
 
     const numbers = [...Array(5).keys()]
-    const [onBoardRedValue, setOnBoardRedValue] = useState(0);
-    const [inHoleRedValue, setInHoleRedValue] = useState(0);
-    const [onBoardBlueValue, setOnBoardBlueValue] = useState(0);
-    const [inHoleBlueValue, setInHoleBlueValue] = useState(0);
-    const handleOnboardRedChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+    const [onBoardTeam1Value, setOnBoardTeam1Value] = useState(0);
+    const [inHoleTeam1Value, setInHoleTeam1Value] = useState(0);
+    const [onBoardTeam2Value, setOnBoardTeam2Value] = useState(0);
+    const [inHoleTeam2Value, setInHoleTeam2Value] = useState(0);
+    const handleOnboardTeam1Change = (event:React.ChangeEvent<HTMLInputElement>) => {
         const VAL = Number(event.target.value);
-        setOnBoardRedValue(VAL);
+        setOnBoardTeam1Value(VAL);
     };
-    const handleInHoleRedChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+    const handleInHoleTeam1Change = (event:React.ChangeEvent<HTMLInputElement>) => {
         const VAL = Number(event.target.value);
-        setInHoleRedValue(VAL);
+        setInHoleTeam1Value(VAL);
     };
-    const handleOnboardBlueChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+    const handleOnboardTeam2Change = (event:React.ChangeEvent<HTMLInputElement>) => {
         const VAL = Number(event.target.value);
-        setOnBoardBlueValue(VAL);
+        setOnBoardTeam2Value(VAL);
     };
-    const handleInHoleBlueChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+    const handleInHoleTeam2Change = (event:React.ChangeEvent<HTMLInputElement>) => {
         const VAL = Number(event.target.value);
-        setInHoleBlueValue(VAL);
+        setInHoleTeam2Value(VAL);
     };
 
     const rTotal = useMemo<number>(() => {
-        if (onBoardRedValue + inHoleRedValue > 4) {
+        if (onBoardTeam1Value + inHoleTeam1Value > 4) {
             return 99
         }
-        return onBoardRedValue+ (inHoleRedValue * 3)
+        return onBoardTeam1Value+ (inHoleTeam1Value * 3)
         
-    },[onBoardRedValue, inHoleRedValue])
+    },[onBoardTeam1Value, inHoleTeam1Value])
 
     const bTotal = useMemo<number>(() => {
-        if (onBoardBlueValue + inHoleBlueValue > 4) {
+        if (onBoardTeam2Value + inHoleTeam2Value > 4) {
             return 99
         }
-        return onBoardBlueValue + (inHoleBlueValue * 3)
+        return onBoardTeam2Value + (inHoleTeam2Value * 3)
         
-    },[onBoardBlueValue, inHoleBlueValue])
+    },[onBoardTeam2Value, inHoleTeam2Value])
 
 
     const newpoints = useMemo(() => {
@@ -63,9 +63,9 @@ export default function Inning() {
             return change;
         }
         if (rTotal > bTotal) {
-            change.team = 'red'
+            change.team = 'team1'
         } else {
-            change.team = 'blue'
+            change.team = 'team2'
         }
         change.value = Math.abs(rTotal - bTotal)
         return change
@@ -73,39 +73,39 @@ export default function Inning() {
 
     const handleScoreUpdate = () => {
         if (newpoints.value !== 0) {
-            if (newpoints.team === 'red') {  
-                updateRed(newpoints.value);     
+            if (newpoints.team === 'team1') {  
+                increaseTeam1Score(newpoints.value);     
             }
-            if (newpoints.team === 'blue') {      
-                updateBlue(newpoints.value)
+            if (newpoints.team === 'team2') {      
+                increaseTeam2Score(newpoints.value)
             }
             setFirst(newpoints.team as Team)
         }
         resetFields()
-        if (score.red >= 21 || score.blue >= 21) {
+        if (score.team1 >= 21 || score.team2 >= 21) {
             router.push('/winner');
         }
         // increment a round?
     }
 
     const resetFields = () => {
-        setOnBoardRedValue(0);
-        setInHoleRedValue(0);
-        setOnBoardBlueValue(0);
-        setInHoleBlueValue(0);
+        setOnBoardTeam1Value(0);
+        setInHoleTeam1Value(0);
+        setOnBoardTeam2Value(0);
+        setInHoleTeam2Value(0);
     }
 
     const router = useRouter();
 
     const buttonColor = useMemo(() => {
-        if (newpoints.team === 'red') {
-            return SUBMIT['red']
+        if (newpoints.team === 'team1') {
+            return SUBMIT[team1color]
         }
-        if (newpoints.team === 'blue') {
-            return SUBMIT['blue']
+        if (newpoints.team === 'team2') {
+            return SUBMIT[team2color]
         }
         return 'bg-slate-800'
-    },[newpoints.team])
+    },[newpoints.team, team1color, team2color])
     
     const buttonText = useMemo(() => {
         if (newpoints.team === 'error') {
@@ -119,17 +119,17 @@ export default function Inning() {
 
     return (
         <div>
-            <div className={`${BAG_BORDER['base']} ${BAG_BORDER['red']}`}>
+            <div className={`${BAG_BORDER['base']} ${BAG_BORDER[team1color]}`}>
                 <h2 className="w-full text-2xl font-bold">
-                    {redteam}
+                    {team1name}
                 </h2>
                 <div className="flex-1">
                     <fieldset className="grid grid-cols-[repeat(5,1fr)]">
                         <legend className="capitalize">on board</legend>
                         {numbers.map((number) => (
                             <span className='flex grow' key={number}>
-                                <input className="hidden peer" id={'onboard-red-' + number} type="radio" name="red-onboard" value={number} onChange={handleOnboardRedChange} checked={onBoardRedValue === number}/>
-                                <label htmlFor={'onboard-red-' + number} className={`${BAG_BUTTON['base']} ${BAG_BUTTON['red']}`}>{number}</label>
+                                <input className="hidden peer" id={'onboard-team1-' + number} type="radio" name="team1-onboard" value={number} onChange={handleOnboardTeam1Change} checked={onBoardTeam1Value === number}/>
+                                <label htmlFor={'onboard-team1-' + number} className={`${BAG_BUTTON['base']} ${BAG_BUTTON[team1color]}`}>{number}</label>
                             </span>
                         ))}
                     </fieldset>
@@ -137,25 +137,25 @@ export default function Inning() {
                         <legend className="capitalize">in hole</legend>
                         {numbers.map((number) => (
                             <span className='flex grow' key={number}>
-                                <input className="hidden peer" id={'inhole-red-' + number} type="radio" name="red-inhole" value={number} onChange={handleInHoleRedChange} checked={inHoleRedValue === number}/>
-                                <label htmlFor={'inhole-red-' + number} className={`${BAG_BUTTON['base']} ${BAG_BUTTON['red']}`}>{number}</label>
+                                <input className="hidden peer" id={'inhole-team1-' + number} type="radio" name="team1-inhole" value={number} onChange={handleInHoleTeam1Change} checked={inHoleTeam1Value === number}/>
+                                <label htmlFor={'inhole-team1-' + number} className={`${BAG_BUTTON['base']} ${BAG_BUTTON[team1color]}`}>{number}</label>
                             </span>
                         ))}
                     </fieldset>
                 </div>
-                <div className={`${BAG_TOTAL['base']}${BAG_TOTAL['red']}`}>{rTotal !== 99 ? rTotal : '--'}</div>
+                <div className={`${BAG_TOTAL['base']}${BAG_TOTAL[team1color]}`}>{rTotal !== 99 ? rTotal : '--'}</div>
             </div>
-            <div className={`${BAG_BORDER['base']} ${BAG_BORDER['blue']}`}>
+            <div className={`${BAG_BORDER['base']} ${BAG_BORDER[team2color]}`}>
                 <h2 className="w-full text-2xl font-bold">
-                    {blueteam}
+                    {team2name}
                 </h2>
                 <div className="flex-1">
                     <fieldset className="grid grid-cols-[repeat(5,1fr)]">
                         <legend className="capitalize">on board</legend>
                         {numbers.map((number) => (
                             <span className='flex grow' key={number}>
-                                <input className="hidden peer" id={'onboard-blue-' + number} type="radio" name="blue-onboard" value={number} onChange={handleOnboardBlueChange} checked={onBoardBlueValue === number}/>
-                                <label htmlFor={'onboard-blue-' + number} className={`${BAG_BUTTON['base']} ${BAG_BUTTON['blue']}`}>{number}</label>
+                                <input className="hidden peer" id={'onboard-team2-' + number} type="radio" name="team2-onboard" value={number} onChange={handleOnboardTeam2Change} checked={onBoardTeam2Value === number}/>
+                                <label htmlFor={'onboard-team2-' + number} className={`${BAG_BUTTON['base']} ${BAG_BUTTON[team2color]}`}>{number}</label>
                             </span>
                         ))}
                     </fieldset>
@@ -163,13 +163,13 @@ export default function Inning() {
                         <legend className="capitalize">in hole</legend>
                         {numbers.map((number) => (
                             <span className='flex grow' key={number}>
-                                <input className="hidden peer" id={'inhole-blue-' + number} type="radio" name="blue-inhole" value={number} onChange={handleInHoleBlueChange} checked={inHoleBlueValue === number}/>
-                                <label htmlFor={'inhole-blue-' + number} className={`${BAG_BUTTON['base']} ${BAG_BUTTON['blue']}`}>{number}</label>
+                                <input className="hidden peer" id={'inhole-team2-' + number} type="radio" name="team2-inhole" value={number} onChange={handleInHoleTeam2Change} checked={inHoleTeam2Value === number}/>
+                                <label htmlFor={'inhole-team2-' + number} className={`${BAG_BUTTON['base']} ${BAG_BUTTON[team2color]}`}>{number}</label>
                             </span>
                         ))}
                     </fieldset>
                 </div>
-                <div className={`${BAG_TOTAL['base']}${BAG_TOTAL['blue']}`}>{bTotal !== 99 ? bTotal : '--'}</div>
+                <div className={`${BAG_TOTAL['base']}${BAG_TOTAL[team2color]}`}>{bTotal !== 99 ? bTotal : '--'}</div>
             </div>
             <button className={`${buttonColor} text-center w-full mt-2 p-4 text-white capitalize`} onClick={handleScoreUpdate} disabled={bTotal === 99 || rTotal === 99}>{buttonText}</button>
         </div>

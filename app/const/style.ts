@@ -1,5 +1,5 @@
-type THEME = 'base'|'red'|'blue';
-type THEME_GROUP = {
+export type THEME = 'base'|'red'|'blue';
+export type THEME_GROUP = {
   [T in THEME]:string
 }
 
