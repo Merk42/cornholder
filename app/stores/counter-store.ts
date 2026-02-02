@@ -24,6 +24,8 @@ export type CounterActions = {
   increaseTeam2Score: (points:number) => void
   setTeam1Name: (name:string) => void
   setTeam2Name: (name:string) => void
+  setTeam1Color: (name:THEME) => void
+  setTeam2Color: (name:THEME) => void
   setFirst: (team:Team) => void
   resetScore: () => void
 }

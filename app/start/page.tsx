@@ -2,10 +2,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCounterStore } from '../providers/counter-store-provider'
-import { DEFAULT_BUTTON, TEAM_SELECT } from '../const/style';
+import { DEFAULT_BUTTON, TEAM_SELECT, THEME } from '../const/style';
 
 export default function Start() {
-    const { team1color, team2color, setTeam1Name, setTeam2Name, setFirst } = useCounterStore(
+    const { setTeam1Name, setTeam2Name, setFirst, setTeam1Color, setTeam2Color } = useCounterStore(
         (state) => state,
     )
 
@@ -28,6 +28,26 @@ export default function Start() {
         "Tooth Girls 1 Bag",
         "UniCORNs*"
     ]
+
+    const THEMES = [
+        'red',
+        'orange',
+        'amber',
+        'yellow',
+        'lime',
+        'green',
+        'emerald',
+        'teal',
+        'cyan',
+        'sky',
+        'blue',
+        'indigo',
+        'violet',
+        'purple',
+        'fuchsia',
+        'pink',
+        'rose'
+    ];
     
     const router = useRouter();
 
@@ -37,45 +57,68 @@ export default function Start() {
     };
 
     const handleGameStart = () => {
-        setTeam1Name(team1Name);
-        setTeam2Name(team2Name);
+        setTeam1Name(localTeam1Name);
+        setTeam2Name(localTeam2Name);
+        setTeam1Color(localTeam1Color);
+        setTeam2Color(localTeam2Color);
         coinFlip();
         router.push('/game');
     }
 
-    const [team1Name, setTeam1NameName] = useState('--- SELECT ---');
-    const [team2Name, setTeam2NameName] = useState('--- SELECT ---');
+    const [localTeam1Name, setLocalTeam1Name] = useState('--- SELECT ---');
+    const [localTeam2Name, setLocalTeam2Name] = useState('--- SELECT ---');
+    const [localTeam1Color, setLocalTeam1Color] = useState<THEME>('red');
+    const [localTeam2Color, setLocalTeam2Color] = useState<THEME>('blue');
 
-    const handleTeam1Change = (event:React.ChangeEvent<HTMLSelectElement>) => {
-        setTeam1NameName(event.target.value);
+    const handleTeam1NameChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
+        setLocalTeam1Name(event.target.value);
     }
 
-    const handleTeam2Change = (event:React.ChangeEvent<HTMLSelectElement>) => {
-        setTeam2NameName(event.target.value);
+    const handleTeam2NameChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
+        setLocalTeam2Name(event.target.value);
     }
 
+    const handleTeam1ColorChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
+        setLocalTeam1Color(event.target.value as THEME);
+    }
+
+    const handleTeam2ColorChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
+        setLocalTeam2Color(event.target.value as THEME);
+    }
 
     return (
         <form className='max-w-3xl px-4 mx-auto h-dvh place-content-center'>
             <h1 className='text-4xl my-4 text-center'>Set Teams</h1>
             <div className='mt-2'>
-                <label htmlFor="team1">Team 1</label>
-                <select className={`${TEAM_SELECT['base']}${TEAM_SELECT[team1color]}`} id="team1" value={team1Name} onChange={handleTeam1Change}>
+                <label htmlFor="team1name">Team 1 Name</label>
+                <select className={`${TEAM_SELECT['base']}${TEAM_SELECT[localTeam1Color]}`} id="team1name" value={localTeam1Name} onChange={handleTeam1NameChange}>
                     {TEAMS.map((team) => (
                         <option value={team} key={team}>{team}</option>
+                    ))}
+                </select>
+                <label htmlFor="team1color">Team 1 Color</label>
+                <select className={`${TEAM_SELECT['base']}${TEAM_SELECT[localTeam1Color]}`} id="team1color" value={localTeam1Color} onChange={handleTeam1ColorChange}>
+                    {THEMES.map((color) => (
+                        <option value={color} key={color}>{color}</option>
                     ))}
                 </select>
             </div>
             <div className='mt-2'>
-                <label htmlFor="team2">Team 2</label>
-                <select className={`${TEAM_SELECT['base']}${TEAM_SELECT[team2color]}`} id="team2" value={team2Name} onChange={handleTeam2Change}>
+                <label htmlFor="team2name">Team 2 Name</label>
+                <select className={`${TEAM_SELECT['base']}${TEAM_SELECT[localTeam2Color]}`} id="team2name" value={localTeam2Name} onChange={handleTeam2NameChange}>
                     {TEAMS.map((team) => (
                         <option value={team} key={team}>{team}</option>
                     ))}
                 </select>
+                <label htmlFor="team1color">Team 2 Color</label>
+                <select className={`${TEAM_SELECT['base']}${TEAM_SELECT[localTeam2Color]}`} id="team1color" value={localTeam2Color} onChange={handleTeam2ColorChange}>
+                    {THEMES.map((color) => (
+                        <option value={color} key={color}>{color}</option>
+                    ))}
+                </select>                
             </div>
             <div className='text-center mt-4'>
-                <button type='button' className={DEFAULT_BUTTON} onClick={handleGameStart} disabled={team1Name === '--- SELECT ---' || team2Name === '--- SELECT ---'}>
+                <button type='button' className={DEFAULT_BUTTON} onClick={handleGameStart} disabled={localTeam1Name === '--- SELECT ---' || localTeam2Name === '--- SELECT ---'}>
                     start game
                 </button>
             </div>
