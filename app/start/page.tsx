@@ -15,7 +15,7 @@ export default function Start() {
         "Bombs Away",
         "Bumble&Fumble",
         "Business Casual",
-        "Came Out Slingin",
+        "Came Out Slingin'",
         "Exciting Whites",
         "Floppy Bags",
         "Noga",

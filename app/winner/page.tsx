@@ -2,7 +2,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCounterStore } from '../providers/counter-store-provider'
-import { DEFAULT_BUTTON, FINAL } from '../const/style';
+import { DEFAULT_BUTTON, BAG_BORDER, BAG_TOTAL } from '../const/style';
 
 export default function Winner() {
     const router = useRouter();
@@ -33,11 +33,21 @@ export default function Winner() {
     return (
         <div className="max-w-3xl px-4 mx-auto text-center h-dvh place-content-center">
             <h1 className='text-4xl mb-6'>{phrase}</h1>
-            <dl className='grid grid-cols-[1fr_auto]'>
-                <dt className={`${FINAL.name['base']}${FINAL.name[team1color]}`}>{team1name}</dt>
-                <dd className={`${FINAL.score['base']}${FINAL.score[team1color]}`}>{score.team1}</dd>
-                <dt className={`${FINAL.name['base']}${FINAL.name[team2color]}`}>{team2name}</dt>
-                <dd className={`${FINAL.score['base']}${FINAL.score[team2color]}`}>{score.team2}</dd>
+            <dl className={`${BAG_BORDER['base']} ${BAG_BORDER[team1color]} grid grid-cols-[1fr_auto]`}>
+                <dt className="w-full text-2xl font-bold text-left">
+                    {team1name}
+                </dt>
+                <dd className={`${BAG_TOTAL['base']}${BAG_TOTAL[team1color]} text-right`}>
+                    {score.team1}
+                </dd>
+            </dl>
+            <dl className={`${BAG_BORDER['base']} ${BAG_BORDER[team2color]} grid grid-cols-[1fr_auto]`}>
+                <dt className="w-full text-2xl font-bold text-left">
+                    {team2name}
+                </dt>
+                <dd className={`${BAG_TOTAL['base']}${BAG_TOTAL[team2color]} text-right`}>
+                    {score.team2}
+                </dd>
             </dl>
             <div className='mt-4'>
                 <button onClick={handleClickSame} className={`leading-none ${DEFAULT_BUTTON}`}>New Game<br></br><span className='text-xs'>(same teams)</span></button> 
