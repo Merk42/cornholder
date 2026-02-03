@@ -9,6 +9,17 @@ type Score = {
   [T in Team]:number
 }
 
+export type FinalScore = {
+  team1: {
+    name:string;
+    score:number;
+  },
+  team2: {
+    name:string;
+    score:number;
+  }
+}
+
 export type CounterState = {
   firsttoss: Team;
   count: number;
@@ -17,6 +28,7 @@ export type CounterState = {
   team2name: string;
   team1color: THEME;
   team2color: THEME;
+  history: FinalScore[]
 }
 
 export type CounterActions = {
@@ -27,6 +39,7 @@ export type CounterActions = {
   setTeam1Color: (name:THEME) => void
   setTeam2Color: (name:THEME) => void
   setFirst: (team:Team) => void
+  addHistory: (final:FinalScore) => void
   resetScore: () => void
 }
 
@@ -42,7 +55,8 @@ export const defaultInitState: CounterState = {
   team1name:'',
   team2name:'',
   team1color:'red',
-  team2color: 'blue'
+  team2color: 'blue',
+  history: []
 }
 
 function updateScore(team:Team, score:number, initial:Score):Score {
@@ -64,6 +78,7 @@ export const createCounterStore = (
     setTeam1Color: (color:THEME) => set({ team1color: color }),
     setTeam2Color: (color:THEME) => set({ team2color: color }),
     setFirst: (team:Team) => set({ firsttoss: team }),
+    addHistory: (final:FinalScore) => set((state) => ({ history: [...state.history, final], })),
     resetScore: () => set({ score: {'team1':0,'team2':0} })
   }))
 }
