@@ -49,13 +49,10 @@ export default function Winner() {
                     {score.team2}
                 </dd>
             </dl>
-            <div className='mt-4'>
+            <div className='mt-4 flex justify-center gap-2'>
                 <button onClick={handleClickSame} className={`leading-none ${DEFAULT_BUTTON}`}>New Game<br></br><span className='text-xs'>(same teams)</span></button> 
-            </div>
-            <div className='mt-2'>
                 <button onClick={handleClickDiff} className={`leading-none ${DEFAULT_BUTTON}`}>New Game<br></br><span className='text-xs'>(different teams)</span></button> 
             </div>
-        </div>
-        
+        </div>        
     )
 } 
