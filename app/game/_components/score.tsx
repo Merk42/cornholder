@@ -15,12 +15,12 @@ export default function Score() {
     // the required distance between touchStart and touchEnd to be detected as a swipe
     const minSwipeDistance = 50 
 
-    const onTouchStart = (e) => {
+    const onTouchStart = (e:any) => {
     setTouchEnd(null) // otherwise the swipe is fired even with usual touch events
     setTouchStart(e.targetTouches[0].clientX)
     }
 
-    const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX)
+    const onTouchMove = (e:any) => setTouchEnd(e.targetTouches[0].clientX)
 
     const onTouchEnd = (team:Team) => {
         if (!touchStart || !touchEnd) return
