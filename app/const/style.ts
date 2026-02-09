@@ -1,4 +1,4 @@
-export type THEME = 'base'|'red'|'orange'|'amber'|'yellow'|'lime'|'green'|'emerald'|'teal'|'cyan'|'sky'|'blue'|'indigo'|'violet'|'purple'|'fuchsia'|'pink'|'rose';
+export type THEME = 'base'|'red'|'orange'|'amber'|'yellow'|'lime'|'green'|'emerald'|'teal'|'cyan'|'sky'|'blue'|'indigo'|'violet'|'purple'|'fuchsia'|'pink'|'rose'|'slate'|'gray'|'zinc'|'neutral'|'stone';
 export type THEME_GROUP = {
   [T in THEME]?:string
 }
@@ -6,7 +6,7 @@ export type THEME_GROUP = {
 export const DEFAULT_BUTTON = "bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded disabled:bg-slate-400 disabled:border-slate-500"
 
 export const BAG_BORDER:THEME_GROUP = {
-    'base':'flex flex-wrap border-2  p-2 my-4 shadow-xl/30',
+    'base':'flex flex-wrap border-2 p-2 my-4 shadow-xl/30',
     'red':'border-red-800 bg-red-100 dark:bg-red-700',
     'orange':'border-orange-800 bg-orange-100 dark:bg-orange-700',
     'amber':'border-amber-800 bg-amber-100 dark:bg-amber-700',
@@ -23,7 +23,12 @@ export const BAG_BORDER:THEME_GROUP = {
     'purple':'border-purple-800 bg-purple-100 dark:bg-purple-700',
     'fuchsia':'border-fuchsia-800 bg-fuchsia-100 dark:bg-fuchsia-700',
     'pink':'border-pink-800 bg-pink-100 dark:bg-pink-700',
-    'rose':'border-rose-800 bg-rose-100 dark:bg-rose-700'
+    'rose':'border-rose-800 bg-rose-100 dark:bg-rose-700',
+    'slate':'border-slate-800 bg-slate-100 dark:bg-slate-700',
+    'gray':'border-gray-800 bg-gray-100 dark:bg-gray-700',
+    'zinc':'border-zinc-800 bg-zinc-100 dark:bg-zinc-700',
+    'neutral':'border-neutral-800 bg-neutral-100 dark:bg-neutral-700',
+    'stone':'border-stone-800 bg-stone-100 dark:bg-stone-700'
 }
 export const BAG_BUTTON:THEME_GROUP = {
     'base': 'cursor-pointer grow text-center border-2 p-2 rounded-md text-black dark:text-white peer-checked:text-white ',
@@ -43,7 +48,12 @@ export const BAG_BUTTON:THEME_GROUP = {
     'purple':'border-purple-800 dark:bg-purple-600 bg-purple-300 dark:bg-purple-800 peer-checked:bg-purple-700',
     'fuchsia':'border-fuchsia-800 dark:bg-fuchsia-600 bg-fuchsia-300 dark:bg-fuchsia-800 peer-checked:bg-fuchsia-700',
     'pink':'border-pink-800 dark:bg-pink-600 bg-pink-300 dark:bg-pink-800 peer-checked:bg-pink-700',
-    'rose':'border-rose-800 dark:bg-rose-600 bg-rose-300 dark:bg-rose-800 peer-checked:bg-rose-700'
+    'rose':'border-rose-800 dark:bg-rose-600 bg-rose-300 dark:bg-rose-800 peer-checked:bg-rose-700',
+    'slate':'border-slate-800 dark:bg-slate-600 bg-slate-300 dark:bg-slate-800 peer-checked:bg-slate-700',
+    'gray':'border-gray-800 dark:bg-gray-600 bg-gray-300 dark:bg-gray-800 peer-checked:bg-gray-700',
+    'zinc':'border-zinc-800 dark:bg-zinc-600 bg-zinc-300 dark:bg-zinc-800 peer-checked:bg-zinc-700',
+    'neutral':'border-neutral-800 dark:bg-neutral-600 bg-neutral-300 dark:bg-neutral-800 peer-checked:bg-neutral-700',
+    'stone':'border-stone-800 dark:bg-stone-600 bg-stone-300 dark:bg-stone-800 peer-checked:bg-stone-700'
 }
 
 export const BAG_TOTAL:THEME_GROUP = {
@@ -64,7 +74,12 @@ export const BAG_TOTAL:THEME_GROUP = {
     'purple':'text-purple-800 dark:text-purple-100',
     'fuchsia':'text-fuchsia-800 dark:text-fuchsia-100',
     'pink':'text-pink-800 dark:text-pink-100',
-    'rose':'text-rose-800 dark:text-rose-100'
+    'rose':'text-rose-800 dark:text-rose-100',
+    'slate':'text-slate-800 dark:text-slate-100',
+    'gray':'text-gray-800 dark:text-gray-100',
+    'zinc':'text-zinc-800 dark:text-zinc-100',
+    'neutral':'text-neutral-800 dark:text-neutral-100',
+    'stone':'text-stone-800 dark:text-stone-100'
 }
 
 export const SCORE:THEME_GROUP = {
@@ -85,7 +100,12 @@ export const SCORE:THEME_GROUP = {
     'purple':'bg-purple-600',
     'fuchsia':'bg-fuchsia-600',
     'pink':'bg-pink-600',
-    'rose':'bg-rose-600'
+    'rose':'bg-rose-600',
+    'slate':'bg-slate-600',
+    'gray':'bg-gray-600',
+    'zinc':'bg-zinc-600',
+    'neutral':'bg-neutral-600',
+    'stone':'bg-stone-600'
 }
 
 export const SUBMIT:THEME_GROUP = {
@@ -105,5 +125,10 @@ export const SUBMIT:THEME_GROUP = {
     'purple':'bg-purple-800',
     'fuchsia':'bg-fuchsia-800',
     'pink':'bg-pink-800',
-    'rose':'bg-rose-800'
+    'rose':'bg-rose-800',
+    'slate':'bg-slate-800',
+    'gray':'bg-gray-800',
+    'zinc':'bg-zinc-800',
+    'neutral':'bg-neutral-800',
+    'stone':'bg-stone-800'
 }

@@ -2,13 +2,14 @@ import type { THEME } from "./style"
 type TEAMSS = {
     id:number;
     name:string;
-    theme?:THEME
+    theme:THEME
 }[]
 
 export const TEAMS:TEAMSS = [
     {
         id:1,
-        name: "B Team"
+        name: "B Team",
+        theme: 'slate'
     },
     {
         id:2,
@@ -22,7 +23,8 @@ export const TEAMS:TEAMSS = [
     },
     {
         id:4,
-        name: "Business Casual"
+        name: "Business Casual",
+        theme: 'stone'
     },
     {
         id:5,
@@ -41,7 +43,8 @@ export const TEAMS:TEAMSS = [
     },
     {
         id:8,
-        name: "Just The Tip"
+        name: "Just The Tip",
+        theme: 'neutral'
     },
     {
         id:9,
@@ -60,7 +63,8 @@ export const TEAMS:TEAMSS = [
     },
     {
         id:12,
-        name: "Shuck It"
+        name: "Shuck It",
+        theme: 'zinc'
     },
     {
         id:13,
@@ -74,7 +78,8 @@ export const TEAMS:TEAMSS = [
     },
     {
         id:15,
-        name: "The Riff Raff"
+        name: "The Riff Raff",
+        theme: 'gray'
     },
     {
         id:16,

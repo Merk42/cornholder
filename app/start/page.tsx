@@ -6,7 +6,7 @@ import { DEFAULT_BUTTON, THEME, BAG_BORDER, BAG_BUTTON } from '../const/style';
 
 import { TEAMS, GAMES } from '../const/data';
 
-function Schedule({onEmitData}) {
+function Schedule({onEmitData}:{onEmitData:(teams: number[]) => void}) {
 
     function getNextThursday(date = new Date()) {
         // Thursday is represented by 4
@@ -81,7 +81,12 @@ export default function Start() {
         'purple',
         'fuchsia',
         'pink',
-        'rose'
+        'rose',
+        'slate',
+        'gray',
+        'zinc',
+        'neutral',
+        'stone'
     ];
     
     const router = useRouter();
