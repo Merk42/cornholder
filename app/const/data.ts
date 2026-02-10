@@ -94,7 +94,7 @@ export const TEAMS:TEAMSS = [
 ]
 
 export const KEYEDTEAMS = Object.fromEntries(TEAMS.map(team => [team.id, team.name]))
-
+export const KEYEDCOLORS = Object.fromEntries(TEAMS.map(team => [team.id, team.theme]))
 export const GAMES = [
     {
         "date":"2026-02-12",

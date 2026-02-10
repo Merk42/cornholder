@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useCounterStore } from '../providers/counter-store-provider'
 import { DEFAULT_BUTTON, THEME, BAG_BORDER, BAG_BUTTON } from '../const/style';
 
-import { TEAMS, KEYEDTEAMS, GAMES } from '../const/data';
+import { TEAMS, KEYEDTEAMS, GAMES, KEYEDCOLORS } from '../const/data';
 
 function Schedule({onEmitData}:{onEmitData:(teams: number[]) => void}) {
 
@@ -56,9 +56,17 @@ function Schedule({onEmitData}:{onEmitData:(teams: number[]) => void}) {
         
     }, [playingTeams])
 
+    const USDate = useMemo(() => {
+        const date = new Date(`${upcoming.date}T12:00:00.000Z`);
+
+        // US English format (MM/DD/YYYY)
+        const enUSFormatter = new Intl.DateTimeFormat('en-US');
+        return enUSFormatter.format(date); // Output: "5/24/2025"
+    }, [upcoming])
+
     return (
         <div>
-            <h1>{upcoming.date}</h1>
+            <h1>{USDate}</h1>
             {double.length > 0 && 
                 <dl>
                     <dt className='font-bold capitalize'>double headers</dt>
@@ -79,12 +87,16 @@ function Schedule({onEmitData}:{onEmitData:(teams: number[]) => void}) {
                 <div key={games.time} className=" border-2 p-2 mb-4">
                     <h2 className='text-3xl'>{ISOTOUS(games.time)}</h2>
                     {games.games.map(game => (
-                        <div key={game.board} className='flex mt-2'>
+                        <div key={game.board} className='flex mt-2 gap-2'>
                             <div className='flex-1'>
                                 <h3 className='text-2xl'>Board {game.board}</h3>
-                                <p>{KEYEDTEAMS[game.team1] || ''} vs {KEYEDTEAMS[game.team2] || ''}</p>
+                                <p className='flex gap-2 md:items-center items-start flex-col md:flex-row' >
+                                    <span className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[game.team1]]}`}>{KEYEDTEAMS[game.team1] || ''}</span>
+                                    <span className='hidden md:inline'>vs</span>
+                                    <span className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[game.team2]]}`}>{KEYEDTEAMS[game.team2] || ''}</span>
+                                </p>
                             </div>
-                            <div className='flex-0'>
+                            <div className='flex-0 self-center'>
                                 <button type='button' className={DEFAULT_BUTTON} onClick={() => onEmitData([game.team1, game.team2])}>start</button>
                             </div>      
                         </div>
