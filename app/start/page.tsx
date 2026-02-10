@@ -82,10 +82,10 @@ function Schedule({onEmitData}:{onEmitData:(teams: number[]) => void}) {
                         <div key={game.board} className='flex mt-2'>
                             <div className='flex-1'>
                                 <h3 className='text-2xl'>Board {game.board}</h3>
-                                <p>{TEAMS.find(team => team.id === game.team1)?.name || ''} vs {TEAMS.find(team => team.id === game.team2)?.name || ''}</p>
+                                <p>{KEYEDTEAMS[game.team1] || ''} vs {KEYEDTEAMS[game.team2] || ''}</p>
                             </div>
                             <div className='flex-0'>
-                                <button type='button' onClick={() => onEmitData([game.team1, game.team2])}>start</button>
+                                <button type='button' className={DEFAULT_BUTTON} onClick={() => onEmitData([game.team1, game.team2])}>start</button>
                             </div>      
                         </div>
                     ))}
