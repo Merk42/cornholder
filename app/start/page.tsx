@@ -4,24 +4,16 @@ import { useRouter } from 'next/navigation';
 import { useCounterStore } from '../providers/counter-store-provider'
 import { DEFAULT_BUTTON, THEME, BAG_BORDER, BAG_BUTTON } from '../const/style';
 
-import { TEAMS, GAMES } from '../const/data';
+import { TEAMS, KEYEDTEAMS, GAMES } from '../const/data';
 
 function Schedule({onEmitData}:{onEmitData:(teams: number[]) => void}) {
 
     function getNextThursday(date = new Date()) {
-        // Thursday is represented by 4
         const THURSDAY = 4;
         const currentDay = date.getDay();
-        // Calculate the number of days until the next Thursday
-        // If today is Thursday, it returns the Thursday in the current week. 
-        // If you need the next Thursday (i.e. next week), you can adjust the logic slightly.
         const daysToAdd = (THURSDAY - currentDay + 7) % 7; 
-        
-        // Create a new Date object to avoid modifying the original date
         const nextThursday = new Date(date);
-        // Set the date by adding the calculated days
         nextThursday.setDate(date.getDate() + daysToAdd);
-        
         return nextThursday.toISOString().split("T")[0];
     }
 
@@ -37,15 +29,59 @@ function Schedule({onEmitData}:{onEmitData:(teams: number[]) => void}) {
         return GAMES.find(game => game.date === D) || {date:"", times:[]}
     }, [])
 
+    const playingTeams = useMemo<number[]>(() => {
+        const PLAYING = [];
+        for (const TIME of upcoming.times) {
+            for (const GAME of TIME.games) {
+                PLAYING.push(GAME.team1);
+                PLAYING.push(GAME.team2);
+            }
+        }
+        return PLAYING
+    }, [upcoming])
+
+    const double = useMemo<number[]>(() => {
+        const duplicates = playingTeams.filter((item, index, array) => {
+            // Return true if the first index of the item is not the current index
+            return array.indexOf(item) !== index;
+        });
+        return [...new Set(duplicates)]
+    }, [playingTeams])
+
+    const bye = useMemo<number[]>(() => {
+        const n = 17; // The desired upper limit
+        const expectedValues = Array.from({ length: n }, (_, index) => index + 1);
+        const actualEntries = new Set(playingTeams); // The Set to check against
+        return expectedValues.filter(item => !actualEntries.has(item));
+        
+    }, [playingTeams])
+
     return (
         <div>
+            <h1>{upcoming.date}</h1>
+            {double.length > 0 && 
+                <dl>
+                    <dt className='font-bold capitalize'>double headers</dt>
+                    {double.map(team => (
+                        <dd key={team}>{KEYEDTEAMS[team]}</dd>
+                    ))}
+                </dl>
+            }
+            {bye.length > 0 && 
+                <dl>
+                    <dt className='font-bold capitalize'>byes</dt>
+                    {bye.map(team => (
+                        <dd key={team}>{KEYEDTEAMS[team]}</dd>
+                    ))}
+                </dl>
+            }
             {upcoming.times.map(games => (
                 <div key={games.time} className=" border-2 p-2 mb-4">
-                    <h1 className='text-3xl'>{ISOTOUS(games.time)}</h1>
+                    <h2 className='text-3xl'>{ISOTOUS(games.time)}</h2>
                     {games.games.map(game => (
                         <div key={game.board} className='flex mt-2'>
                             <div className='flex-1'>
-                                 <h2 className='text-2xl'>Board {game.board}</h2>
+                                <h3 className='text-2xl'>Board {game.board}</h3>
                                 <p>{TEAMS.find(team => team.id === game.team1)?.name || ''} vs {TEAMS.find(team => team.id === game.team2)?.name || ''}</p>
                             </div>
                             <div className='flex-0'>
@@ -97,8 +133,8 @@ export default function Start() {
     };
 
     const handleGameStart = () => {
-        const TEAM1NAME = TEAMS.find(team => team.id === localTeam1ID)?.name || '';
-        const TEAM2NAME = TEAMS.find(team => team.id === localTeam2ID)?.name || '';
+        const TEAM1NAME = KEYEDTEAMS[localTeam1ID] || '';
+        const TEAM2NAME = KEYEDTEAMS[localTeam2ID] || '';
         setTeam1Name(TEAM1NAME);
         setTeam2Name(TEAM2NAME);
         setTeam1Color(localTeam1Color);

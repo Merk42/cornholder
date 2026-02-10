@@ -93,6 +93,8 @@ export const TEAMS:TEAMSS = [
     },
 ]
 
+export const KEYEDTEAMS = Object.fromEntries(TEAMS.map(team => [team.id, team.name]))
+
 export const GAMES = [
     {
         "date":"2026-02-12",
@@ -107,13 +109,13 @@ export const GAMES = [
                     },
                     {
                         "board":2,
-                        "team1":12,
+                        "team1":13,
                         "team2":3
                     },
                     {
                         "board":3,
                         "team1":1,
-                        "team2":13
+                        "team2":14
                     }
                 ]
             },
@@ -123,16 +125,16 @@ export const GAMES = [
                     {
                         "board":1,
                         "team1":4,
-                        "team2":14
-                    },
-                    {
-                        "board":2,
-                        "team1":8,
                         "team2":15
                     },
                     {
+                        "board":2,
+                        "team1":9,
+                        "team2":16
+                    },
+                    {
                         "board":3,
-                        "team1":12,
+                        "team1":13,
                         "team2":2
                     }
                 ]
@@ -154,6 +156,72 @@ export const GAMES = [
                         "board":3,
                         "team1":17,
                         "team2":4
+                    }
+                ]
+            }
+
+        ]
+    },
+    {
+        "date":"2026-02-19",
+        "times":[
+            {
+                "time":"1830",
+                "games":[
+                    {
+                        "board":1,
+                        "team1":5,
+                        "team2":1
+                    },
+                    {
+                        "board":2,
+                        "team1":12,
+                        "team2":6
+                    },
+                    {
+                        "board":3,
+                        "team1":16,
+                        "team2":17
+                    }
+                ]
+            },
+            {
+                "time":"1915",
+                "games":[
+                    {
+                        "board":1,
+                        "team1":15,
+                        "team2":9
+                    },
+                    {
+                        "board":2,
+                        "team1":3,
+                        "team2":4
+                    },
+                    {
+                        "board":3,
+                        "team1":2,
+                        "team2":6
+                    }
+                ]
+            },
+            {
+                "time":"2000",
+                "games":[
+                    {
+                        "board":1,
+                        "team1":10,
+                        "team2":7
+                    },
+                    {
+                        "board":2,
+                        "team1":11,
+                        "team2":13
+                    },
+                    {
+                        "board":3,
+                        "team1":14,
+                        "team2":8
                     }
                 ]
             }
