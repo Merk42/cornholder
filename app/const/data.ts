@@ -149,7 +149,7 @@ export const GAMES = [
                     },
                     {
                         "board":2,
-                        "team1":11,
+                        "team1":2,
                         "team2":12
                     },
                     {
