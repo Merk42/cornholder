@@ -10,7 +10,7 @@ export default function Home() {
     <div>
       <main className="max-w-3xl px-4 mx-auto">
        <Score/>
-       <div>
+       <div className="hidden md:block portrait:block">
         <Inning/>
        </div>
       </main>
