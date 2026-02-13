@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useCounterStore } from '../providers/counter-store-provider'
 import { DEFAULT_BUTTON, THEME, BAG_BORDER, BAG_BUTTON } from '../const/style';
 
-import { GAMES } from '../const/data';
+import { RAW, TEAMS } from '../const/data';
 
 type TEAM = {
      id:number;
@@ -12,8 +12,94 @@ type TEAM = {
     theme:THEME
 }
 
+type GAME = {
+    id: string;
+    day: string;
+    time: string;
+    board: string;
+    visitor_id: string;
+    home_id: string;
+    home_score: null|number;
+    visitor_score: null|number;
+}
+
+type F = {
+    date:string;
+    times: {
+        time:string;
+        games:{
+            board:number;
+            team1:number;
+            team2:number;
+        }[]
+    }[]
+}[]
+
 function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: number[]) => void, KEYEDTEAMS:{[k:string]:string}, KEYEDCOLORS:{[k:string]:THEME}}) {
 
+    const [games, setGames] = useState<F>([])
+
+    useEffect(() => {
+        const fetchGames = async () => {
+
+        try {
+            // This URL points to your backend API endpoint, not the database directly
+            const response = await fetch('/pwa/cornholder/api/games.php'); 
+            if (!response.ok) {
+                const F = formatGames(RAW as GAME[]);
+                setGames(F);
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
+                const data = await response.json();
+                const F = formatGames(data as GAME[]);
+                setGames(F);
+            }
+        } catch (error) {
+            console.error(error);
+            const F = formatGames(RAW as GAME[]);
+            setGames(F);
+        } finally {
+            // setIsLoading(false);
+        }
+
+        };
+
+        fetchGames();
+    }, []); // Empty dependency array means this runs once on mount
+
+    
+    function formatGames(games:GAME[]):F {
+          const dateMap = new Map();
+        
+        games.forEach(game => {
+            const date = game.day;
+            const time = game.time.replace(/:/g, '').slice(0, 4);
+            
+            if (!dateMap.has(date)) {
+            dateMap.set(date, new Map());
+            }
+            
+            const timeMap = dateMap.get(date);
+            if (!timeMap.has(time)) {
+            timeMap.set(time, []);
+            }
+            
+            timeMap.get(time).push({
+            board: parseInt(game.board),
+            team1: parseInt(game.visitor_id),
+            team2: parseInt(game.home_id)
+            });
+        });
+        
+        // Convert Maps to arrays
+        return Array.from(dateMap, ([date, timeMap]) => ({
+            date,
+            times: Array.from(timeMap, ([time, games]) => ({
+            time,
+            games
+            }))
+        }));      
+    }
 
     function getNextThursday(date = new Date()) {
         const THURSDAY = 4;
@@ -33,8 +119,8 @@ function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: numb
 
     const upcoming = useMemo(() => {
         const D =  getNextThursday();
-        return GAMES.find(game => game.date === D) || {date:"", times:[]}
-    }, [])
+        return games.find(game => game.date === D) || {date:"", times:[]}
+    }, [games])
 
     const playingTeams = useMemo<number[]>(() => {
         const PLAYING = [];
@@ -60,7 +146,6 @@ function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: numb
         const expectedValues = Array.from({ length: n }, (_, index) => index + 1);
         const actualEntries = new Set(playingTeams); // The Set to check against
         return expectedValues.filter(item => !actualEntries.has(item));
-        
     }, [playingTeams])
 
     const USDate = useMemo(() => {
@@ -77,6 +162,7 @@ function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: numb
     return (
         <div>
             <h1>{USDate}</h1>
+            <pre></pre>
             {double.length > 0 && 
                 <dl>
                     <dt className='font-bold capitalize'>double headers</dt>
@@ -127,13 +213,15 @@ export default function Start() {
         // This URL points to your backend API endpoint, not the database directly
         const response = await fetch('/pwa/cornholder/api/teams.php'); 
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+            setTeams(TEAMS)
+            throw new Error(`HTTP error! status: ${response.status}`);
+        } else {
+            const data = await response.json();
+            setTeams(data);
         }
-        const data = await response.json();
-        console.log("data", data);
-        setTeams(data);
       } catch (error) {
         console.error(error);
+        setTeams(TEAMS)
       } finally {
         // setIsLoading(false);
       }

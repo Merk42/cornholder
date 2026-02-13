@@ -229,3 +229,187 @@ export const GAMES = [
         ]
     }
 ]
+
+
+export const RAW = [
+    {
+        "id": "1",
+        "day": "2026-02-12",
+        "time": "18:30:00",
+        "board": "1",
+        "visitor_id": "6",
+        "home_id": "7",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "2",
+        "day": "2026-02-12",
+        "time": "18:30:00",
+        "board": "2",
+        "visitor_id": "13",
+        "home_id": "3",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "3",
+        "day": "2026-02-12",
+        "time": "18:30:00",
+        "board": "3",
+        "visitor_id": "1",
+        "home_id": "14",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "4",
+        "day": "2026-02-12",
+        "time": "19:15:00",
+        "board": "1",
+        "visitor_id": "4",
+        "home_id": "15",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "5",
+        "day": "2026-02-12",
+        "time": "19:15:00",
+        "board": "2",
+        "visitor_id": "9",
+        "home_id": "16",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "6",
+        "day": "2026-02-12",
+        "time": "19:15:00",
+        "board": "3",
+        "visitor_id": "13",
+        "home_id": "2",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "7",
+        "day": "2026-02-12",
+        "time": "20:00:00",
+        "board": "1",
+        "visitor_id": "8",
+        "home_id": "5",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "8",
+        "day": "2026-02-12",
+        "time": "20:00:00",
+        "board": "2",
+        "visitor_id": "2",
+        "home_id": "12",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "9",
+        "day": "2026-02-12",
+        "time": "20:00:00",
+        "board": "3",
+        "visitor_id": "14",
+        "home_id": "4",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "10",
+        "day": "2026-02-19",
+        "time": "18:30:00",
+        "board": "1",
+        "visitor_id": "5",
+        "home_id": "1",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "11",
+        "day": "2026-02-19",
+        "time": "18:30:00",
+        "board": "2",
+        "visitor_id": "12",
+        "home_id": "6",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "12",
+        "day": "2026-02-19",
+        "time": "18:30:00",
+        "board": "3",
+        "visitor_id": "16",
+        "home_id": "17",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "13",
+        "day": "2026-02-19",
+        "time": "19:15:00",
+        "board": "1",
+        "visitor_id": "15",
+        "home_id": "9",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "14",
+        "day": "2026-02-19",
+        "time": "19:15:00",
+        "board": "2",
+        "visitor_id": "3",
+        "home_id": "4",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "15",
+        "day": "2026-02-19",
+        "time": "19:15:00",
+        "board": "3",
+        "visitor_id": "2",
+        "home_id": "6",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "16",
+        "day": "2026-02-19",
+        "time": "20:00:00",
+        "board": "1",
+        "visitor_id": "10",
+        "home_id": "7",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "17",
+        "day": "2026-02-19",
+        "time": "20:00:00",
+        "board": "2",
+        "visitor_id": "11",
+        "home_id": "13",
+        "home_score": null,
+        "visitor_score": null
+    },
+    {
+        "id": "18",
+        "day": "2026-02-19",
+        "time": "20:00:00",
+        "board": "3",
+        "visitor_id": "14",
+        "home_id": "8",
+        "home_score": null,
+        "visitor_score": null
+    }
+]
