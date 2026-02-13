@@ -1,12 +1,19 @@
 'use client'; // Required for client-side hooks in the App Router
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCounterStore } from '../providers/counter-store-provider'
 import { DEFAULT_BUTTON, THEME, BAG_BORDER, BAG_BUTTON } from '../const/style';
 
-import { TEAMS, KEYEDTEAMS, GAMES, KEYEDCOLORS } from '../const/data';
+import { GAMES } from '../const/data';
 
-function Schedule({onEmitData}:{onEmitData:(teams: number[]) => void}) {
+type TEAM = {
+     id:number;
+    name:string;
+    theme:THEME
+}
+
+function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: number[]) => void, KEYEDTEAMS:{[k:string]:string}, KEYEDCOLORS:{[k:string]:THEME}}) {
+
 
     function getNextThursday(date = new Date()) {
         const THURSDAY = 4;
@@ -57,6 +64,9 @@ function Schedule({onEmitData}:{onEmitData:(teams: number[]) => void}) {
     }, [playingTeams])
 
     const USDate = useMemo(() => {
+        if  (!upcoming?.date) {
+            return null
+        }
         const date = new Date(`${upcoming.date}T12:00:00.000Z`);
 
         // US English format (MM/DD/YYYY)
@@ -108,6 +118,45 @@ function Schedule({onEmitData}:{onEmitData:(teams: number[]) => void}) {
 }
 
 export default function Start() {
+    const [teams, setTeams] = useState<TEAM[]>([])
+
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        // This URL points to your backend API endpoint, not the database directly
+        const response = await fetch('/pwa/cornholder/api/teams.php'); 
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("data", data);
+        setTeams(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        // setIsLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []); // Empty dependency array means this runs once on mount
+
+    const KEYEDTEAMS = useMemo(() => {
+        if (!teams.length) {
+            return {}
+        }
+        return Object.fromEntries(teams.map(team => [team.id, team.name]))
+    }, [teams])
+
+    const KEYEDCOLORS = useMemo(() => {
+        if (!teams.length) {
+            return {}
+        }
+        return Object.fromEntries(teams.map(team => [team.id, team.theme]))
+    }, [teams])
+
+
     const { setTeam1Name, setTeam2Name, setFirst, setTeam1Color, setTeam2Color } = useCounterStore(
         (state) => state,
     )
@@ -156,12 +205,10 @@ export default function Start() {
     }
 
     const handleChildData = (dataFromChild:number[]) => {
-        const TEAM1 = TEAMS.find(team => team.id === dataFromChild[0]) || {id: dataFromChild[0], name:"", theme:'base'};
-        const TEAM2 = TEAMS.find(team => team.id === dataFromChild[1]) || {id: dataFromChild[1], name:"", theme:'base'};
-        setTeam1Name(TEAM1.name);
-        setTeam2Name(TEAM2.name);
-        setTeam1Color(TEAM1.theme || 'base');
-        setTeam2Color(TEAM2.theme || 'base');
+        setTeam1Name(KEYEDTEAMS[dataFromChild[0]]);
+        setTeam2Name(KEYEDTEAMS[dataFromChild[1]]);
+        setTeam1Color(KEYEDCOLORS[dataFromChild[0]]);
+        setTeam2Color(KEYEDCOLORS[dataFromChild[1]]);
         coinFlip();
         router.push('/game');
     };
@@ -189,7 +236,7 @@ export default function Start() {
 
     return (
         <form className='max-w-3xl px-4 mx-auto h-dvh place-content-center'>
-            <Schedule onEmitData={handleChildData}/>
+            <Schedule onEmitData={handleChildData} KEYEDCOLORS={KEYEDCOLORS} KEYEDTEAMS={KEYEDTEAMS}/>
             <h1 className='text-4xl my-4 text-center'>Set Teams</h1>
             <div className={`${BAG_BORDER['base']} ${BAG_BORDER[localTeam1Color]}`}>
                 <h2 className="w-full text-2xl font-bold">
@@ -199,7 +246,7 @@ export default function Start() {
                     <label htmlFor='team1name' className="capitalize block">name</label>
                     <select className={`${BAG_BUTTON['base']} ${BAG_BUTTON[localTeam1Color]} text-left w-full`} id="team1name" value={localTeam1ID} onChange={handleTeam1NameChange}>
                         <option value={0}>--- SELECT ---</option>
-                        {TEAMS.map((team) => (
+                        {teams.map((team) => (
                             <option value={team.id} key={team.id}>{team.name}</option>
                         ))}
                     </select>                               
@@ -219,7 +266,7 @@ export default function Start() {
                     <label htmlFor='team2name' className="capitalize block">name</label>
                     <select className={`${BAG_BUTTON['base']} ${BAG_BUTTON[localTeam2Color]} text-left w-full`} id="team2name" value={localTeam2ID} onChange={handleTeam2NameChange}>
                         <option value={0}>--- SELECT ---</option>
-                        {TEAMS.map((team) => (
+                        {teams.map((team) => (
                             <option value={team.id} key={team.id}>{team.name}</option>
                         ))}
                     </select>                               
