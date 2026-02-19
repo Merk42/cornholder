@@ -36,7 +36,8 @@ type fullgame = {
 }
 export default function Standings() {
 
-    const [games, setGames] = useState<fullgame[]>([])
+    const [games, setGames] = useState<fullgame[]>([{"id":"1","day":"2026-02-12","time":"18:30:00","board":"1","visitor_id":"6","home_id":"7","home_score":"24","visitor_score":"0","game_2_home_score":"25","game_2_visitor_score":"0","game_3_home_score":"21","game_3_visitor_score":"0"},{"id":"2","day":"2026-02-12","time":"18:30:00","board":"2","visitor_id":"13","home_id":"3","home_score":"4","visitor_score":"22","game_2_home_score":"6","game_2_visitor_score":"21","game_3_home_score":"2","game_3_visitor_score":"28"},{"id":"3","day":"2026-02-12","time":"18:30:00","board":"3","visitor_id":"1","home_id":"14","home_score":"17","visitor_score":"24","game_2_home_score":"25","game_2_visitor_score":"12","game_3_home_score":"9","game_3_visitor_score":"27"},{"id":"4","day":"2026-02-12","time":"19:15:00","board":"1","visitor_id":"4","home_id":"15","home_score":"21","visitor_score":"0","game_2_home_score":"21","game_2_visitor_score":"0","game_3_home_score":"21","game_3_visitor_score":"0"},{"id":"5","day":"2026-02-12","time":"19:15:00","board":"2","visitor_id":"9","home_id":"16","home_score":"2","visitor_score":"21","game_2_home_score":"0","game_2_visitor_score":"22","game_3_home_score":"2","game_3_visitor_score":"22"},{"id":"6","day":"2026-02-12","time":"19:15:00","board":"3","visitor_id":"13","home_id":"2","home_score":"1","visitor_score":"21","game_2_home_score":"14","game_2_visitor_score":"21","game_3_home_score":"23","game_3_visitor_score":"19"},{"id":"7","day":"2026-02-12","time":"20:00:00","board":"1","visitor_id":"8","home_id":"5","home_score":"0","visitor_score":"23","game_2_home_score":"22","game_2_visitor_score":"14","game_3_home_score":"6","game_3_visitor_score":"23"},{"id":"8","day":"2026-02-12","time":"20:00:00","board":"2","visitor_id":"2","home_id":"12","home_score":"21","visitor_score":"4","game_2_home_score":"27","game_2_visitor_score":"0","game_3_home_score":"29","game_3_visitor_score":"11"},{"id":"9","day":"2026-02-12","time":"20:00:00","board":"3","visitor_id":"14","home_id":"4","home_score":"0","visitor_score":"21","game_2_home_score":"0","game_2_visitor_score":"21","game_3_home_score":"0","game_3_visitor_score":"21"},{"id":"10","day":"2026-02-19","time":"18:30:00","board":"1","visitor_id":"5","home_id":"1","home_score":null,"visitor_score":null,"game_2_home_score":null,"game_2_visitor_score":null,"game_3_home_score":null,"game_3_visitor_score":null},{"id":"11","day":"2026-02-19","time":"18:30:00","board":"2","visitor_id":"12","home_id":"6","home_score":null,"visitor_score":null,"game_2_home_score":null,"game_2_visitor_score":null,"game_3_home_score":null,"game_3_visitor_score":null},{"id":"12","day":"2026-02-19","time":"18:30:00","board":"3","visitor_id":"16","home_id":"17","home_score":null,"visitor_score":null,"game_2_home_score":null,"game_2_visitor_score":null,"game_3_home_score":null,"game_3_visitor_score":null},{"id":"13","day":"2026-02-19","time":"19:15:00","board":"1","visitor_id":"15","home_id":"9","home_score":null,"visitor_score":null,"game_2_home_score":null,"game_2_visitor_score":null,"game_3_home_score":null,"game_3_visitor_score":null},{"id":"14","day":"2026-02-19","time":"19:15:00","board":"2","visitor_id":"3","home_id":"4","home_score":null,"visitor_score":null,"game_2_home_score":null,"game_2_visitor_score":null,"game_3_home_score":null,"game_3_visitor_score":null},{"id":"15","day":"2026-02-19","time":"19:15:00","board":"3","visitor_id":"2","home_id":"6","home_score":null,"visitor_score":null,"game_2_home_score":null,"game_2_visitor_score":null,"game_3_home_score":null,"game_3_visitor_score":null},{"id":"16","day":"2026-02-19","time":"20:00:00","board":"1","visitor_id":"10","home_id":"7","home_score":null,"visitor_score":null,"game_2_home_score":null,"game_2_visitor_score":null,"game_3_home_score":null,"game_3_visitor_score":null},{"id":"17","day":"2026-02-19","time":"20:00:00","board":"2","visitor_id":"11","home_id":"13","home_score":null,"visitor_score":null,"game_2_home_score":null,"game_2_visitor_score":null,"game_3_home_score":null,"game_3_visitor_score":null},{"id":"18","day":"2026-02-19","time":"20:00:00","board":"3","visitor_id":"14","home_id":"8","home_score":null,"visitor_score":null,"game_2_home_score":null,"game_2_visitor_score":null,"game_3_home_score":null,"game_3_visitor_score":null}]
+)
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -122,23 +123,23 @@ export default function Standings() {
 
             const STATS = homewlt(GAME)
 
-            const HOME_SCORED = GAME.home_score + GAME.game_2_home_score + GAME.game_3_home_score;
-            const VISITOR_SCORED = GAME.visitor_score + GAME.game_2_visitor_score + GAME.game_3_visitor_score;
+            const HOME_SCORED:number = Number(GAME.home_score) + Number(GAME.game_2_home_score) +  Number(GAME.game_3_home_score);
+            const VISITOR_SCORED:number = Number(GAME.visitor_score) + Number(GAME.game_2_visitor_score) + Number(GAME.game_3_visitor_score);
             HOMETEAM.id = HID;
-            HOMETEAM.wins = HOMETEAM.wins + STATS.w;
-            HOMETEAM.losses = HOMETEAM.losses + STATS.l;
-            HOMETEAM.draws = HOMETEAM.draws + STATS.t;
-            HOMETEAM.win_percent = Math.floor(HOMETEAM.wins / (HOMETEAM.losses + HOMETEAM.wins) * 100);
-            HOMETEAM.scored = HOMETEAM.scored + HOME_SCORED;
-            HOMETEAM.allowed = HOMETEAM.allowed + VISITOR_SCORED;
+            HOMETEAM.wins = Number(HOMETEAM.wins) + STATS.w;
+            HOMETEAM.losses = Number(HOMETEAM.losses) + STATS.l;
+            HOMETEAM.draws = Number(HOMETEAM.draws) + STATS.t;
+            HOMETEAM.win_percent = HOMETEAM.wins === 0 && HOMETEAM.losses === 0 ? 0 : Math.floor(Number(HOMETEAM.wins) / (Number(HOMETEAM.losses) + Number(HOMETEAM.wins)) * 100);
+            HOMETEAM.scored = Number(HOMETEAM.scored) + HOME_SCORED;
+            HOMETEAM.allowed = Number(HOMETEAM.allowed) + VISITOR_SCORED;
             HOMETEAM.diff = HOMETEAM.scored - HOMETEAM.allowed;
             VISITORTEAM.id = VID;
-            VISITORTEAM.wins = VISITORTEAM.wins + STATS.l;
-            VISITORTEAM.losses = VISITORTEAM.losses + STATS.w;
-            VISITORTEAM.draws = VISITORTEAM.draws + STATS.t;
-            VISITORTEAM.win_percent = Math.floor(VISITORTEAM.wins / (VISITORTEAM.losses + VISITORTEAM.wins) * 100);
-            VISITORTEAM.scored = VISITORTEAM.scored + VISITOR_SCORED;
-            VISITORTEAM.allowed = VISITORTEAM.allowed + HOME_SCORED;
+            VISITORTEAM.wins = Number(VISITORTEAM.wins) + STATS.l;
+            VISITORTEAM.losses = Number(VISITORTEAM.losses) + STATS.w;
+            VISITORTEAM.draws = Number(VISITORTEAM.draws) + STATS.t;
+            VISITORTEAM.win_percent = VISITORTEAM.wins === 0 && VISITORTEAM.losses === 0 ? 0 : Math.floor(VISITORTEAM.wins / (VISITORTEAM.losses + VISITORTEAM.wins) * 100);
+            VISITORTEAM.scored = Number(VISITORTEAM.scored) + VISITOR_SCORED;
+            VISITORTEAM.allowed = Number(VISITORTEAM.allowed) + HOME_SCORED;
             VISITORTEAM.diff = VISITORTEAM.scored - VISITORTEAM.allowed;
 
             standingmap.set(GAME.home_id, HOMETEAM)
