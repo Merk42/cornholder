@@ -73,6 +73,11 @@ export default function Standings() {
             game_2_visitor_score:number,
             game_3_home_score:number,
             game_3_visitor_score:number}):{w:number,l:number,t:number} {
+                const RES = {
+                    w:0,
+                    l:0,
+                    t:0
+                }
                 const WLT = {
                     w:0,
                     l:0,
@@ -98,9 +103,18 @@ export default function Standings() {
                     WLT.w++
                 } else {
                     WLT.l++
-                }                                
-                return WLT
-            }
+                }
+                if (WLT.w >= 2) {
+                    RES.w = 1
+                }
+                if (WLT.l >= 2) {
+                    RES.l = 1
+                }
+                if (WLT.t === 3 || (WLT.w === 1 && WLT.l === 1 && WLT.t === 1)) {
+                    RES.t = 1
+                }
+                return RES
+        }
 
 
         const INITIAL:stand = {
