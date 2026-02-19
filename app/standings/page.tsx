@@ -36,8 +36,7 @@ type fullgame = {
 }
 export default function Standings() {
 
-    const [games, setGames] = useState<fullgame[]>([]
-)
+    const [games, setGames] = useState<fullgame[]>([])
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -48,8 +47,8 @@ export default function Standings() {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             } else {
-                const data = await response.json();
-                setGames(data);
+                const data:fullgame[] = await response.json();
+                setGames(data.filter(game => game.home_score !== null));
             }
         } catch (error) {
             console.error(error);
@@ -135,7 +134,8 @@ export default function Standings() {
             const HID = GAME.home_id;
             const VID = GAME.visitor_id;
 
-            const STATS = homewlt(GAME)
+            const STATS = homewlt(GAME);
+            console.log("STATS", STATS)
 
             const HOME_SCORED:number = Number(GAME.home_score) + Number(GAME.game_2_home_score) +  Number(GAME.game_3_home_score);
             const VISITOR_SCORED:number = Number(GAME.visitor_score) + Number(GAME.game_2_visitor_score) + Number(GAME.game_3_visitor_score);
@@ -174,6 +174,7 @@ export default function Standings() {
         <div>
         <div>standings</div>
         <table>
+            <tbody>
             <tr>
                 <th className="px-2 capitalize">name</th>
                 <th className="px-2 capitalize">wins</th>
@@ -196,6 +197,7 @@ export default function Standings() {
                 <td className="text-right px-2">{team.diff}</td>
             </tr>
         ))}
+        </tbody>
         </table>
         </div>
     )
