@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import { DEFAULT_BUTTON } from "./const/style";
 import { CounterStoreProvider } from './providers/counter-store-provider'
 
 
@@ -28,9 +29,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        <CounterStoreProvider>{children}</CounterStoreProvider>
+        <CounterStoreProvider>
+          <main className="grow">{children}</main>
+          <footer className="sticky bottom-0" >
+            <nav className="flex justify-between max-w-3xl px-4 mx-auto">
+              <Link className={`${DEFAULT_BUTTON} whitespace-nowrap`} href="/start">New Game</Link>
+              <Link className={`${DEFAULT_BUTTON} whitespace-nowrap`} href="/standings">Standings</Link>
+              <Link className={`${DEFAULT_BUTTON} whitespace-nowrap`} href="/championship">Championship</Link>
+            </nav>
+          </footer>
+        </CounterStoreProvider>
       </body>
     </html>
   );

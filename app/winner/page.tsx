@@ -59,7 +59,7 @@ export default function Winner() {
 
     return (
         
-        <div className="max-w-3xl px-4 mx-auto text-center h-dvh place-content-center">
+        <div className="max-w-3xl px-4 mx-auto text-center place-content-center">
             { !empty &&
             <div>
                 <h1 className='text-4xl mb-6'>{phrase}</h1>
