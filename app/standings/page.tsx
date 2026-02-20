@@ -76,23 +76,24 @@ export default function Standings() {
                     l:0,
                     t:0
                 }
-                if (g.home_score === g.visitor_score) {
+                // TODO coerce value types with Number()
+                if (Number(g.home_score )=== Number(g.visitor_score)) {
                     WLT.t++
-                } else if (g.home_score >= g.visitor_score) {
+                } else if (Number(g.home_score )>= Number(g.visitor_score)) {
                     WLT.w++
                 } else {
                     WLT.l++
                 }
-                if (g.game_2_home_score === g.game_2_visitor_score) {
+                if (Number(g.game_2_home_score) === Number(g.game_2_visitor_score)) {
                     WLT.t++
-                } else if (g.game_2_home_score >= g.game_2_visitor_score) {
+                } else if (Number(g.game_2_home_score) >= Number(g.game_2_visitor_score)) {
                     WLT.w++
                 } else {
                     WLT.l++
                 }
-                if (g.game_3_home_score === g.game_3_visitor_score) {
+                if (Number(g.game_3_home_score) === Number(g.game_3_visitor_score)) {
                     WLT.t++
-                } else if (g.game_3_home_score >= g.game_3_visitor_score) {
+                } else if (Number(g.game_3_home_score) >= Number(g.game_3_visitor_score)) {
                     WLT.w++
                 } else {
                     WLT.l++
@@ -127,9 +128,16 @@ export default function Standings() {
             const VISITORTEAM:stand = standingmap.get(GAME.visitor_id) || {...INITIAL}
             const HID = GAME.home_id;
             const VID = GAME.visitor_id;
-
+            if (Number(GAME.home_id) === 10 || Number(GAME.visitor_id) === 10) {
+                console.log(GAME)
+            }
             const STATS = homewlt(GAME);
-            console.log("STATS", STATS)
+            if (Number(HID) === 10 ) {
+                console.log("HOME STATS", STATS)
+            }
+            if (Number(VID) === 10) {
+                console.log("AWAY STATS", STATS)
+            }
 
             const HOME_SCORED:number = Number(GAME.home_score) + Number(GAME.game_2_home_score) +  Number(GAME.game_3_home_score);
             const VISITOR_SCORED:number = Number(GAME.visitor_score) + Number(GAME.game_2_visitor_score) + Number(GAME.game_3_visitor_score);
