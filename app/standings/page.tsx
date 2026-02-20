@@ -31,6 +31,7 @@ type fullgame = {
 export default function Standings() {
 
     const [games, setGames] = useState<fullgame[]>([]);
+    const [isCards, setIsCards] = useState<boolean>(true)
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -171,36 +172,48 @@ export default function Standings() {
 )
     }, [games])
 
+    const layout = useMemo(() => {
+        if (isCards) {
+            return "block before:content-[attr(data-col)] before:font-bold] before:block"
+        }
+        return ""
+    }, [isCards])
+
 
     return (
         <div className="max-w-3xl px-4 mx-auto">
             <h1 className="text-4xl my-4 text-center">Standings</h1>
-            <table className="w-full">
-                <tbody>
-                <tr>
-                    <th className="px-2 capitalize">name</th>
-                    <th className="px-2 capitalize">wins</th>
-                    <th className="px-2 capitalize">losses</th>
-                    <th className="px-2 capitalize">draws</th>
-                    <th className="px-2 capitalize whitespace-nowrap">win %</th>
-                    <th className="px-2 capitalize">scored</th>
-                    <th className="px-2 capitalize">allowed</th>
-                    <th className="px-2 capitalize">diff</th>
-                </tr>
-            {st.map(team => (
-                <tr key={team.id} className={`${BAG_BORDER['base']} ${BAG_BORDER[KEYEDCOLORS[team.id]]} table-row`}>
-                    <td className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[team.id]]}`}>{KEYEDTEAMS[team.id]}</td>
-                    <td className="text-right px-2">{team.wins}</td>
-                    <td className="text-right px-2">{team.losses}</td>
-                    <td className="text-right px-2">{team.draws}</td>
-                    <td className="text-right px-2">{team.win_percent}</td>
-                    <td className="text-right px-2">{team.scored}</td>
-                    <td className="text-right px-2">{team.allowed}</td>
-                    <td className="text-right px-2">{team.diff}</td>
-                </tr>
-            ))}
-            </tbody>
-            </table>
+            <div className="md:hidden">
+                <button onClick={() => {setIsCards(!isCards)}}>switch layout</button>
+            </div>
+            <div className="overflow-x-auto">
+                <table className="w-full">
+                    <tbody>
+                    <tr className={isCards ? 'hidden' : ''}>
+                        <th className="px-2 capitalize">name</th>
+                        <th className="px-2 capitalize">wins</th>
+                        <th className="px-2 capitalize">losses</th>
+                        <th className="px-2 capitalize">draws</th>
+                        <th className="px-2 capitalize whitespace-nowrap">win %</th>
+                        <th className="px-2 capitalize">scored</th>
+                        <th className="px-2 capitalize">allowed</th>
+                        <th className="px-2 capitalize">diff</th>
+                    </tr>
+                {st.map(team => (
+                    <tr key={team.id} className={`${BAG_BORDER['base']} ${BAG_BORDER[KEYEDCOLORS[team.id]]} table-row`}>
+                        <td className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[team.id]]} ${layout}`}>{KEYEDTEAMS[team.id]}</td>
+                        <td data-col="wins" className={`${layout} text-right px-2`}>{team.wins}</td>
+                        <td data-col="losses" className={`${layout} text-right px-2`}>{team.losses}</td>
+                        <td data-col="draws" className={`${layout} text-right px-2`}>{team.draws}</td>
+                        <td data-col="win %" className={`${layout} text-right px-2`}>{team.win_percent}</td>
+                        <td data-col="scored"className={`${layout} text-right px-2`}>{team.scored}</td>
+                        <td data-col="allowed" className={`${layout} text-right px-2`}>{team.allowed}</td>
+                        <td data-col="diff" className={`${layout} text-right px-2`}>{team.diff}</td>
+                    </tr>
+                ))}
+                </tbody>
+                </table>
+            </div>
         </div>
     )
 }
