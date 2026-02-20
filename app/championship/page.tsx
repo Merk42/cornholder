@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { KEYEDCOLORS, KEYEDTEAMS } from "../const/data";
-import { BAG_BUTTON } from "../const/style";
+import { BAG_BUTTON, THEME_GROUP, THEME } from "../const/style";
 export default function Championship() {
 
     interface R {
@@ -10,6 +10,13 @@ export default function Championship() {
         board?:number;
         team1:string;
         team2:string
+    }
+
+    interface Champ {
+        homeName: string;
+        visitorName:string;
+        homeColor:THEME;
+        visitorColor:THEME
     }
 
     const pairedup = useMemo(() => {
@@ -59,19 +66,33 @@ export default function Championship() {
             return product.round;
         });
         const ROUNDS = 4;
-        const BR:R[][] = [];
-        let placeholder = 65;
+        const BR:Champ[][] = [];
+        // let placeholder = 65;
         for (let i = 1; i <= ROUNDS; i++) {
-            if (groupedByObject[i]?.length) {
-                BR.push(groupedByObject[i] || [])
+            const ROUND = groupedByObject[i];
+            if (ROUND && ROUND.length) {
+                const C:Champ[] = ROUND.map(f => {
+                    return {
+                        homeName:KEYEDTEAMS[f.team2],
+                        visitorName:KEYEDTEAMS[f.team1],
+                        homeColor:KEYEDCOLORS[f.team2],
+                        visitorColor:KEYEDCOLORS[f.team1]
+                    }
+                })
+                BR.push(C)
             } else {
                 const EXPONENT = ROUNDS - i;
                 const ARRLENGTH = 2**EXPONENT;
-                BR.push(new Array(ARRLENGTH).fill({team1:String.fromCharCode(placeholder),team2:String.fromCharCode(placeholder)}))
-                placeholder++;
+                BR.push(new Array(ARRLENGTH).fill({
+                        homeName:"TBD",
+                        visitorName:"TBD",
+                        homeColor:"",
+                        visitorColor:""
+                    }))
+                // placeholder++;
             }
         }
-        const pairArray = (arr:R[]) => {
+        const pairArray = (arr:Champ[]) => {
             const paired = [];
             for (let i = 0; i < arr.length; i += 2) {
                 // Slice two elements to create a pair
@@ -94,13 +115,13 @@ export default function Championship() {
                         <div key={index} className="four">
                         
                             <div className="pairing">
-                                <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[pair[0].team1]]} text-left`}>{KEYEDTEAMS[pair[0].team1]}</div>
-                                <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[pair[0].team2]]} text-left`}>{KEYEDTEAMS[pair[0].team2]}</div>
+                                <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[pair[0].visitorColor]} text-left`}>{pair[0].visitorName}</div>
+                                <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[pair[0].homeColor]} text-left`}>{pair[0].homeName}</div>
                             </div>
                             {pair[1] &&
                             <div className="pairing">
-                                <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[pair[1].team1]]} text-left`}>{KEYEDTEAMS[pair[1].team1]}</div>
-                                <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[pair[1].team2]]} text-left`}>{KEYEDTEAMS[pair[1].team2]}</div>
+                                <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[pair[1].visitorColor]} text-left`}>{pair[1].visitorName}</div>
+                                <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[pair[1].homeColor]} text-left`}>{pair[1].homeName}</div>
                             </div>
                             }
                         </div>
