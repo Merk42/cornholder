@@ -168,48 +168,52 @@ function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: numb
         return enUSFormatter.format(date); // Output: "5/24/2025"
     }, [upcoming])
 
-    return (
-        <div>
-            <h1>{USDate}</h1>
-            <pre></pre>
-            {double.length > 0 && 
-                <dl>
-                    <dt className='font-bold capitalize'>double headers</dt>
-                    {double.map(team => (
-                        <dd key={team}>{KEYEDTEAMS[team]}</dd>
-                    ))}
-                </dl>
-            }
-            {bye.length > 0 && 
-                <dl>
-                    <dt className='font-bold capitalize'>byes</dt>
-                    {bye.map(team => (
-                        <dd key={team}>{KEYEDTEAMS[team]}</dd>
-                    ))}
-                </dl>
-            }
-            {upcoming.times.map(games => (
-                <div key={games.time} className=" border-2 p-2 mb-4">
-                    <h2 className='text-3xl'>{ISOTOUS(games.time)}</h2>
-                    {games.games.map(game => (
-                        <div key={game.board} className='flex mt-2 gap-2'>
-                            <div className='flex-1'>
-                                <h3 className='text-2xl'>Board {game.board}</h3>
-                                <p className='flex gap-2 md:items-center items-start flex-col md:flex-row' >
-                                    <span className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[game.team1]]}`}>{KEYEDTEAMS[game.team1] || ''}</span>
-                                    <span className='hidden md:inline'>vs</span>
-                                    <span className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[game.team2]]}`}>{KEYEDTEAMS[game.team2] || ''}</span>
-                                </p>
+    if (upcoming.times.length === 0) {
+        return <p>No upcoming games</p>
+    } else {
+        return (
+            <div>
+                <h1>{USDate}</h1>
+                
+                {double.length > 0 && 
+                    <dl>
+                        <dt className='font-bold capitalize'>double headers</dt>
+                        {double.map(team => (
+                            <dd key={team}>{KEYEDTEAMS[team]}</dd>
+                        ))}
+                    </dl>
+                }
+                {bye.length > 0 && 
+                    <dl>
+                        <dt className='font-bold capitalize'>byes</dt>
+                        {bye.map(team => (
+                            <dd key={team}>{KEYEDTEAMS[team]}</dd>
+                        ))}
+                    </dl>
+                }
+                {upcoming.times.map(games => (
+                    <div key={games.time} className=" border-2 p-2 mb-4">
+                        <h2 className='text-3xl'>{ISOTOUS(games.time)}</h2>
+                        {games.games.map(game => (
+                            <div key={game.board} className='flex mt-2 gap-2'>
+                                <div className='flex-1'>
+                                    <h3 className='text-2xl'>Board {game.board}</h3>
+                                    <p className='flex gap-2 md:items-center items-start flex-col md:flex-row' >
+                                        <span className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[game.team1]]}`}>{KEYEDTEAMS[game.team1] || ''}</span>
+                                        <span className='hidden md:inline'>vs</span>
+                                        <span className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[game.team2]]}`}>{KEYEDTEAMS[game.team2] || ''}</span>
+                                    </p>
+                                </div>
+                                <div className='flex-0 self-center'>
+                                    <button type='button' className={DEFAULT_BUTTON} onClick={() => onEmitData([game.team1, game.team2])}>start</button>
+                                </div>      
                             </div>
-                            <div className='flex-0 self-center'>
-                                <button type='button' className={DEFAULT_BUTTON} onClick={() => onEmitData([game.team1, game.team2])}>start</button>
-                            </div>      
-                        </div>
-                    ))}
-                </div>
-            ))}
-        </div>
-    )
+                        ))}
+                    </div>
+                ))}
+            </div>
+        )
+    }
 }
 
 export default function Start() {
