@@ -30,7 +30,7 @@ type fullgame = {
 }
 export default function Standings() {
 
-    const [games, setGames] = useState<fullgame[]>([])
+    const [games, setGames] = useState<fullgame[]>([]);
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -139,8 +139,8 @@ export default function Standings() {
                 console.log("AWAY STATS", STATS)
             }
 
-            const HOME_SCORED:number = Number(GAME.home_score) + Number(GAME.game_2_home_score) +  Number(GAME.game_3_home_score);
-            const VISITOR_SCORED:number = Number(GAME.visitor_score) + Number(GAME.game_2_visitor_score) + Number(GAME.game_3_visitor_score);
+            const HOME_SCORED:number = Math.max(0, Number(GAME.home_score)) + Math.max(0, Number(GAME.game_2_home_score)) +  Math.max(0, Number(GAME.game_3_home_score));
+            const VISITOR_SCORED:number = Math.max(0, Number(GAME.visitor_score)) + Math.max(0, Number(GAME.game_2_visitor_score)) + Math.max(0, Number(GAME.game_3_visitor_score));
             HOMETEAM.id = HID;
             HOMETEAM.wins = Number(HOMETEAM.wins) + STATS.w;
             HOMETEAM.losses = Number(HOMETEAM.losses) + STATS.l;
