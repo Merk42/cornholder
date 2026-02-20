@@ -102,6 +102,15 @@ function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: numb
     }
 
     function getNextThursday(date = new Date()) {
+        const estString = date.toLocaleString('en-US', {
+            timeZone: 'America/New_York',
+            timeZoneName: 'shortOffset' // Request short GMT format, e.g., "GMT-5"
+        });
+        // Extract the offset from the resulting string (e.g., "GMT-5" or "GMT-4")
+        const offsetMatch = estString.match(/GMT([+-]\d+)/);
+        const estOffset = offsetMatch ? Number(offsetMatch[1]) : 0;
+        date.setHours(date.getHours() + estOffset);
+
         const THURSDAY = 4;
         const currentDay = date.getDay();
         const daysToAdd = (THURSDAY - currentDay + 7) % 7; 
