@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { KEYEDTEAMS, KEYEDCOLORS } from "../const/data";
-import { BAG_BUTTON } from "../const/style";
+import { BAG_BUTTON, BAG_BORDER, THEME_GROUP } from "../const/style";
 type stand = {
     id:string|number;
     wins:number;
@@ -12,12 +12,6 @@ type stand = {
     scored:number;
     allowed:number;
     diff:number;
-}
-
-type fullteam = {
-    id: string;
-    name: string;
-
 }
 
 type fullgame = {
@@ -171,34 +165,34 @@ export default function Standings() {
 
 
     return (
-        <div>
-        <div>standings</div>
-        <table>
-            <tbody>
-            <tr>
-                <th className="px-2 capitalize">name</th>
-                <th className="px-2 capitalize">wins</th>
-                <th className="px-2 capitalize">losses</th>
-                <th className="px-2 capitalize">draws</th>
-                <th className="px-2 capitalize">win %</th>
-                <th className="px-2 capitalize">scored</th>
-                <th className="px-2 capitalize">allowed</th>
-                <th className="px-2 capitalize">diff</th>
-            </tr>
-        {st.map(team => (
-            <tr key={team.id} className="my-2">
-                <td className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[team.id]]}`}>{KEYEDTEAMS[team.id]}</td>
-                <td className="text-right px-2">{team.wins}</td>
-                <td className="text-right px-2">{team.losses}</td>
-                <td className="text-right px-2">{team.draws}</td>
-                <td className="text-right px-2">{team.win_percent}</td>
-                <td className="text-right px-2">{team.scored}</td>
-                <td className="text-right px-2">{team.allowed}</td>
-                <td className="text-right px-2">{team.diff}</td>
-            </tr>
-        ))}
-        </tbody>
-        </table>
+        <div className="max-w-3xl px-4 mx-auto">
+            <h1 className="text-4xl my-4 text-center">Standings</h1>
+            <table className="w-full">
+                <tbody>
+                <tr>
+                    <th className="px-2 capitalize">name</th>
+                    <th className="px-2 capitalize">wins</th>
+                    <th className="px-2 capitalize">losses</th>
+                    <th className="px-2 capitalize">draws</th>
+                    <th className="px-2 capitalize whitespace-nowrap">win %</th>
+                    <th className="px-2 capitalize">scored</th>
+                    <th className="px-2 capitalize">allowed</th>
+                    <th className="px-2 capitalize">diff</th>
+                </tr>
+            {st.map(team => (
+                <tr key={team.id} className={`${BAG_BORDER['base']} ${BAG_BORDER[KEYEDCOLORS[team.id]]} table-row`}>
+                    <td className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[team.id]]}`}>{KEYEDTEAMS[team.id]}</td>
+                    <td className="text-right px-2">{team.wins}</td>
+                    <td className="text-right px-2">{team.losses}</td>
+                    <td className="text-right px-2">{team.draws}</td>
+                    <td className="text-right px-2">{team.win_percent}</td>
+                    <td className="text-right px-2">{team.scored}</td>
+                    <td className="text-right px-2">{team.allowed}</td>
+                    <td className="text-right px-2">{team.diff}</td>
+                </tr>
+            ))}
+            </tbody>
+            </table>
         </div>
     )
 }
