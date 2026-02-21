@@ -31,7 +31,7 @@ type fullgame = {
 export default function Standings() {
 
     const [games, setGames] = useState<fullgame[]>([]);
-    const [isCards, setIsCards] = useState<boolean>(true)
+    const [isCards, setIsCards] = useState<boolean>(false)
 
     useEffect(() => {
         const fetchGames = async () => {
