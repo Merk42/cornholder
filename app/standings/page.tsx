@@ -2,9 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { KEYEDTEAMS, KEYEDCOLORS } from "../const/data";
-import { BAG_BUTTON, BAG_BORDER, THEME_GROUP } from "../const/style";
+import { BAG_BUTTON, BAG_BORDER } from "../const/style";
+import { FULL_GAME, GAMES_API } from "../const/type";
 type stand = {
-    id:string|number;
+    id:string;
     wins:number;
     losses:number;
     draws:number;
@@ -14,23 +15,9 @@ type stand = {
     diff:number;
 }
 
-type fullgame = {
-    id: string|number,
-    day: string;
-    time: string;
-    board: string|number;
-    visitor_id:string|number;
-    home_id:string|number;
-    home_score:number;
-    visitor_score:number;
-    game_2_home_score:number;
-    game_2_visitor_score:number;
-    game_3_home_score:number;
-    game_3_visitor_score:number;
-}
 export default function Standings() {
 
-    const [games, setGames] = useState<fullgame[]>([]);
+    const [games, setGames] = useState<FULL_GAME[]>([]);
     const [isCards, setIsCards] = useState<boolean>(false)
 
     useEffect(() => {
@@ -42,8 +29,25 @@ export default function Standings() {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             } else {
-                const data:fullgame[] = await response.json();
-                setGames(data.filter(game => game.home_score !== null));
+                const data:GAMES_API[] = await response.json();
+                // setGames(data.filter(game => game.home_score !== null));
+                const filteredAndMapped:FULL_GAME[] = data
+                .filter(game => game.home_score !== null) // Filter: keeps only even numbers
+                .map(game => ({
+                    id: game.id.toString(),
+                    day: game.day,
+                    time: game.time,
+                    board: Number(game.board),
+                    visitor_id: game.visitor_id.toString(),
+                    home_id: game.home_id.toString(),
+                    game_1_home_score: Number(game.home_score),
+                    game_1_visitor_score: Number(game.visitor_score),
+                    game_2_home_score: Number(game.game_2_home_score),
+                    game_2_visitor_score: Number(game.game_2_visitor_score),
+                    game_3_home_score: Number(game.game_3_home_score),
+                    game_3_visitor_score: Number(game.game_3_visitor_score)
+                }));
+                setGames(filteredAndMapped);
             }
         } catch (error) {
             console.error(error);
@@ -61,8 +65,8 @@ export default function Standings() {
     const st = useMemo<stand[]>(() => {
 
         function homewlt(g:{
-            home_score:number,
-            visitor_score:number,
+            game_1_home_score:number,
+            game_1_visitor_score:number,
             game_2_home_score:number,
             game_2_visitor_score:number,
             game_3_home_score:number,
@@ -77,24 +81,23 @@ export default function Standings() {
                     l:0,
                     t:0
                 }
-                // TODO coerce value types with Number()
-                if (Number(g.home_score )=== Number(g.visitor_score)) {
+                if (g.game_1_home_score === g.game_1_visitor_score) {
                     WLT.t++
-                } else if (Number(g.home_score )>= Number(g.visitor_score)) {
+                } else if (g.game_1_home_score >= g.game_1_visitor_score) {
                     WLT.w++
                 } else {
                     WLT.l++
                 }
-                if (Number(g.game_2_home_score) === Number(g.game_2_visitor_score)) {
+                if (g.game_2_home_score === g.game_2_visitor_score) {
                     WLT.t++
-                } else if (Number(g.game_2_home_score) >= Number(g.game_2_visitor_score)) {
+                } else if (g.game_2_home_score >= g.game_2_visitor_score) {
                     WLT.w++
                 } else {
                     WLT.l++
                 }
-                if (Number(g.game_3_home_score) === Number(g.game_3_visitor_score)) {
+                if (g.game_3_home_score === g.game_3_visitor_score) {
                     WLT.t++
-                } else if (Number(g.game_3_home_score) >= Number(g.game_3_visitor_score)) {
+                } else if (g.game_3_home_score >= g.game_3_visitor_score) {
                     WLT.w++
                 } else {
                     WLT.l++
@@ -113,7 +116,7 @@ export default function Standings() {
 
 
         const INITIAL:stand = {
-            id:0,
+            id:'0',
             wins:0,
             losses:0,
             draws:0,
@@ -129,40 +132,29 @@ export default function Standings() {
             const VISITORTEAM:stand = standingmap.get(GAME.visitor_id) || {...INITIAL}
             const HID = GAME.home_id;
             const VID = GAME.visitor_id;
-            if (Number(GAME.home_id) === 10 || Number(GAME.visitor_id) === 10) {
-                console.log(GAME)
-            }
             const STATS = homewlt(GAME);
-            if (Number(HID) === 10 ) {
-                console.log("HOME STATS", STATS)
-            }
-            if (Number(VID) === 10) {
-                console.log("AWAY STATS", STATS)
-            }
-
-            const HOME_SCORED:number = Math.max(0, Number(GAME.home_score)) + Math.max(0, Number(GAME.game_2_home_score)) +  Math.max(0, Number(GAME.game_3_home_score));
-            const VISITOR_SCORED:number = Math.max(0, Number(GAME.visitor_score)) + Math.max(0, Number(GAME.game_2_visitor_score)) + Math.max(0, Number(GAME.game_3_visitor_score));
+            const HOME_SCORED:number = Math.max(0, GAME.game_1_home_score) + Math.max(0, GAME.game_2_home_score) +  Math.max(0, GAME.game_3_home_score);
+            const VISITOR_SCORED:number = Math.max(0, GAME.game_1_visitor_score) + Math.max(0, GAME.game_2_visitor_score) + Math.max(0, GAME.game_3_visitor_score);
             HOMETEAM.id = HID;
-            HOMETEAM.wins = Number(HOMETEAM.wins) + STATS.w;
-            HOMETEAM.losses = Number(HOMETEAM.losses) + STATS.l;
-            HOMETEAM.draws = Number(HOMETEAM.draws) + STATS.t;
-            HOMETEAM.win_percent = HOMETEAM.wins === 0 && HOMETEAM.losses === 0 ? 0 : Math.floor(Number(HOMETEAM.wins) / (Number(HOMETEAM.losses) + Number(HOMETEAM.wins)) * 100);
-            HOMETEAM.scored = Number(HOMETEAM.scored) + HOME_SCORED;
-            HOMETEAM.allowed = Number(HOMETEAM.allowed) + VISITOR_SCORED;
+            HOMETEAM.wins = HOMETEAM.wins + STATS.w;
+            HOMETEAM.losses = HOMETEAM.losses + STATS.l;
+            HOMETEAM.draws = HOMETEAM.draws + STATS.t;
+            HOMETEAM.win_percent = HOMETEAM.wins === 0 && HOMETEAM.losses === 0 ? 0 : Math.floor(HOMETEAM.wins / (HOMETEAM.losses + HOMETEAM.wins) * 100);
+            HOMETEAM.scored = HOMETEAM.scored + HOME_SCORED;
+            HOMETEAM.allowed = HOMETEAM.allowed + VISITOR_SCORED;
             HOMETEAM.diff = HOMETEAM.scored - HOMETEAM.allowed;
             VISITORTEAM.id = VID;
-            VISITORTEAM.wins = Number(VISITORTEAM.wins) + STATS.l;
-            VISITORTEAM.losses = Number(VISITORTEAM.losses) + STATS.w;
-            VISITORTEAM.draws = Number(VISITORTEAM.draws) + STATS.t;
+            VISITORTEAM.wins = VISITORTEAM.wins + STATS.l;
+            VISITORTEAM.losses = VISITORTEAM.losses + STATS.w;
+            VISITORTEAM.draws = VISITORTEAM.draws + STATS.t;
             VISITORTEAM.win_percent = VISITORTEAM.wins === 0 && VISITORTEAM.losses === 0 ? 0 : Math.floor(VISITORTEAM.wins / (VISITORTEAM.losses + VISITORTEAM.wins) * 100);
-            VISITORTEAM.scored = Number(VISITORTEAM.scored) + VISITOR_SCORED;
-            VISITORTEAM.allowed = Number(VISITORTEAM.allowed) + HOME_SCORED;
+            VISITORTEAM.scored = VISITORTEAM.scored + VISITOR_SCORED;
+            VISITORTEAM.allowed = VISITORTEAM.allowed + HOME_SCORED;
             VISITORTEAM.diff = VISITORTEAM.scored - VISITORTEAM.allowed;
 
             standingmap.set(GAME.home_id, HOMETEAM)
             standingmap.set(GAME.visitor_id, VISITORTEAM)
         }
-        console.log(standingmap)
         const STANDINGS_ARR = [...standingmap.values()]
         // return STANDINGS_ARR;
         return STANDINGS_ARR.sort(

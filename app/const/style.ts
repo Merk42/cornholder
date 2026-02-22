@@ -1,7 +1,8 @@
 export type THEME = 'base'|'red'|'orange'|'amber'|'yellow'|'lime'|'green'|'emerald'|'teal'|'cyan'|'sky'|'blue'|'indigo'|'violet'|'purple'|'fuchsia'|'pink'|'rose'|'slate'|'gray'|'zinc'|'neutral'|'stone';
 export type THEME_GROUP = {
-  [T in THEME]?:string
+  [T in THEME]:string
 }
+
 
 export const DEFAULT_BUTTON = "bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded disabled:bg-slate-400 disabled:border-slate-500"
 
@@ -109,6 +110,7 @@ export const SCORE:THEME_GROUP = {
 }
 
 export const SUBMIT:THEME_GROUP = {
+    'base':'',
     'red':'bg-red-800',
     'orange':'bg-orange-800',
     'amber':'bg-amber-800',

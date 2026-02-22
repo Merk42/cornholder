@@ -1,11 +1,6 @@
-import type { THEME } from "./style"
-type TEAMSS = {
-    id:number;
-    name:string;
-    theme:THEME
-}[]
+import { GAMES_API, TEAMS_API } from "./type"
 
-export const TEAMS:TEAMSS = [
+export const TEAMS:TEAMS_API[] = [
     {
         id:1,
         name: "B Team",
@@ -231,7 +226,7 @@ export const GAMES = [
 ]
 
 
-export const RAW = [
+export const RAWGAMES:GAMES_API[] = [
     {
         "id": "1",
         "day": "2026-02-12",
@@ -239,8 +234,12 @@ export const RAW = [
         "board": "1",
         "visitor_id": "6",
         "home_id": "7",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "2",
@@ -249,8 +248,12 @@ export const RAW = [
         "board": "2",
         "visitor_id": "13",
         "home_id": "3",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "3",
@@ -259,8 +262,12 @@ export const RAW = [
         "board": "3",
         "visitor_id": "1",
         "home_id": "14",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "4",
@@ -269,8 +276,12 @@ export const RAW = [
         "board": "1",
         "visitor_id": "4",
         "home_id": "15",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "5",
@@ -279,8 +290,12 @@ export const RAW = [
         "board": "2",
         "visitor_id": "9",
         "home_id": "16",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "6",
@@ -289,8 +304,12 @@ export const RAW = [
         "board": "3",
         "visitor_id": "13",
         "home_id": "2",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "7",
@@ -299,8 +318,12 @@ export const RAW = [
         "board": "1",
         "visitor_id": "8",
         "home_id": "5",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "8",
@@ -309,8 +332,12 @@ export const RAW = [
         "board": "2",
         "visitor_id": "2",
         "home_id": "12",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "9",
@@ -319,8 +346,12 @@ export const RAW = [
         "board": "3",
         "visitor_id": "14",
         "home_id": "4",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "10",
@@ -329,8 +360,12 @@ export const RAW = [
         "board": "1",
         "visitor_id": "5",
         "home_id": "1",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "11",
@@ -339,8 +374,12 @@ export const RAW = [
         "board": "2",
         "visitor_id": "12",
         "home_id": "6",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "12",
@@ -349,8 +388,12 @@ export const RAW = [
         "board": "3",
         "visitor_id": "16",
         "home_id": "17",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "13",
@@ -359,8 +402,12 @@ export const RAW = [
         "board": "1",
         "visitor_id": "15",
         "home_id": "9",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "14",
@@ -369,8 +416,12 @@ export const RAW = [
         "board": "2",
         "visitor_id": "3",
         "home_id": "4",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "15",
@@ -379,8 +430,12 @@ export const RAW = [
         "board": "3",
         "visitor_id": "2",
         "home_id": "6",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "16",
@@ -389,8 +444,12 @@ export const RAW = [
         "board": "1",
         "visitor_id": "10",
         "home_id": "7",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "17",
@@ -399,8 +458,12 @@ export const RAW = [
         "board": "2",
         "visitor_id": "11",
         "home_id": "13",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     },
     {
         "id": "18",
@@ -409,7 +472,11 @@ export const RAW = [
         "board": "3",
         "visitor_id": "14",
         "home_id": "8",
-        "home_score": null,
-        "visitor_score": null
+        "home_score": "",
+        "visitor_score": "",
+        "game_2_home_score": "",
+        "game_2_visitor_score": "",
+        "game_3_home_score": "",
+        "game_3_visitor_score": ""
     }
 ]

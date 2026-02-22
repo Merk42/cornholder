@@ -2,26 +2,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCounterStore } from '../providers/counter-store-provider'
-import { DEFAULT_BUTTON, THEME, BAG_BORDER, BAG_BUTTON } from '../const/style';
-
-import { RAW, TEAMS } from '../const/data';
-
-type TEAM = {
-     id:number;
-    name:string;
-    theme:THEME
-}
-
-type GAME = {
-    id: string;
-    day: string;
-    time: string;
-    board: string;
-    visitor_id: string;
-    home_id: string;
-    home_score: null|number;
-    visitor_score: null|number;
-}
+import { DEFAULT_BUTTON, BAG_BORDER, BAG_BUTTON } from '../const/style';
+import type { FULL_GAME, GAMES_API, TEAMS_API, THEME } from '../const/type';
+import { RAWGAMES, TEAMS } from '../const/data';
 
 type F = {
     date:string;
@@ -46,17 +29,17 @@ function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: numb
             // This URL points to your backend API endpoint, not the database directly
             const response = await fetch('/pwa/cornholder/api/games.php'); 
             if (!response.ok) {
-                const F = formatGames(RAW as GAME[]);
+                const F = formatGames(RAWGAMES as GAMES_API[]);
                 setGames(F);
                 throw new Error(`HTTP error! status: ${response.status}`);
             } else {
                 const data = await response.json();
-                const F = formatGames(data as GAME[]);
+                const F = formatGames(data as GAMES_API[]);
                 setGames(F);
             }
         } catch (error) {
             console.error(error);
-            const F = formatGames(RAW as GAME[]);
+            const F = formatGames(RAWGAMES as GAMES_API[]);
             setGames(F);
         } finally {
             // setIsLoading(false);
@@ -68,8 +51,8 @@ function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: numb
     }, []); // Empty dependency array means this runs once on mount
 
     
-    function formatGames(games:GAME[]):F {
-          const dateMap = new Map();
+    function formatGames(games:GAMES_API[]):F {
+        const dateMap = new Map();
         
         games.forEach(game => {
             const date = game.day;
@@ -85,9 +68,9 @@ function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: numb
             }
             
             timeMap.get(time).push({
-            board: parseInt(game.board),
-            team1: parseInt(game.visitor_id),
-            team2: parseInt(game.home_id)
+                board: Number(game.board),
+                team1: Number(game.visitor_id),
+                team2: Number(game.home_id)
             });
         });
         
@@ -217,7 +200,7 @@ function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: numb
 }
 
 export default function Start() {
-    const [teams, setTeams] = useState<TEAM[]>([])
+    const [teams, setTeams] = useState<TEAMS_API[]>([])
 
 
   useEffect(() => {

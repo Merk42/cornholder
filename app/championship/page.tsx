@@ -2,22 +2,28 @@
 
 import { useMemo } from "react";
 import { KEYEDCOLORS, KEYEDTEAMS } from "../const/data";
-import { BAG_BUTTON, THEME_GROUP, THEME } from "../const/style";
+import { BAG_BUTTON } from "../const/style";
+import { THEME } from "../const/type";
+
+interface Champ {
+    homeName: string;
+    visitorName:string;
+    homeColor:THEME;
+    visitorColor:THEME;
+}
+
+function Matchup({match}:{match:Champ}) {
+    return (
+        <div className="pairing">
+            <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[match.visitorColor]} text-left`}>{match.visitorName}</div>
+            <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[match.homeColor]} text-left`}>{match.homeName}</div>
+        </div>
+    )
+}
+
 export default function Championship() {
 
-    interface R {
-        round?:number;
-        board?:number;
-        team1:string;
-        team2:string
-    }
 
-    interface Champ {
-        homeName: string;
-        visitorName:string;
-        homeColor:THEME;
-        visitorColor:THEME
-    }
 
     const pairedup = useMemo(() => {
         const DB = [
@@ -113,16 +119,9 @@ export default function Championship() {
                     {column.map((pair, index) => (
                         // A unique key is important for React to efficiently update the DOM
                         <div key={index} className="four">
-                        
-                            <div className="pairing">
-                                <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[pair[0].visitorColor]} text-left`}>{pair[0].visitorName}</div>
-                                <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[pair[0].homeColor]} text-left`}>{pair[0].homeName}</div>
-                            </div>
+                            <Matchup match={pair[0]} />
                             {pair[1] &&
-                            <div className="pairing">
-                                <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[pair[1].visitorColor]} text-left`}>{pair[1].visitorName}</div>
-                                <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[pair[1].homeColor]} text-left`}>{pair[1].homeName}</div>
-                            </div>
+                                <Matchup match={pair[1]} />
                             }
                         </div>
                     ))}                    
