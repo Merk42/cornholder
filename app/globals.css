@@ -44,7 +44,7 @@ body {
 .pairing-col:not(:last-child) .pairing:after{
   content:"";
   display:block;
-  border-color: canvasText;
+  border-color: var(--foreground);
   border-width:2px 2px 2px 0;
   position: absolute;
   top: anchor(--my-anchor-1 center); /* Align the target's top to the bottom of anchor one */
@@ -57,7 +57,7 @@ body {
 .pairing-col .pairing:before {
    content:"";
   display:block;
-  border-color: canvasText;
+  border-color: var(--foreground);
   border-width:1px;
   position: absolute;   
       top: anchor(--my-anchor-1 center); /* Align the target's top to the bottom of anchor one */

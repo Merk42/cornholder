@@ -17,4 +17,19 @@ $request = $data->request;
   echo json_encode($response);
   exit;
 // }
+
+
+if($request == 3){
+  $winner_id = $data->winner_id;
+  $winner_game_id = $data->winner_game_id;
+  $winner_game_position = $data->winner_game_position;
+  if ($winner_game_position == 0) {
+    mysqli_query($con,"UPDATE championship SET visitor_id='".$winner_id."' WHERE id=".$winner_game_id);
+  }
+  if ($winner_game_position == 1) {
+    mysqli_query($con,"UPDATE championship SET home_id='".$winner_id."' WHERE id=".$winner_game_id);
+  }
+  echo "Update successfully";
+  exit;
+}
 ?>
