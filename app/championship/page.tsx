@@ -57,7 +57,8 @@ function Matchup({match}:{match:Champ}) {
         headers: { "Content-Type": "application/json" }, // Important: defines the content type
         body: JSON.stringify(post) // Convert the JavaScript object to a JSON string
         }).then(() => {
-        console.log('New post added');
+            console.log('Updated bracket');
+            setModal(false)
         // You can add logic here to redirect the user or show a success message
         }).catch(error => {
             console.error('Error:', error);
@@ -77,9 +78,11 @@ function Matchup({match}:{match:Champ}) {
             <button onClick={openModal} className="w-full text-left rounded-md px-4 text-sm border-2 bg-foreground text-background">Board {match.board} @ {match.time}</button>
             <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[match.homeColor]} text-left`}>{match.homeName}</div>
             <Modal openModal={modal} closeModal={() => setModal(false)}>
-                <h1>winner</h1>
-                <button className={DEFAULT_BUTTON} onClick={() => handleSubmit(match.visitor_id, match.winner_game_id, match.winner_game_position)}>{match.visitorName}</button>
-                <button className={DEFAULT_BUTTON} onClick={() => handleSubmit(match.home_id, match.winner_game_id, match.winner_game_position)}>{match.homeName}</button>
+                <h1 className="text-3xl">Winner</h1>
+                <div className="flex gap-2 mb-4">
+                    <button className={DEFAULT_BUTTON} onClick={() => handleSubmit(match.visitor_id, match.winner_game_id, match.winner_game_position)}>{match.visitorName}</button>
+                    <button className={DEFAULT_BUTTON} onClick={() => handleSubmit(match.home_id, match.winner_game_id, match.winner_game_position)}>{match.homeName}</button>
+                </div>
             </Modal>
         </div>
     )
