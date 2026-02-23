@@ -22,7 +22,7 @@ interface Champ {
 const url = '/pwa/cornholder/api/championship.php';
 
 
-function Modal({ openModal, closeModal, children }) {
+function Modal({ openModal, closeModal, children }:{openModal:boolean, closeModal:() => void, children:React.ReactNode}) {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
