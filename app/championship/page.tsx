@@ -29,7 +29,7 @@ function Matchup({match}:{match:Champ}) {
 }
 
 export default function Championship() {
-    const url = '/pwa/cornholder/api/games.php';
+    const url = '/pwa/cornholder/api/championship.php';
     const intervalTime = 5000;
 
     const [data, setData] = useState<CHAMPIONSHIP_API[]>([])
