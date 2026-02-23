@@ -24,6 +24,17 @@ export type TEAMS_API = {
     theme:THEME
 }
 
+export type CHAMPIONSHIP_API = {
+    id: string;
+    round:number;
+    home_id:string;
+    visitor_id:string;
+    board:number;
+    time:string;
+    winner_game_id:string;
+    winner_game_position:string;
+}
+
 export type FULL_GAME = {
     id: string,
     day: string;

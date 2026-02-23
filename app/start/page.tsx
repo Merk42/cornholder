@@ -3,8 +3,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCounterStore } from '../providers/counter-store-provider'
 import { DEFAULT_BUTTON, BAG_BORDER, BAG_BUTTON } from '../const/style';
-import type { FULL_GAME, GAMES_API, TEAMS_API, THEME } from '../const/type';
-import { RAWGAMES, TEAMS } from '../const/data';
+import type { GAMES_API, TEAMS_API, THEME } from '../const/type';
+import { ISOTOUS, RAWGAMES, TEAMS } from '../const/data';
 
 type F = {
     date:string;
@@ -100,13 +100,6 @@ function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: numb
         const nextThursday = new Date(date);
         nextThursday.setDate(date.getDate() + daysToAdd);
         return nextThursday.toISOString().split("T")[0];
-    }
-
-    const ISOTOUS = (ISO:string) => {
-        const MIN = ISO[2] + ISO[3];
-        const HR = Number(ISO[0] + ISO[1])
-        const AMPM = HR >= 12 ? 'PM' : 'AM';
-        return `${HR % 12}:${MIN} ${AMPM}`
     }
 
     const upcoming = useMemo(() => {

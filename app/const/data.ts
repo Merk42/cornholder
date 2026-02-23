@@ -1,4 +1,4 @@
-import { GAMES_API, TEAMS_API } from "./type"
+import { CHAMPIONSHIP_API, GAMES_API, TEAMS_API } from "./type"
 
 export const TEAMS:TEAMS_API[] = [
     {
@@ -95,7 +95,7 @@ export const GAMES = [
         "date":"2026-02-12",
         "times":[
             {
-                "time":"1830",
+                "time":"18:30:00",
                 "games":[
                     {
                         "board":1,
@@ -115,7 +115,7 @@ export const GAMES = [
                 ]
             },
             {
-                "time":"1915",
+                "time":"19:15:00",
                 "games":[
                     {
                         "board":1,
@@ -135,7 +135,7 @@ export const GAMES = [
                 ]
             },
             {
-                "time":"2000",
+                "time":"20:00:00",
                 "games":[
                     {
                         "board":1,
@@ -161,7 +161,7 @@ export const GAMES = [
         "date":"2026-02-19",
         "times":[
             {
-                "time":"1830",
+                "time":"18:30:00",
                 "games":[
                     {
                         "board":1,
@@ -181,7 +181,7 @@ export const GAMES = [
                 ]
             },
             {
-                "time":"1915",
+                "time":"19:15:00",
                 "games":[
                     {
                         "board":1,
@@ -201,7 +201,7 @@ export const GAMES = [
                 ]
             },
             {
-                "time":"2000",
+                "time":"20:00:00",
                 "games":[
                     {
                         "board":1,
@@ -480,3 +480,153 @@ export const RAWGAMES:GAMES_API[] = [
         "game_3_visitor_score": ""
     }
 ]
+
+export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
+    {
+        id:"1",
+        round:1,
+        visitor_id:'16',
+        home_id:'6',
+        board:1,
+        time: '18:30:00',
+        winner_game_id:"9",
+        winner_game_position:"visitor"
+    },
+    {
+        id:"2",
+        round:1,
+        visitor_id:'11',
+        home_id:'17',
+        board:2,
+        time: '18:30:00',
+        winner_game_id:"9",
+        winner_game_position:"home"
+    },
+    {
+        id:"3",
+        round:1,
+        visitor_id:'3',
+        home_id:'4',
+        board:3,
+        time: '18:30:00',
+        winner_game_id:"10",
+        winner_game_position:"visitor"
+    },
+    {
+        id:"4",
+        round:1,
+        visitor_id:'2',
+        home_id:'15',
+        board:2,
+        time: '19:30:00',
+        winner_game_id:"10",
+        winner_game_position:"home"
+    },
+    {
+        id:"5",
+        round:1,
+        visitor_id:'7',
+        home_id:'9',
+        board:1,
+        time: '19:00:00',
+        winner_game_id:"11",
+        winner_game_position:"visitor"
+    },
+    {
+        id:"6",
+        round:1,
+        visitor_id:'1',
+        home_id:'14',
+        board:2,
+        time: '19:00:00',
+        winner_game_id:"11",
+        winner_game_position:"home"
+    },
+    {
+        id:"7",
+        round:1,
+        visitor_id:'12',
+        home_id:'5',
+        board:3,
+        time: '19:00:00',
+        winner_game_id:"12",
+        winner_game_position:"visitor"
+    },
+    {
+        id:"8",
+        round:1,
+        visitor_id:'13',
+        home_id:'8',
+        board:1,
+        time: '19:30:00',
+        winner_game_id:"12",
+        winner_game_position:"home"
+    },
+    {
+        id:"9",
+        round:2,
+        visitor_id:'',
+        home_id: '',
+        board:1,
+        time: '20:00:00',
+        winner_game_id:"13",
+        winner_game_position:"visitor"
+    },
+    {
+        id:"10",
+        round:2,
+        visitor_id:'',
+        home_id: '',
+        board:2,
+        time: '20:00:00',
+        winner_game_id:"13",
+        winner_game_position:"home"
+    },
+    {
+        id:"11",
+        round:2,
+        visitor_id:'',
+        home_id: '',
+        board:3,
+        time: '19:30:00',
+        winner_game_id:"14",
+        winner_game_position:"visitor"
+    },
+    {
+        id:"12",
+        round:2,
+        visitor_id:'',
+        home_id: '',
+        board:3,
+        time: '20:00:00',
+        winner_game_id:"14",
+        winner_game_position:"home"
+    },
+    {
+        id:"13",
+        round:3,
+        visitor_id:'',
+        home_id: '',
+        board:1,
+        time: '20:30:00',
+        winner_game_id:"15",
+        winner_game_position:"visitor"
+    },
+    {
+        id:"14",
+        round:3,
+        visitor_id:'',
+        home_id: '',
+        board:2,
+        time: '20:30:00',
+        winner_game_id:"15",
+        winner_game_position:"home"
+    }
+]
+
+export const ISOTOUS = (ISO:string) => {
+    const MIN = ISO[3] + ISO[4];
+    const HR = Number(ISO[0] + ISO[1])
+    const AMPM = HR >= 12 ? 'PM' : 'AM';
+    return `${HR % 12}:${MIN} ${AMPM}`
+}

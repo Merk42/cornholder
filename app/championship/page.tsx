@@ -1,74 +1,71 @@
 'use client'
 
-import { useMemo } from "react";
-import { KEYEDCOLORS, KEYEDTEAMS } from "../const/data";
+import { useEffect, useMemo, useState } from "react";
+import { CHAMPIONSHIP, ISOTOUS, KEYEDCOLORS, KEYEDTEAMS } from "../const/data";
 import { BAG_BUTTON } from "../const/style";
-import { THEME } from "../const/type";
+import { CHAMPIONSHIP_API, THEME } from "../const/type";
 
 interface Champ {
     homeName: string;
     visitorName:string;
     homeColor:THEME;
     visitorColor:THEME;
+    board:number;
+    time:string;
+
+    winner_game_id:string;
+    winner_game_position:string;
+    id: string;
 }
 
 function Matchup({match}:{match:Champ}) {
     return (
-        <div className="pairing">
+        <div className="pairing rounded-md">
             <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[match.visitorColor]} text-left`}>{match.visitorName}</div>
+            <div className="px-4 text-sm">Board {match.board} @ {match.time}</div>
             <div className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[match.homeColor]} text-left`}>{match.homeName}</div>
         </div>
     )
 }
 
 export default function Championship() {
+    const url = '/pwa/cornholder/api/games.php';
+    const intervalTime = 5000;
+
+    const [data, setData] = useState<CHAMPIONSHIP_API[]>([])
+    const fetchData = async () => {
+        try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            setData(CHAMPIONSHIP)
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        setData(result);
+        } catch (err) {
+        // setError(err);
+        console.error("Error fetching data:", err);
+        setData(CHAMPIONSHIP)
+        }
+    };
+
+    useEffect(() => {
+        // Initial fetch
+        fetchData();
+
+        // Set up the interval for subsequent fetches
+        const timerId = setInterval(fetchData, intervalTime);
+
+        // Clean up the interval when the component unmounts
+        return () => {
+        clearInterval(timerId);
+        };
+    }, [url, intervalTime]); // Dependencies array: re-run effect if url or intervalTime changes
 
 
 
     const pairedup = useMemo(() => {
-        const DB = [
-            {
-                round:1,
-                team1:'12',
-                team2:'10'
-            },
-            {
-                round:1,
-                team1:'7',
-                team2:'6'
-            },
-            {
-                round:1,
-                team1:'13',
-                team2:'15'
-            },
-            {
-                round:1,
-                team1:'7',
-                team2:'2'
-            },
-            {
-                round:1,
-                team1:'8',
-                team2:'3'
-            },
-            {
-                round:1,
-                team1:'14',
-                team2:'17'
-            },
-            {
-                round:1,
-                team1:'5',
-                team2:'16'
-            },
-            {
-                round:1,
-                team1:'11',
-                team2:'9'
-            }
-        ]
-        const groupedByObject = Object.groupBy(DB, (product) => {
+        const groupedByObject = Object.groupBy(data, (product) => {
             return product.round;
         });
         const ROUNDS = 4;
@@ -79,10 +76,15 @@ export default function Championship() {
             if (ROUND && ROUND.length) {
                 const C:Champ[] = ROUND.map(f => {
                     return {
-                        homeName:KEYEDTEAMS[f.team2],
-                        visitorName:KEYEDTEAMS[f.team1],
-                        homeColor:KEYEDCOLORS[f.team2],
-                        visitorColor:KEYEDCOLORS[f.team1]
+                        homeName: f.home_id ? KEYEDTEAMS[f.home_id] : 'TBD',
+                        visitorName: f.visitor_id ? KEYEDTEAMS[f.visitor_id] : "TBD",
+                        homeColor: f.home_id ? KEYEDCOLORS[f.home_id]: "base" ,
+                        visitorColor:f.visitor_id ? KEYEDCOLORS[f.visitor_id] : "base",
+                        board: f.board,
+                        time: ISOTOUS(f.time),
+                        winner_game_id: f.winner_game_id,
+                        winner_game_position: f.winner_game_position,
+                        id: f.id
                     }
                 })
                 BR.push(C)
@@ -109,7 +111,7 @@ export default function Championship() {
 
 
         return BR.map((column) => pairArray(column))
-    }, [])
+    }, [data])
     
 
     return (
