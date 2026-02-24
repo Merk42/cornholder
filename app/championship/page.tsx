@@ -177,7 +177,7 @@ export default function Championship() {
 
 
     return (
-        <div className={`flex gap-3`}>
+        <div className={`flex gap-3 flex-col md:flex-row`}>
             {pairedup.map((column, i) => (
                 <div key={i} className="gap-8 grow whitespace-nowrap flex flex-col justify-around pairing-col">
                     {column.map((pair, index) => (
