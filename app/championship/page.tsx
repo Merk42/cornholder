@@ -18,6 +18,7 @@ interface Champ {
     id: string;
     home_id:string;
     visitor_id:string;
+    division:string;
 }
 const url = '/pwa/cornholder/api/championship.php';
 
@@ -120,15 +121,19 @@ export default function Championship() {
         return () => {
         clearInterval(timerId);
         };
-    }, [url, intervalTime]); // Dependencies array: re-run effect if url or intervalTime changes
+    }, [intervalTime]); // Dependencies array: re-run effect if url or intervalTime changes
 
+    const pairArray = (arr:Champ[]) => {
+        const paired = [];
+        for (let i = 0; i < arr.length; i += 2) {
+            // Slice two elements to create a pair
+            paired.push(arr.slice(i, i + 2));
+        }
+        return paired;
+    };
 
-
-    const pairedup = useMemo(() => {
-        const groupedByObject = Object.groupBy(data, (product) => {
-            return product.round;
-        });
-        const ROUNDS = 4;
+    const brackets = (groupedByObject:Partial<Record<number, CHAMPIONSHIP_API[]>>) => {
+        const ROUNDS = 3;
         const BR:Champ[][] = [];
         // let placeholder = 65;
         for (let i = 1; i <= ROUNDS; i++) {
@@ -146,7 +151,8 @@ export default function Championship() {
                         winner_game_position: f.winner_game_position,
                         id: f.id,
                         home_id: f.home_id,
-                        visitor_id: f.visitor_id
+                        visitor_id: f.visitor_id,
+                        division: f.division
                     }
                 })
                 BR.push(C)
@@ -162,35 +168,48 @@ export default function Championship() {
                 // placeholder++;
             }
         }
-        const pairArray = (arr:Champ[]) => {
-            const paired = [];
-            for (let i = 0; i < arr.length; i += 2) {
-                // Slice two elements to create a pair
-                paired.push(arr.slice(i, i + 2));
-            }
-            return paired;
-        };
-
-
         return BR.map((column) => pairArray(column))
+    }
+
+    const pairedup = useMemo(() => {
+        const GBD = Object.groupBy(data, (game) => {
+            return game.division;
+        })
+        const LLL:Champ[][][][] = []
+        for (const DS of Object.values(GBD)) {
+            if (DS) {
+                const groupedByObject = Object.groupBy(DS, (product) => {
+                    return product.round;
+                });
+                LLL.push(brackets(groupedByObject));
+            }
+        }
+        return LLL
     }, [data])
 
-
     return (
-        <div className={`flex gap-3 flex-col md:flex-row`}>
-            {pairedup.map((column, i) => (
-                <div key={i} className="gap-8 grow whitespace-nowrap flex flex-col justify-around pairing-col">
-                    {column.map((pair, index) => (
-                        // A unique key is important for React to efficiently update the DOM
-                        <div key={index} className="four">
-                            <Matchup match={pair[0]} />
-                            {pair[1] &&
-                                <Matchup match={pair[1]} />
-                            }
+        <div >
+            {pairedup.map((divshn) => (
+                <div key={divshn[0][0][0].id} >
+                    <h2 className="capitalize">{divshn[0][0][0].division}</h2>
+                    <div className={`flex gap-3 flex-col md:flex-row mb-8`}>
+                    {divshn.map((column, i) => (
+                        <div key={i} className="gap-8 grow whitespace-nowrap flex flex-col justify-around pairing-col">
+                            {column.map((pair, index) => (
+                                // A unique key is important for React to efficiently update the DOM
+                                <div key={index} className="four">
+                                    <Matchup match={pair[0]} />
+                                    {pair[1] &&
+                                        <Matchup match={pair[1]} />
+                                    }
+                                </div>
+                            ))}                    
                         </div>
-                    ))}                    
+                    ))}
+                    </div>
                 </div>
             ))}
+            
         </div>
     )
 }

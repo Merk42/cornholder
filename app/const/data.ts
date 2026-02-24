@@ -490,7 +490,8 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         board:1,
         time: '18:30:00',
         winner_game_id:"9",
-        winner_game_position:"visitor"
+        winner_game_position:"visitor",
+        division:"heroes",
     },
     {
         id:"2",
@@ -500,7 +501,8 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         board:2,
         time: '18:30:00',
         winner_game_id:"9",
-        winner_game_position:"home"
+        winner_game_position:"home",
+        division:"heroes"
     },
     {
         id:"3",
@@ -510,7 +512,8 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         board:3,
         time: '18:30:00',
         winner_game_id:"10",
-        winner_game_position:"visitor"
+        winner_game_position:"visitor",
+        division:"heroes"
     },
     {
         id:"4",
@@ -520,7 +523,8 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         board:2,
         time: '19:30:00',
         winner_game_id:"10",
-        winner_game_position:"home"
+        winner_game_position:"home",
+        division:"heroes"
     },
     {
         id:"5",
@@ -530,7 +534,8 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         board:1,
         time: '19:00:00',
         winner_game_id:"11",
-        winner_game_position:"visitor"
+        winner_game_position:"visitor",
+        division:"legends"
     },
     {
         id:"6",
@@ -540,7 +545,8 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         board:2,
         time: '19:00:00',
         winner_game_id:"11",
-        winner_game_position:"home"
+        winner_game_position:"home",
+        division:"legends"
     },
     {
         id:"7",
@@ -550,7 +556,8 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         board:3,
         time: '19:00:00',
         winner_game_id:"12",
-        winner_game_position:"visitor"
+        winner_game_position:"visitor",
+        division:"legends"
     },
     {
         id:"8",
@@ -560,7 +567,8 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         board:1,
         time: '19:30:00',
         winner_game_id:"12",
-        winner_game_position:"home"
+        winner_game_position:"home",
+        division:"legends"
     },
     {
         id:"9",
@@ -570,7 +578,8 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         board:1,
         time: '20:00:00',
         winner_game_id:"13",
-        winner_game_position:"visitor"
+        winner_game_position:"visitor",
+        division:"heroes"
     },
     {
         id:"10",
@@ -580,7 +589,8 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         board:2,
         time: '20:00:00',
         winner_game_id:"13",
-        winner_game_position:"home"
+        winner_game_position:"home",
+        division:"heroes"
     },
     {
         id:"11",
@@ -590,7 +600,8 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         board:3,
         time: '19:30:00',
         winner_game_id:"14",
-        winner_game_position:"visitor"
+        winner_game_position:"visitor",
+        division:"legends"
     },
     {
         id:"12",
@@ -600,7 +611,8 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         board:3,
         time: '20:00:00',
         winner_game_id:"14",
-        winner_game_position:"home"
+        winner_game_position:"home",
+        division:"legends"
     },
     {
         id:"13",
@@ -610,7 +622,8 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         board:1,
         time: '20:30:00',
         winner_game_id:"15",
-        winner_game_position:"visitor"
+        winner_game_position:"visitor",
+        division:"heroes"
     },
     {
         id:"14",
@@ -620,7 +633,8 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         board:2,
         time: '20:30:00',
         winner_game_id:"15",
-        winner_game_position:"home"
+        winner_game_position:"home",
+        division:"legends"
     }
 ]
 

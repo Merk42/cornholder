@@ -33,6 +33,7 @@ export type CHAMPIONSHIP_API = {
     time:string;
     winner_game_id:string;
     winner_game_position:string;
+    division:string;
 }
 
 export type FULL_GAME = {
