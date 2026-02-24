@@ -91,7 +91,7 @@ function Matchup({match}:{match:Champ}) {
 export default function Championship() {
     
     const intervalTime = 5000;
-
+    // todo either change this to post, or change endpoint for other
     const [data, setData] = useState<CHAMPIONSHIP_API[]>([])
     const fetchData = async () => {
         try {

@@ -4,9 +4,9 @@ include "config.php";
 $data = json_decode(file_get_contents("php://input"));
 
 $request = $data->request;
-
+echo $request; 
 // Fetch All records
-// if($request == 1){
+if($request != 3 && $request != '3'){
   $userData = mysqli_query($con,"select * from championship order by id asc");
 
   $response = array();
@@ -16,10 +16,10 @@ $request = $data->request;
 
   echo json_encode($response);
   exit;
-// }
+}
 
 
-if($request == 3){
+if($request == 3 || $request == '3') {
   $winner_id = $data->winner_id;
   $winner_game_id = $data->winner_game_id;
   $winner_game_position = $data->winner_game_position;
