@@ -141,10 +141,10 @@ export default function Championship() {
             if (ROUND && ROUND.length) {
                 const C:Champ[] = ROUND.map(f => {
                     return {
-                        homeName: f.home_id ? KEYEDTEAMS[f.home_id] : 'TBD',
-                        visitorName: f.visitor_id ? KEYEDTEAMS[f.visitor_id] : "TBD",
-                        homeColor: f.home_id ? KEYEDCOLORS[f.home_id]: "base" ,
-                        visitorColor:f.visitor_id ? KEYEDCOLORS[f.visitor_id] : "base",
+                        homeName: Number(f.home_id) !== 0 ? KEYEDTEAMS[f.home_id] : 'TBD',
+                        visitorName: Number(f.visitor_id) !== 0 ? KEYEDTEAMS[f.visitor_id] : "TBD",
+                        homeColor: Number(f.home_id) !== 0 ? KEYEDCOLORS[f.home_id]: "base" ,
+                        visitorColor: Number(f.visitor_id) !== 0 ? KEYEDCOLORS[f.visitor_id] : "base",
                         board: f.board,
                         time: ISOTOUS(f.time),
                         winner_game_id: f.winner_game_id,
