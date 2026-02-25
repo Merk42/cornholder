@@ -90,7 +90,11 @@ function Matchup({match}:{match:Champ}) {
 }
 
 export default function Championship() {
-    
+    const brnames = [
+        "quaterfinals",
+        "semifinals",
+        "finals"
+    ]
     const intervalTime = 5000;
     // todo either change this to post, or change endpoint for other
     const [data, setData] = useState<CHAMPIONSHIP_API[]>([])
@@ -186,15 +190,16 @@ export default function Championship() {
         }
         return LLL
     }, [data])
-
     return (
         <div >
             {pairedup.map((divshn) => (
-                <div key={divshn[0][0][0].id} >
-                    <h2 className="capitalize">{divshn[0][0][0].division}</h2>
-                    <div className={`flex gap-3 flex-col md:flex-row mb-8`}>
+                <div key={divshn[0][0][0].id} className="mt-8">
+                    <h2 className="capitalize text-3xl">{divshn[0][0][0].division}</h2>
+                    <div className="grid-rows-[auto_1fr] md:grid grid-cols-[repeat(3,_1fr)] grid-flow-col gap-3">
                     {divshn.map((column, i) => (
-                        <div key={i} className="gap-8 grow whitespace-nowrap flex flex-col justify-around pairing-col">
+                        <>
+                        <h3 className="capitalize text-2xl my-4">{brnames[i]}</h3>
+                        <div key={i} className="gap-8 whitespace-nowrap flex flex-col justify-around pairing-col">
                             {column.map((pair, index) => (
                                 // A unique key is important for React to efficiently update the DOM
                                 <div key={index} className="four">
@@ -205,11 +210,11 @@ export default function Championship() {
                                 </div>
                             ))}                    
                         </div>
+                        </>
                     ))}
                     </div>
                 </div>
             ))}
-            
         </div>
     )
 }

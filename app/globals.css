@@ -37,34 +37,35 @@ body {
   anchor-scope: --my-anchor-2, --my-anchor-1;
   display:contents;
 }
+@media (min-width: 48rem) {
+  .pairing-col:not(:last-child) .pairing:after,
+  .pairing-col .pairing:before {
+    content:"";
+    display:block;
+    position: absolute;
+    border-color: var(--foreground);
+  }
 
-.pairing-col:not(:last-child) .pairing:after,
-.pairing-col .pairing:before {
-  content:"";
-  display:block;
-  position: absolute;
-  border-color: var(--foreground);
-}
+  .pairing-col:not(:last-child) .pairing:after{
+    border-width:2px 2px 2px 0;
+    border-radius: 0 4px 4px 0;
+    top: anchor(--my-anchor-1 center);
+    bottom: anchor(--my-anchor-2 center);
+    right: calc(anchor(--my-anchor-1 right) - .5rem);
+    left: anchor(--my-anchor-1 right);
+  }
 
-.pairing-col:not(:last-child) .pairing:after{
-  border-width:2px 2px 2px 0;
-  border-radius: 0 4px 4px 0;
-  top: anchor(--my-anchor-1 center);
-  bottom: anchor(--my-anchor-2 center);
-  right: calc(anchor(--my-anchor-1 right) - .5rem);
-  left: anchor(--my-anchor-1 right);
-}
-
-.pairing-col .pairing:before {
-  border-width:1px;
-  top: anchor(--my-anchor-1 center);
-  bottom: anchor(--my-anchor-1 center);
-  right:anchor(--my-anchor-1 left);
-  left:  calc(anchor(--my-anchor-1 left) - .25rem);
-}
-.pairing-col .pairing:nth-child(even):before {
-  top: anchor(--my-anchor-2 center);
-  bottom: anchor(--my-anchor-2 center);
-  right:anchor(--my-anchor-2 left);
-  left:  calc(anchor(--my-anchor-2 left) - .25rem);
+  .pairing-col .pairing:before {
+    border-width:1px;
+    top: anchor(--my-anchor-1 center);
+    bottom: anchor(--my-anchor-1 center);
+    right:anchor(--my-anchor-1 left);
+    left:  calc(anchor(--my-anchor-1 left) - .25rem);
+  }
+  .pairing-col .pairing:nth-child(even):before {
+    top: anchor(--my-anchor-2 center);
+    bottom: anchor(--my-anchor-2 center);
+    right:anchor(--my-anchor-2 left);
+    left:  calc(anchor(--my-anchor-2 left) - .25rem);
+  }
 }
