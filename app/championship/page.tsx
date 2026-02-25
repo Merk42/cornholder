@@ -91,7 +91,7 @@ function Matchup({match}:{match:Champ}) {
 
 export default function Championship() {
     const brnames = [
-        "quaterfinals",
+        "quarterfinals",
         "semifinals",
         "finals",
         "winner"
@@ -143,7 +143,7 @@ export default function Championship() {
         // let placeholder = 65;
         for (let i = 1; i <= ROUNDS; i++) {
             const ROUND = groupedByObject[i];
-            if (ROUND && ROUND.length) {
+            if (ROUND) {
                 const C:Champ[] = ROUND.map(f => {
                     return {
                         homeName: Number(f.home_id) !== 0 ? KEYEDTEAMS[f.home_id] : 'TBD',
@@ -161,16 +161,6 @@ export default function Championship() {
                     }
                 })
                 BR.push(C)
-            } else {
-                const EXPONENT = ROUNDS - i;
-                const ARRLENGTH = 2**EXPONENT;
-                BR.push(new Array(ARRLENGTH).fill({
-                        homeName:"TBD",
-                        visitorName:"TBD",
-                        homeColor:"",
-                        visitorColor:""
-                    }))
-                // placeholder++;
             }
         }
         return BR.map((column) => pairArray(column))
@@ -215,11 +205,11 @@ export default function Championship() {
         <div >
             {pairedup.map((divshn) => (
                 <div key={divshn[0][0][0].id} className="mt-8">
-                    <h2 className="capitalize text-3xl">{divshn[0][0][0].division}</h2>
+                    <h2 className="capitalize text-3xl text-left md:text-center sticky md:static top-0 bg-background">{divshn[0][0][0].division}</h2>
                     <div className="grid-rows-[auto_1fr] md:grid grid-cols-[repeat(4,_1fr)] grid-flow-col gap-3">
                     {divshn.map((column, i, array) => (        
                         <>
-                        <h3 className="capitalize text-2xl my-4">{brnames[i]}</h3>
+                        <h3 className="capitalize text-2xl my-4 text-right md:text-center sticky md:static top-0 bg-background w-1/2 ml-[50%] md:w-full md:ml-[0]">{brnames[i]}</h3>
                         <div key={i} className="gap-8 whitespace-nowrap flex flex-col justify-around pairing-col">
                             {i === array.length - 1 ?
                                 <div className={`${BAG_BUTTON['base']} ${BAG_BUTTON[winner(column[0][0].visitor_id, column[0][0].home_id).color]} text-left grow-0`}>{winner(column[0][0].visitor_id, column[0][0].home_id).name}</div>
