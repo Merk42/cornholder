@@ -632,7 +632,29 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         home_id: '',
         board:2,
         time: '20:30:00',
-        winner_game_id:"15",
+        winner_game_id:"16",
+        winner_game_position:"home",
+        division:"legends"
+    },
+    {
+        id:"15",
+        round:4,
+        visitor_id:'',
+        home_id: '',
+        board:2,
+        time: '20:30:00',
+        winner_game_id:"0",
+        winner_game_position:"home",
+        division:"heroes"
+    },
+    {
+        id:"16",
+        round:4,
+        visitor_id:'',
+        home_id: '',
+        board:2,
+        time: '20:30:00',
+        winner_game_id:"0",
         winner_game_position:"home",
         division:"legends"
     }
