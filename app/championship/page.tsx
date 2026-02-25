@@ -93,7 +93,8 @@ export default function Championship() {
     const brnames = [
         "quaterfinals",
         "semifinals",
-        "finals"
+        "finals",
+        "winner"
     ]
     const intervalTime = 5000;
     // todo either change this to post, or change endpoint for other
@@ -137,7 +138,7 @@ export default function Championship() {
     };
 
     const brackets = (groupedByObject:Partial<Record<number, CHAMPIONSHIP_API[]>>) => {
-        const ROUNDS = 4;
+        const ROUNDS = Object.keys(groupedByObject).length;
         const BR:Champ[][] = [];
         // let placeholder = 65;
         for (let i = 1; i <= ROUNDS; i++) {
@@ -217,27 +218,23 @@ export default function Championship() {
                     <h2 className="capitalize text-3xl">{divshn[0][0][0].division}</h2>
                     <div className="grid-rows-[auto_1fr] md:grid grid-cols-[repeat(4,_1fr)] grid-flow-col gap-3">
                     {divshn.map((column, i, array) => (        
-                        i === array.length - 1 ?
-                            <>
-                            <h3 className="capitalize text-2xl my-4">Winner</h3>
-                            <div key={i} className="gap-8 whitespace-nowrap flex flex-col justify-around pairing-col">
+                        <>
+                        <h3 className="capitalize text-2xl my-4">{brnames[i]}</h3>
+                        <div key={i} className="gap-8 whitespace-nowrap flex flex-col justify-around pairing-col">
+                            {i === array.length - 1 ?
                                 <div className={`${BAG_BUTTON['base']} ${BAG_BUTTON[winner(column[0][0].visitor_id, column[0][0].home_id).color]} text-left grow-0`}>{winner(column[0][0].visitor_id, column[0][0].home_id).name}</div>
-                            </div>
-                            </> 
-                        :            
-                            <>
-                            <h3 className="capitalize text-2xl my-4">{brnames[i]}</h3>
-                            <div key={i} className="gap-8 whitespace-nowrap flex flex-col justify-around pairing-col">
-                                {column.map((pair, index) => (
+                            :                                    
+                                column.map((pair, index) => (
                                     <div key={index} className="four">
                                         <Matchup match={pair[0]} />
                                         {pair[1] &&
                                             <Matchup match={pair[1]} />
                                         }
                                     </div>
-                                ))}                    
-                            </div>
-                            </>
+                                ))
+                            }
+                        </div>
+                        </>
                     ))}
                     </div>
                 </div>
