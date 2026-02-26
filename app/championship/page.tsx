@@ -202,7 +202,7 @@ export default function Championship() {
         }
     }
     return (
-        <div >
+        <div id="brackets" className="m-2">
             {pairedup.map((divshn) => (
                 <div key={divshn[0][0][0].id} className="mt-8">
                     <h2 className="capitalize text-3xl text-left md:text-center sticky md:static top-0 bg-background">{divshn[0][0][0].division}</h2>

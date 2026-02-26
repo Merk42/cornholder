@@ -47,25 +47,46 @@ body {
   }
 
   .pairing-col:not(:last-child) .pairing:after{
-    border-width:2px 2px 2px 0;
-    border-radius: 0 4px 4px 0;
-    top: anchor(--my-anchor-1 center);
-    bottom: anchor(--my-anchor-2 center);
-    right: calc(anchor(--my-anchor-1 right) - .5rem);
-    left: anchor(--my-anchor-1 right);
+    border-width: 2px;
+    border-radius: 4px;
+    border-inline-start-width: 0;
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    inset-block-start: anchor(--my-anchor-1 center);
+    inset-block-end: anchor(--my-anchor-2 center);
+    inset-inline-end: calc(anchor(--my-anchor-1 self-end) - .5rem);
+    inset-inline-start: anchor(--my-anchor-1 self-end);
   }
 
   .pairing-col .pairing:before {
     border-width:1px;
-    top: anchor(--my-anchor-1 center);
-    bottom: anchor(--my-anchor-1 center);
-    right:anchor(--my-anchor-1 left);
-    left:  calc(anchor(--my-anchor-1 left) - .25rem);
+    inset-block-start: anchor(--my-anchor-1 center);
+    inset-block-end: anchor(--my-anchor-1 center);
+    inset-inline-end:anchor(--my-anchor-1 self-start);
+    inset-inline-start:  calc(anchor(--my-anchor-1 self-start) - .25rem);
   }
   .pairing-col .pairing:nth-child(even):before {
-    top: anchor(--my-anchor-2 center);
-    bottom: anchor(--my-anchor-2 center);
-    right:anchor(--my-anchor-2 left);
-    left:  calc(anchor(--my-anchor-2 left) - .25rem);
+    inset-block-start: anchor(--my-anchor-2 center);
+    inset-block-end: anchor(--my-anchor-2 center);
+    inset-inline-end:anchor(--my-anchor-2 self-start);
+    inset-inline-start:  calc(anchor(--my-anchor-2 self-start) - .25rem);
+  }
+
+  h3:first-child+.pairing-col .pairing:before{
+    display:none
+  }
+}
+
+@media (width >= 96rem) {
+  #brackets {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:1rem;
+  }
+  #brackets > div+div{
+    direction: rtl;
+  }
+  #brackets > div+div .text-left{
+    direction: ltr;
   }
 }
