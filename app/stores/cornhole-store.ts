@@ -20,7 +20,7 @@ export type FinalScore = {
   }
 }
 
-export type CounterState = {
+export type CornholeState = {
   firsttoss: Team;
   count: number;
   score: Score;
@@ -31,7 +31,7 @@ export type CounterState = {
   history: FinalScore[]
 }
 
-export type CounterActions = {
+export type CornholeActions = {
   increaseTeam1Score: (points:number) => void
   increaseTeam2Score: (points:number) => void
   setTeam1Name: (name:string) => void
@@ -43,9 +43,9 @@ export type CounterActions = {
   resetScore: () => void
 }
 
-export type CounterStore = CounterState & CounterActions
+export type CornholeStore = CornholeState & CornholeActions
 
-export const defaultInitState: CounterState = {
+export const defaultInitState: CornholeState = {
   firsttoss: 'team1',
   count: 0,
   score: {
@@ -66,10 +66,10 @@ function updateScore(team:Team, score:number, initial:Score):Score {
     return initial;
 }
 
-export const createCounterStore = (
-  initState: CounterState = defaultInitState,
+export const createCornholeStore = (
+  initState: CornholeState = defaultInitState,
 ) => {
-  return createStore<CounterStore>()((set) => ({
+  return createStore<CornholeStore>()((set) => ({
     ...initState,
     increaseTeam1Score: (points:number) => set((state) => ({ score: updateScore('team1', points, state.score) })),
     increaseTeam2Score: (points:number) => set((state) => ({ score: updateScore('team2', points, state.score) })),

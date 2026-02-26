@@ -1,7 +1,7 @@
 'use client'; // Required for client-side hooks in the App Router
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useCounterStore } from '../providers/counter-store-provider'
+import { useCornholeStore } from '../providers/cornhole-store-provider'
 import { DEFAULT_BUTTON, BAG_BORDER, BAG_BUTTON } from '../const/style';
 import type { GAMES_API, TEAMS_API, THEME } from '../const/type';
 import { ISOTOUS, RAWGAMES, TEAMS } from '../const/data';
@@ -234,7 +234,7 @@ export default function Start() {
     }, [teams])
 
 
-    const { setTeam1Name, setTeam2Name, setFirst, setTeam1Color, setTeam2Color } = useCounterStore(
+    const { setTeam1Name, setTeam2Name, setFirst, setTeam1Color, setTeam2Color } = useCornholeStore(
         (state) => state,
     )
 

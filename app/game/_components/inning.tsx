@@ -1,13 +1,13 @@
 'use client'
 import { useMemo, useState } from "react";
-import { useCounterStore } from '../../providers/counter-store-provider'
+import { useCornholeStore } from '../../providers/cornhole-store-provider'
 import { useRouter } from 'next/navigation';
-import { Team } from "@/app/stores/counter-store";
+import { Team } from "@/app/stores/cornhole-store";
 import { BAG_BORDER, BAG_BUTTON, BAG_TOTAL, SUBMIT } from "@/app/const/style";
 
 export default function Inning() {
 
-    const { team1name, team2name, team1color, team2color, score, increaseTeam1Score, increaseTeam2Score, setFirst } = useCounterStore(
+    const { team1name, team2name, team1color, team2color, score, increaseTeam1Score, increaseTeam2Score, setFirst } = useCornholeStore(
         (state) => state,
     )
 

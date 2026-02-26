@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { DEFAULT_BUTTON } from "./const/style";
-import { CounterStoreProvider } from './providers/counter-store-provider'
+import { CornholeStoreProvider } from './providers/cornhole-store-provider'
 
 
 const geistSans = Geist({
@@ -31,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen gap-3`}
       >
-        <CounterStoreProvider>
+        <CornholeStoreProvider>
           <main className="grow">{children}</main>
           <footer className="sticky bottom-0 bg-background" >
             <nav className="flex justify-between max-w-3xl px-4 mx-auto">
@@ -40,7 +40,7 @@ export default function RootLayout({
               <Link className={`${DEFAULT_BUTTON} whitespace-nowrap`} href="/championship">Championship</Link>
             </nav>
           </footer>
-        </CounterStoreProvider>
+        </CornholeStoreProvider>
       </body>
     </html>
   );

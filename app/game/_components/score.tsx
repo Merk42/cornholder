@@ -1,11 +1,11 @@
 'use client'
-import { useCounterStore } from '../../providers/counter-store-provider'
+import { useCornholeStore } from '../../providers/cornhole-store-provider'
 import { SCORE } from '@/app/const/style'
-import { Team } from '@/app/stores/counter-store'
+import { Team } from '@/app/stores/cornhole-store'
 import { useState } from 'react'
 export default function Score() {
 
-    const { team1name, team2name, team1color, team2color, score, firsttoss, increaseTeam1Score, increaseTeam2Score } = useCounterStore(
+    const { team1name, team2name, team1color, team2color, score, firsttoss, increaseTeam1Score, increaseTeam2Score } = useCornholeStore(
         (state) => state,
     )
 

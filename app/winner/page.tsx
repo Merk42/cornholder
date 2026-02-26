@@ -1,13 +1,13 @@
 'use client'; // Required for client-side hooks in the App Router
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { useCounterStore } from '../providers/counter-store-provider'
+import { useCornholeStore } from '../providers/cornhole-store-provider'
 import { DEFAULT_BUTTON, BAG_BORDER, BAG_TOTAL } from '../const/style';
-import { FinalScore } from '../stores/counter-store';
+import { FinalScore } from '../stores/cornhole-store';
 
 export default function Winner() {
     const router = useRouter();
-    const { team1name, team2name, team1color, team2color, score, history, resetScore, addHistory } = useCounterStore(
+    const { team1name, team2name, team1color, team2color, score, history, resetScore, addHistory } = useCornholeStore(
         (state) => state,
     )
 
