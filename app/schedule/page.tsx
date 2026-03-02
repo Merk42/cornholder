@@ -1,11 +1,11 @@
 'use client'; // Required for client-side hooks in the App Router
 import { useEffect, useMemo, useState } from 'react';
-import { ISOTOUS, RAWGAMES } from '../const/data';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { ISOTOUS, KEYEDTEAMS, KEYEDCOLORS, RAWGAMES } from '../const/data';
 import { BAG_BUTTON, DEFAULT_BUTTON } from '../const/style'
 import { GAMES_API } from '../const/type';
 import { useCornholeStore } from '../providers/cornhole-store-provider';
-import { useRouter } from 'next/navigation';
-import { KEYEDTEAMS, KEYEDCOLORS } from '../const/data';
 
 type F = {
     date:string;
@@ -26,13 +26,14 @@ export default function Schedule() {
         const { setTeam1Name, setTeam2Name, setFirst, setTeam1Color, setTeam2Color } = useCornholeStore(
             (state) => state,
         )
-
+    const LEAGUE_ID = useCornholeStore((state) => state.league_id); 
     useEffect(() => {
+        
         const fetchGames = async () => {
-
+        
         try {
             // This URL points to your backend API endpoint, not the database directly
-            const response = await fetch('/pwa/cornholder/api/games.php?league_id=1'); 
+            const response = await fetch(`/pwa/cornholder/api/games.php?league_id=${LEAGUE_ID}`); 
             if (!response.ok) {
                 const F = formatGames(RAWGAMES as GAMES_API[]);
                 setGames(F);
@@ -53,7 +54,7 @@ export default function Schedule() {
         };
 
         fetchGames();
-    }, []); // Empty dependency array means this runs once on mount
+    }, [LEAGUE_ID]); // Empty dependency array means this runs once on mount
 
     
     function formatGames(games:GAMES_API[]):F {
@@ -167,7 +168,11 @@ export default function Schedule() {
 
 
     if (upcoming.times.length === 0) {
-        return <p>No upcoming games</p>
+        return (
+            <div>
+                <p>No upcoming games</p>
+                <Link className={DEFAULT_BUTTON} href="/championship">Championship</Link>
+            </div>
     } else {
         return (
             <div>

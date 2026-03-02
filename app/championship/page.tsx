@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { CHAMPIONSHIP, ISOTOUS, KEYEDCOLORS, KEYEDTEAMS } from "../const/data";
 import { BAG_BUTTON, DEFAULT_BUTTON } from "../const/style";
 import { CHAMPIONSHIP_API, THEME } from "../const/type";
+import { useCornholeStore } from "../providers/cornhole-store-provider";
 
 interface Champ {
     homeName: string;
@@ -49,10 +50,11 @@ function Modal({ openModal, closeModal, children }:{openModal:boolean, closeModa
 }
 
 function Matchup({match}:{match:Champ}) {
+    const LEAGUE_ID = useCornholeStore((state) => state.league_id); 
 
     const [modal, setModal] = useState(false);  
      const handleSubmit = (winner_id:string, winner_game_id:string, winner_game_position:string) => {
-        const post = { league_id: 1, request: 3, winner_id:winner_id, winner_game_id: winner_game_id, winner_game_position: winner_game_position }; 
+        const post = { league_id: LEAGUE_ID, request: 3, winner_id:winner_id, winner_game_id: winner_game_id, winner_game_position: winner_game_position }; 
         fetch(url, { // Replace with your actual API endpoint
         method: 'POST',
         headers: { "Content-Type": "application/json" }, // Important: defines the content type
@@ -99,9 +101,10 @@ export default function Championship() {
     const intervalTime = 5000;
     // todo either change this to post, or change endpoint for other
     const [data, setData] = useState<CHAMPIONSHIP_API[]>([])
+    const LEAGUE_ID = useCornholeStore((state) => state.league_id); 
     const fetchData = async () => {
         try {
-        const response = await fetch(`${url}?league_id=1`);
+        const response = await fetch(`${url}?league_id=${LEAGUE_ID}`);
         if (!response.ok) {
             setData(CHAMPIONSHIP)
             throw new Error(`HTTP error! status: ${response.status}`);

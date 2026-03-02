@@ -10,6 +10,10 @@ export default function Home() {
       <Link className={DEFAULT_BUTTON} href="/standings">Standings</Link>
       <hr  className='my-4'></hr>
       <Link className={DEFAULT_BUTTON} href="/championship">Championship</Link>
+      <hr  className='my-4'></hr>
+      <Link className={DEFAULT_BUTTON} href="/start">New Game</Link>
+      <hr  className='my-4'></hr>
+      <Link className={DEFAULT_BUTTON} href="/leagues">Leagues</Link>
     </div>
   );
 }

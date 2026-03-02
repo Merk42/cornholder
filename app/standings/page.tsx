@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { KEYEDTEAMS, KEYEDCOLORS } from "../const/data";
 import { BAG_BUTTON, BAG_BORDER } from "../const/style";
 import { FULL_GAME, GAMES_API } from "../const/type";
+import { useCornholeStore } from "../providers/cornhole-store-provider";
 type stand = {
     id:string;
     wins:number;
@@ -19,13 +20,13 @@ export default function Standings() {
 
     const [games, setGames] = useState<FULL_GAME[]>([]);
     const [isCards, setIsCards] = useState<boolean>(false)
-
+    const LEAGUE_ID = useCornholeStore((state) => state.league_id); 
     useEffect(() => {
         const fetchGames = async () => {
 
         try {
             // This URL points to your backend API endpoint, not the database directly
-            const response = await fetch('/pwa/cornholder/api/games.php?league_id=1'); 
+            const response = await fetch(`/pwa/cornholder/api/games.php?league_id=${LEAGUE_ID}`); 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             } else {
@@ -58,7 +59,7 @@ export default function Standings() {
         };
 
         fetchGames();
-    }, []); // Empty dependency array means this runs once on mount
+    }, [LEAGUE_ID]); // Empty dependency array means this runs once on mount
 
 
 

@@ -21,13 +21,13 @@ type F = {
 function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: number[]) => void, KEYEDTEAMS:{[k:string]:string}, KEYEDCOLORS:{[k:string]:THEME}}) {
 
     const [games, setGames] = useState<F>([])
-
+    const LEAGUE_ID = useCornholeStore((state) => state.league_id); 
     useEffect(() => {
         const fetchGames = async () => {
 
         try {
             // This URL points to your backend API endpoint, not the database directly
-            const response = await fetch('/pwa/cornholder/api/games.php?league_id=1'); 
+            const response = await fetch(`/pwa/cornholder/api/games.php?league_id=${LEAGUE_ID}`); 
             if (!response.ok) {
                 const F = formatGames(RAWGAMES as GAMES_API[]);
                 setGames(F);
@@ -48,7 +48,7 @@ function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: numb
         };
 
         fetchGames();
-    }, []); // Empty dependency array means this runs once on mount
+    }, [LEAGUE_ID]); // Empty dependency array means this runs once on mount
 
     
     function formatGames(games:GAMES_API[]):F {
@@ -195,12 +195,12 @@ function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: numb
 export default function Start() {
     const [teams, setTeams] = useState<TEAMS_API[]>([])
 
-
+const LEAGUE_ID = useCornholeStore((state) => state.league_id); 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         // This URL points to your backend API endpoint, not the database directly
-        const response = await fetch('/pwa/cornholder/api/teams.php?league_id=1'); 
+        const response = await fetch(`/pwa/cornholder/api/teams.php?league_id=${LEAGUE_ID}`); 
         if (!response.ok) {
             setTeams(TEAMS)
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -217,7 +217,7 @@ export default function Start() {
     };
 
     fetchUsers();
-  }, []); // Empty dependency array means this runs once on mount
+  }, [LEAGUE_ID]); // Empty dependency array means this runs once on mount
 
     const KEYEDTEAMS = useMemo(() => {
         if (!teams.length) {

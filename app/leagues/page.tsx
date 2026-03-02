@@ -1,9 +1,11 @@
 'use client'; // Required for client-side hooks in the App Router
 import { useRouter } from 'next/navigation';
-
+import { useCornholeStore } from '../providers/cornhole-store-provider';
 import { DEFAULT_BUTTON } from "../const/style"
 export default function Leagues() {
-
+    const { setLeagueID } = useCornholeStore(
+        (state) => state,
+    )
     const LEAGUES_API = [
         {
             name:"ROOT down",
@@ -13,7 +15,7 @@ export default function Leagues() {
 
     const router = useRouter();
     function handleClick(id:string) {
-        // set id in state
+        setLeagueID(Number(id));
         router.push('/schedule');
     }
 
