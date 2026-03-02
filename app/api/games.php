@@ -7,7 +7,7 @@ $request = $data->request;
 $league_id = $_GET['league_id'];
 // Fetch All records
 if($request != 3 && $request != '3'){
-  $userData = mysqli_query($con,"select * from games WHERE league_id=".$league_id." order by id asc");
+  $userData = mysqli_query($con,"select * from games WHERE league_id=".$league_id."' order by id asc");
 
   $response = array();
   while($row = mysqli_fetch_assoc($userData)){
@@ -19,15 +19,17 @@ if($request != 3 && $request != '3'){
 }
 
 if($request == 3 || $request == '3') {
-  $winner_id = $data->winner_id;
-  $winner_game_id = $data->winner_game_id;
-  $winner_game_position = $data->winner_game_position;
-  if ($winner_game_position == 0) {
-    mysqli_query($con,"UPDATE championship SET visitor_id='".$winner_id."' WHERE id=".$winner_game_id);
-  }
-  if ($winner_game_position == 1) {
-    mysqli_query($con,"UPDATE championship SET home_id='".$winner_id."' WHERE id=".$winner_game_id);
-  }
+  $game_id = $data->game_id;
+  $game_1_visitor_score = $data->game_1_visitor_score;
+  $game_1_home_score = $data->game_1_home_score;
+  $game_2_visitor_score = $data->game_2_visitor_score;
+  $game_2_home_score = $data->game_2_home_score;
+  $game_3_visitor_score = $data->game_3_visitor_score;
+  $game_3_home_score = $data->game_3_home_score;
+
+  mysqli_query($con,"UPDATE games SET game_1_visitor_score = '".$game_1_visitor_score."''', game_1_home_score = '".$game_1_home_score."''', game_2_visitor_score = '".$game_2_visitor_score."'', game_2_home_score = '".$game_2_home_score."'', game_3_visitor_score = '".$game_3_visitor_score."'', game_3_home_score = '".$game_3_home_score."'' WHERE id='".$game_id);
+
+
   echo "Update successfully";
   exit;
 }

@@ -25,15 +25,15 @@ export default function Winner() {
 
     return (  
         <div className="max-w-3xl px-4 mx-auto text-center place-content-center">    
-            <h1 className='text-4xl mb-6'>{phrase}</h1>
-            {LEAGUE_ID == 0 ?
+            <h1 className='text-4xl mb-6'>{phrase} ({LEAGUE_ID})</h1>
+            {LEAGUE_ID != 0 ?
                 <Gamegrid/>
                 :
                 <>
                 <Endscore/>
-                <History/>
                 </>
             }
+            <History/>
         </div>
     )
 } 

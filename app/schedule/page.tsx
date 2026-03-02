@@ -12,6 +12,7 @@ type F = {
     times: {
         time:string;
         games:{
+            id:number;
             board:number;
             team1:number;
             team2:number;
@@ -23,7 +24,7 @@ export default function Schedule() {
 
     const [games, setGames] = useState<F>([])
 
-        const { setTeam1Name, setTeam2Name, setFirst, setTeam1Color, setTeam2Color } = useCornholeStore(
+        const { setGameID, setTeam1Name, setTeam2Name, setFirst, setTeam1Color, setTeam2Color } = useCornholeStore(
             (state) => state,
         )
     const LEAGUE_ID = useCornholeStore((state) => state.league_id); 
@@ -74,6 +75,7 @@ export default function Schedule() {
             }
             
             timeMap.get(time).push({
+                id: Number(game.id),
                 board: Number(game.board),
                 team1: Number(game.visitor_id),
                 team2: Number(game.home_id)
@@ -157,7 +159,8 @@ export default function Schedule() {
         setFirst(newNumber);
     };
     
-    const startLeagueGame = (visitor_id:string|number, home_id:string|number) => {
+    const startLeagueGame = (game_id:string|number, visitor_id:string|number, home_id:string|number) => {
+        setGameID(Number(game_id));
         setTeam1Name(KEYEDTEAMS[visitor_id.toString()]);
         setTeam2Name(KEYEDTEAMS[home_id.toString()]);
         setTeam1Color(KEYEDCOLORS[visitor_id.toString()]);
@@ -209,7 +212,7 @@ export default function Schedule() {
                                     </p>
                                 </div>
                                 <div className='flex-0 self-center'>
-                                    <button type='button' className={DEFAULT_BUTTON} onClick={() => startLeagueGame(game.team1, game.team2)}>start</button>
+                                    <button type='button' className={DEFAULT_BUTTON} onClick={() => startLeagueGame(game.id, game.team1, game.team2)}>start</button>
                                 </div>      
                             </div>
                         ))}

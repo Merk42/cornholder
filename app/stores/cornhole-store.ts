@@ -22,7 +22,8 @@ export type FinalScore = {
 
 export type CornholeState = {
   league_id: number;
-  league_game: number;
+  round: number;
+  game_id: number;
   firsttoss: Team;
   count: number;
   score: Score;
@@ -35,7 +36,8 @@ export type CornholeState = {
 
 export type CornholeActions = {
   setLeagueID: (id: number) => void
-  increaseLeagueGame: () => void
+  setGameID: (id: number) => void
+  increaseLeagueRound: () => void
   increaseTeam1Score: (points:number) => void
   increaseTeam2Score: (points:number) => void
   setTeam1Name: (name:string) => void
@@ -51,7 +53,8 @@ export type CornholeStore = CornholeState & CornholeActions
 
 export const defaultInitState: CornholeState = {
   league_id: 0,
-  league_game: 0,
+  round: 0,
+  game_id:0,
   firsttoss: 'team1',
   count: 0,
   score: {
@@ -78,7 +81,8 @@ export const createCornholeStore = (
   return createStore<CornholeStore>()((set) => ({
     ...initState,
     setLeagueID: (id:number) => set({ league_id: id }),
-    increaseLeagueGame: () => set((state) => ({ league_game: state.league_game++})),
+    setGameID: (id:number) => set({ game_id: id }),
+    increaseLeagueRound: () => set((state) => ({ round: state.round++})),
     increaseTeam1Score: (points:number) => set((state) => ({ score: updateScore('team1', points, state.score) })),
     increaseTeam2Score: (points:number) => set((state) => ({ score: updateScore('team2', points, state.score) })),
     setTeam1Name: (name:string) => set({ team1name: name }),
