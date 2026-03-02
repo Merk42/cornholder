@@ -27,7 +27,7 @@ function Schedule({onEmitData, KEYEDTEAMS, KEYEDCOLORS}:{onEmitData:(teams: numb
 
         try {
             // This URL points to your backend API endpoint, not the database directly
-            const response = await fetch('/pwa/cornholder/api/games.php'); 
+            const response = await fetch('/pwa/cornholder/api/games.php?league_id=1'); 
             if (!response.ok) {
                 const F = formatGames(RAWGAMES as GAMES_API[]);
                 setGames(F);
@@ -200,7 +200,7 @@ export default function Start() {
     const fetchUsers = async () => {
       try {
         // This URL points to your backend API endpoint, not the database directly
-        const response = await fetch('/pwa/cornholder/api/teams.php'); 
+        const response = await fetch('/pwa/cornholder/api/teams.php?league_id=1'); 
         if (!response.ok) {
             setTeams(TEAMS)
             throw new Error(`HTTP error! status: ${response.status}`);

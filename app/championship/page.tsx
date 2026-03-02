@@ -52,7 +52,7 @@ function Matchup({match}:{match:Champ}) {
 
     const [modal, setModal] = useState(false);  
      const handleSubmit = (winner_id:string, winner_game_id:string, winner_game_position:string) => {
-        const post = { request: 3, winner_id:winner_id, winner_game_id: winner_game_id, winner_game_position: winner_game_position }; 
+        const post = { league_id: 1, request: 3, winner_id:winner_id, winner_game_id: winner_game_id, winner_game_position: winner_game_position }; 
         fetch(url, { // Replace with your actual API endpoint
         method: 'POST',
         headers: { "Content-Type": "application/json" }, // Important: defines the content type
@@ -101,7 +101,7 @@ export default function Championship() {
     const [data, setData] = useState<CHAMPIONSHIP_API[]>([])
     const fetchData = async () => {
         try {
-        const response = await fetch(url);
+        const response = await fetch(`${url}?league_id=1`);
         if (!response.ok) {
             setData(CHAMPIONSHIP)
             throw new Error(`HTTP error! status: ${response.status}`);

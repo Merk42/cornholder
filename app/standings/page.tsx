@@ -25,7 +25,7 @@ export default function Standings() {
 
         try {
             // This URL points to your backend API endpoint, not the database directly
-            const response = await fetch('/pwa/cornholder/api/games.php'); 
+            const response = await fetch('/pwa/cornholder/api/games.php?league_id=1'); 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             } else {
