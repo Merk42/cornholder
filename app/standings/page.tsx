@@ -33,7 +33,7 @@ export default function Standings() {
                 const data:GAMES_API[] = await response.json();
                 // setGames(data.filter(game => game.home_score !== null));
                 const filteredAndMapped:FULL_GAME[] = data
-                .filter(game => game.home_score !== null) // Filter: keeps only even numbers
+                .filter(game => game.game_1_home_score !== null) // Filter: keeps only even numbers
                 .map(game => ({
                     id: game.id.toString(),
                     day: game.day,
@@ -41,8 +41,8 @@ export default function Standings() {
                     board: Number(game.board),
                     visitor_id: game.visitor_id.toString(),
                     home_id: game.home_id.toString(),
-                    game_1_home_score: Number(game.home_score),
-                    game_1_visitor_score: Number(game.visitor_score),
+                    game_1_home_score: Number(game.game_1_home_score),
+                    game_1_visitor_score: Number(game.game_1_visitor_score),
                     game_2_home_score: Number(game.game_2_home_score),
                     game_2_visitor_score: Number(game.game_2_visitor_score),
                     game_3_home_score: Number(game.game_3_home_score),

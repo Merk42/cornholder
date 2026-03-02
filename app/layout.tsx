@@ -33,9 +33,9 @@ export default function RootLayout({
       >
         <CornholeStoreProvider>
           <main className="grow">{children}</main>
-          <footer className="sticky bottom-0 bg-background" >
+          <footer className="sticky bottom-0 bg-background hidden" >
             <nav className="flex justify-between max-w-3xl px-4 mx-auto">
-              <Link className={`${DEFAULT_BUTTON} whitespace-nowrap`} href="/start">New Game</Link>
+              <Link className={`${DEFAULT_BUTTON} whitespace-nowrap`} href="/setup">New Game</Link>
               <Link className={`${DEFAULT_BUTTON} whitespace-nowrap`} href="/standings">Standings</Link>
               <Link className={`${DEFAULT_BUTTON} whitespace-nowrap`} href="/championship">Championship</Link>
             </nav>

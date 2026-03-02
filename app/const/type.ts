@@ -10,8 +10,8 @@ export type GAMES_API = {
     board: string;
     visitor_id:string;
     home_id:string;
-    home_score:string;
-    visitor_score:string;
+    game_1_home_score:string;
+    game_1_visitor_score:string;
     game_2_home_score:string;
     game_2_visitor_score:string;
     game_3_home_score:string;

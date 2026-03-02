@@ -173,6 +173,7 @@ export default function Schedule() {
                 <p>No upcoming games</p>
                 <Link className={DEFAULT_BUTTON} href="/championship">Championship</Link>
             </div>
+        )
     } else {
         return (
             <div>
