@@ -15,7 +15,7 @@ export default function Freeend() {
     }
     const handleClickDiff = () => {
         resetScore()
-        router.push('/start');
+        router.push('/setup');
     }
 
     return (
