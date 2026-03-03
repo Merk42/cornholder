@@ -63,7 +63,7 @@ export default function Schedule() {
         
         games.forEach(game => {
             const date = game.day;
-            const time = game.time.replace(/:/g, '').slice(0, 4);
+            const time = game.time;
             
             if (!dateMap.has(date)) {
             dateMap.set(date, new Map());
