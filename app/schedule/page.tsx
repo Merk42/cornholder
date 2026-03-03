@@ -172,14 +172,14 @@ export default function Schedule() {
 
     if (upcoming.times.length === 0) {
         return (
-            <div>
+            <div className='max-w-3xl px-4 mx-auto text-center place-content-center'>
                 <p>No upcoming games</p>
                 <Link className={DEFAULT_BUTTON} href="/championship">Championship</Link>
             </div>
         )
     } else {
         return (
-            <div>
+            <div className='max-w-3xl px-4 mx-auto text-center place-content-center'>
                 <h1>{USDate}</h1>
                 
                 {double.length > 0 && 

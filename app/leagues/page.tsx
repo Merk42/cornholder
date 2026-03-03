@@ -20,12 +20,15 @@ export default function Leagues() {
     }
 
     return (
-        <ul>
-        {LEAGUES_API.map(league => (
-            <li key={league.id} >
-                <button className={DEFAULT_BUTTON} onClick={() => handleClick(league.id)}>{league.name}</button>
-            </li>
-        ))}
-        </ul>
+        <div className='max-w-3xl px-4 mx-auto text-center place-content-center'>
+            <h1 className='text-4xl my-4'>Leagues</h1>
+            <ul>
+            {LEAGUES_API.map(league => (
+                <li key={league.id} >
+                    <button className={DEFAULT_BUTTON} onClick={() => handleClick(league.id)}>{league.name}</button>
+                </li>
+            ))}
+            </ul>
+        </div>
     )
 }
