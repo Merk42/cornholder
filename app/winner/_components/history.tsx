@@ -33,7 +33,6 @@ export default function History() {
         <div>
             {history.length > 0 &&
             <>
-                <h2 className='text-2xl mb-6 mt-8'>History</h2>
                 {history.reverse().map((scores, index, array) => (
                     <div key={scores.id}>
                         <dl className={`${BAG_BORDER['base']} ${BAG_BORDER[scores.team1.color]} grid grid-cols-[1fr_auto]`}>
