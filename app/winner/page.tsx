@@ -1,8 +1,8 @@
 'use client'; // Required for client-side hooks in the App Router
 import { useMemo } from 'react';
 import { useCornholeStore } from '../providers/cornhole-store-provider'
-import Gamegrid from './_components/gamegrid';
-import Endscore from './_components/endscore';
+import Leagueend from './_components/leagueend';
+import Freeend from './_components/freeend';
 import History from './_components/history';
 
 export default function Winner() {
@@ -21,19 +21,20 @@ export default function Winner() {
         }
     }, [team1name, team2name, score])
 
-    const LEAGUE_ID = useCornholeStore((state) => state.league_id); 
+    const GAME_ID = useCornholeStore((state) => state.game_id); 
 
     return (  
         <div className="max-w-3xl px-4 mx-auto text-center place-content-center">    
-            <h1 className='text-4xl mb-6'>{phrase} ({LEAGUE_ID})</h1>
-            {LEAGUE_ID != 0 ?
-                <Gamegrid/>
+            <h1 className='text-4xl mb-6'>{phrase}</h1>
+            <History/>
+            {Number(GAME_ID) !== 0 ?
+                <Leagueend/>
                 :
                 <>
-                <Endscore/>
+                <Freeend/>
                 </>
             }
-            <History/>
+            
         </div>
     )
 } 

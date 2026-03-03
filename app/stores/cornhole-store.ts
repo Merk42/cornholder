@@ -10,13 +10,16 @@ type Score = {
 }
 
 export type FinalScore = {
+  id: string;
   team1: {
     name:string;
     score:number;
+    color:THEME;
   },
   team2: {
     name:string;
     score:number;
+    color:THEME;
   }
 }
 

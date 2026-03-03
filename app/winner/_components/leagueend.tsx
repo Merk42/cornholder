@@ -2,27 +2,16 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCornholeStore } from '../../providers/cornhole-store-provider'
-import { FinalScore } from '../../stores/cornhole-store';
+import { DEFAULT_BUTTON } from '@/app/const/style';
 
-export default function Gamegrid () {
+export default function Leagueend () {
     const router = useRouter();
-    const { team1name, team2name, score, resetScore, addHistory } = useCornholeStore(
+    const { resetScore } = useCornholeStore(
         (state) => state,
     )
 
     const handleNextgame =  () => {
         resetScore();
-        const F:FinalScore = {
-            team1: {
-                name: team1name,
-                score: score.team1
-            },
-            team2: {
-                name: team2name,
-                score: score.team2
-            }
-        }
-        addHistory(F)
         router.push('/game');
     }
 
@@ -58,11 +47,11 @@ export default function Gamegrid () {
     }
 
     return (
-        <div>
+        <div className='mt-4 flex justify-center gap-2'>
             {isLast ?
-                <button onClick={handleSubmission}>submit scores</button>
+                <button className={`leading-none ${DEFAULT_BUTTON}`} onClick={handleSubmission}>submit scores</button>
                 :
-                <button onClick={handleNextgame}>next game</button>
+                <button className={`leading-none ${DEFAULT_BUTTON}`} onClick={handleNextgame}>next game</button>
             }
         </div>
     )
