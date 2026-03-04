@@ -1,11 +1,11 @@
 'use client'; // Required for client-side hooks in the App Router
 import { useEffect, useMemo, useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ISOTOUS, KEYEDTEAMS, KEYEDCOLORS, RAWGAMES } from '../const/data';
 import { BAG_BUTTON, DEFAULT_BUTTON } from '../const/style'
 import { GAMES_API } from '../const/type';
 import { useCornholeStore } from '../providers/cornhole-store-provider';
+import LeagueFooter from '../_components/league-footer';
 
 type F = {
     date:string;
@@ -174,7 +174,7 @@ export default function Schedule() {
         return (
             <div className='max-w-3xl px-4 mx-auto text-center place-content-center'>
                 <p>No upcoming games</p>
-                <Link className={DEFAULT_BUTTON} href="/championship">Championship</Link>
+                <LeagueFooter/>
             </div>
         )
     } else {
@@ -218,6 +218,7 @@ export default function Schedule() {
                         ))}
                     </div>
                 ))}
+                <LeagueFooter/>
             </div>
         )
     }
