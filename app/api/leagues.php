@@ -7,7 +7,7 @@ $request = $data->request;
 
 // Fetch All records
 // if($request == 1){
-  $userData = mysqli_query($con,"select * from bday order by month asc, day asc");
+  $userData = mysqli_query($con,"select * from leagues order by id asc");
 
   $response = array();
   while($row = mysqli_fetch_assoc($userData)){

@@ -1,4 +1,4 @@
-import { CHAMPIONSHIP_API, GAMES_API, TEAMS_API } from "./type"
+import { CHAMPIONSHIP_API, GAMES_API, LEAGUES_API, TEAMS_API } from "./type"
 
 export const TEAMS:TEAMS_API[] = [
     {
@@ -657,6 +657,13 @@ export const CHAMPIONSHIP:CHAMPIONSHIP_API[] = [
         winner_game_id:"0",
         winner_game_position:"home",
         division:"legends"
+    }
+]
+
+export const LEAGUES:LEAGUES_API[] = [
+    {
+        id: '1',
+        name: 'ROOT down'
     }
 ]
 

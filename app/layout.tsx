@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { DEFAULT_BUTTON } from "./const/style";
 import { CornholeStoreProvider } from './providers/cornhole-store-provider'
 
 

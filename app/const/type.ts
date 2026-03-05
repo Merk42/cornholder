@@ -36,6 +36,11 @@ export type CHAMPIONSHIP_API = {
     division:string;
 }
 
+export type LEAGUES_API = {
+    id: string;
+    name:string;
+}
+
 export type FULL_GAME = {
     id: string,
     day: string;
