@@ -32,14 +32,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen gap-3`}
       >
         <CornholeStoreProvider>
-          <main className="grow">{children}</main>
-          <footer className="sticky bottom-0 bg-background hidden" >
-            <nav className="flex justify-between max-w-3xl px-4 mx-auto">
-              <Link className={`${DEFAULT_BUTTON} whitespace-nowrap`} href="/setup">New Game</Link>
-              <Link className={`${DEFAULT_BUTTON} whitespace-nowrap`} href="/standings">Standings</Link>
-              <Link className={`${DEFAULT_BUTTON} whitespace-nowrap`} href="/championship">Championship</Link>
-            </nav>
-          </footer>
+          {children}
         </CornholeStoreProvider>
       </body>
     </html>

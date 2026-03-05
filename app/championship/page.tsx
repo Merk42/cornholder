@@ -5,6 +5,7 @@ import { CHAMPIONSHIP, ISOTOUS, KEYEDCOLORS, KEYEDTEAMS } from "../const/data";
 import { BAG_BUTTON, DEFAULT_BUTTON } from "../const/style";
 import { CHAMPIONSHIP_API, THEME } from "../const/type";
 import { useCornholeStore } from "../providers/cornhole-store-provider";
+import LeagueFooter from "../_components/league-footer";
 
 interface Champ {
     homeName: string;
@@ -205,6 +206,8 @@ export default function Championship() {
         }
     }
     return (
+        <>
+        <main className="pb-12">
         <div id="brackets" className="m-2">
             {pairedup.map((divshn) => (
                 <div key={divshn[0][0][0].id} className="mt-8">
@@ -233,5 +236,8 @@ export default function Championship() {
                 </div>
             ))}
         </div>
+        </main>
+        <LeagueFooter/>
+        </>
     )
 }

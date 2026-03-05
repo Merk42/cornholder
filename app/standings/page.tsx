@@ -5,6 +5,7 @@ import { KEYEDTEAMS, KEYEDCOLORS } from "../const/data";
 import { BAG_BUTTON, BAG_BORDER } from "../const/style";
 import { FULL_GAME, GAMES_API } from "../const/type";
 import { useCornholeStore } from "../providers/cornhole-store-provider";
+import LeagueFooter from "../_components/league-footer";
 type stand = {
     id:string;
     wins:number;
@@ -175,6 +176,7 @@ export default function Standings() {
 
     return (
         <div className="max-w-3xl px-4 mx-auto">
+            <main className="pb-12">
             <h1 className="text-4xl my-4 text-center">Standings</h1>
             <div className="md:hidden">
                 <button onClick={() => {setIsCards(!isCards)}}>switch layout</button>
@@ -207,6 +209,8 @@ export default function Standings() {
                 </tbody>
                 </table>
             </div>
+            </main>
+            <LeagueFooter/>
         </div>
     )
 }

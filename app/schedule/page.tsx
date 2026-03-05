@@ -173,15 +173,17 @@ export default function Schedule() {
     if (upcoming.times.length === 0) {
         return (
             <div className='max-w-3xl px-4 mx-auto text-center place-content-center'>
-                <p>No upcoming games</p>
+                <main className="pb-12">
+                    <p>No upcoming games</p>
+                </main>
                 <LeagueFooter/>
             </div>
         )
     } else {
         return (
             <div className='max-w-3xl px-4 mx-auto text-center place-content-center'>
-                <h1>{USDate}</h1>
-                
+                <main className="pb-12">
+                <h1>{USDate}</h1>            
                 {double.length > 0 && 
                     <dl>
                         <dt className='font-bold capitalize'>double headers</dt>
@@ -218,6 +220,7 @@ export default function Schedule() {
                         ))}
                     </div>
                 ))}
+                </main>
                 <LeagueFooter/>
             </div>
         )
