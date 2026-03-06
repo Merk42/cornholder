@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CHAMPIONSHIP, ISOTOUS, KEYEDCOLORS, KEYEDTEAMS } from "../const/data";
+import { CHAMPIONSHIP, ISOTOUSTIME, KEYEDCOLORS, KEYEDTEAMS } from "../const/data";
 import { BAG_BUTTON, DEFAULT_BUTTON } from "../const/style";
 import { CHAMPIONSHIP_API, THEME } from "../const/type";
 import { useCornholeStore } from "../providers/cornhole-store-provider";
@@ -155,7 +155,7 @@ export default function Championship() {
                         homeColor: Number(f.home_id) !== 0 ? KEYEDCOLORS[f.home_id]: "base" ,
                         visitorColor: Number(f.visitor_id) !== 0 ? KEYEDCOLORS[f.visitor_id] : "base",
                         board: f.board,
-                        time: ISOTOUS(f.time),
+                        time: ISOTOUSTIME(f.time),
                         winner_game_id: f.winner_game_id,
                         winner_game_position: f.winner_game_position,
                         id: f.id,
