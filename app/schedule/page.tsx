@@ -114,7 +114,7 @@ export default function Schedule() {
         <div className='max-w-3xl px-4 mx-auto text-center place-content-center'>
             <main className="pb-12">
                 {games.map((day) => (
-                    <div key={day.date}>
+                    <div key={day.date} className='pt-8'>
                         <h2 className='text-4xl'>{ISOTOUSDATE(day.date)}</h2>
                         {day.times.map(games => (
                             <div key={games.time} className=" border-2 p-2 mb-4">
