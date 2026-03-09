@@ -4,7 +4,7 @@ export type THEME_GROUP = {
 }
 
 export type GAMES_API = {
-    id: string,
+    id: string;
     day: string;
     time: string;
     board: string;
@@ -42,7 +42,7 @@ export type LEAGUES_API = {
 }
 
 export type FULL_GAME = {
-    id: string,
+    id: string;
     day: string;
     time: string;
     board: string|number;

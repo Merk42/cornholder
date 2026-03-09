@@ -234,12 +234,12 @@ export const RAWGAMES:GAMES_API[] = [
         "board": "1",
         "visitor_id": "6",
         "home_id": "7",
-        "game_1_home_score": "",
-        "game_1_visitor_score": "",
-        "game_2_home_score": "",
-        "game_2_visitor_score": "",
-        "game_3_home_score": "",
-        "game_3_visitor_score": ""
+        "game_1_home_score": "24",
+        "game_1_visitor_score": "0",
+        "game_2_home_score": "25",
+        "game_2_visitor_score": "0",
+        "game_3_home_score": "21",
+        "game_3_visitor_score": "0"
     },
     {
         "id": "2",

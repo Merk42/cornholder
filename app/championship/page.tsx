@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CHAMPIONSHIP, ISOTOUSTIME, KEYEDCOLORS, KEYEDTEAMS } from "../const/data";
 import { BAG_BUTTON, DEFAULT_BUTTON } from "../const/style";
 import { CHAMPIONSHIP_API, THEME } from "../const/type";
 import { useCornholeStore } from "../providers/cornhole-store-provider";
 import LeagueFooter from "../_components/league-footer";
+import Modal from "../_components/modal";
 
 interface Champ {
     homeName: string;
@@ -23,32 +24,6 @@ interface Champ {
     division:string;
 }
 const url = '/pwa/cornholder/api/championship.php';
-
-
-function Modal({ openModal, closeModal, children }:{openModal:boolean, closeModal:() => void, children:React.ReactNode}) {
-  const ref = useRef<HTMLDialogElement>(null);
-
-  useEffect(() => {
-    if (openModal) {
-      ref.current?.showModal();
-    } else {
-      ref.current?.close();
-    }
-  }, [openModal]);
-
-  return (
-    <dialog
-        className=" mx-auto my-auto p-4 rounded-lg shadow-xl backdrop:bg-gray-400/50"
-        ref={ref}
-        onCancel={closeModal}
-    >
-      {children}
-      <button onClick={closeModal}>
-        Close
-      </button>
-    </dialog>
-  );
-}
 
 function Matchup({match}:{match:Champ}) {
     const LEAGUE_ID = useCornholeStore((state) => state.league_id); 

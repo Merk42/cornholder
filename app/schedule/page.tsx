@@ -6,17 +6,14 @@ import { BAG_BUTTON, DEFAULT_BUTTON } from '../const/style'
 import { GAMES_API } from '../const/type';
 import { useCornholeStore } from '../providers/cornhole-store-provider';
 import LeagueFooter from '../_components/league-footer';
+import Summary from './_components/summary';
+import { FULL_GAME } from '../const/type';
 
 type F = {
     date:string;
     times: {
         time:string;
-        games:{
-            id:number;
-            board:number;
-            team1:number;
-            team2:number;
-        }[]
+        games:FULL_GAME[]
     }[]
 }[]
 
@@ -76,9 +73,17 @@ export default function Schedule() {
             
             timeMap.get(time).push({
                 id: Number(game.id),
+                day: game.day,
+                time: game.time,
                 board: Number(game.board),
-                team1: Number(game.visitor_id),
-                team2: Number(game.home_id)
+                visitor_id: Number(game.visitor_id),
+                home_id: Number(game.home_id),
+                game_1_home_score: Number(game.game_1_home_score),
+                game_1_visitor_score: Number(game.game_1_visitor_score),
+                game_2_home_score: Number(game.game_2_home_score),
+                game_2_visitor_score: Number(game.game_2_visitor_score),
+                game_3_home_score: Number(game.game_3_home_score),
+                game_3_visitor_score: Number(game.game_3_visitor_score)
             });
         });
         
@@ -124,13 +129,17 @@ export default function Schedule() {
                                         <div className='flex-1'>
                                             <h3 className='text-2xl'>Board {game.board}</h3>
                                             <p className='flex gap-2 md:items-center items-start flex-col md:flex-row' >
-                                                <span className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[game.team1]]}`}>{KEYEDTEAMS[game.team1] || ''}</span>
+                                                <span className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[game.visitor_id]]}`}>{KEYEDTEAMS[game.visitor_id] || ''}</span>
                                                 <span className='hidden md:inline'>vs</span>
-                                                <span className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[game.team2]]}`}>{KEYEDTEAMS[game.team2] || ''}</span>
+                                                <span className={`${BAG_BUTTON['base']}  ${BAG_BUTTON[KEYEDCOLORS[game.home_id]]}`}>{KEYEDTEAMS[game.home_id] || ''}</span>
                                             </p>
                                         </div>
                                         <div className='flex-0 self-center'>
-                                            <button type='button' className={DEFAULT_BUTTON} onClick={() => startLeagueGame(game.id, game.team1, game.team2)}>start</button>
+                                            {game.game_1_home_score === 0 && game.game_1_visitor_score === 0 ?
+                                                <button type='button' className={DEFAULT_BUTTON} onClick={() => startLeagueGame(game.id, game.visitor_id, game.home_id)}>start</button>
+                                            :
+                                                <Summary game={game}/>
+                                            }                                            
                                         </div>      
                                     </div>
                                 ))}
