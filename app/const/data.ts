@@ -676,6 +676,6 @@ export const ISOTOUSTIME = (ISO:string) => {
 
 export const ISOTOUSDATE = (ISO:string) => {
     const ISOARR = ISO.split("-");
-    const date = new Date(Date.UTC(Number(ISOARR[0]), Number(ISOARR[1]), Number(ISOARR[2]), 12, 0, 0, 0));
+    const date = new Date(Date.UTC(Number(ISOARR[0]), Number(ISOARR[1]) - 1, Number(ISOARR[2]), 12, 0, 0, 0));
     return new Intl.DateTimeFormat("en-US").format(date)
 }
